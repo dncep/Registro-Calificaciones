@@ -60,10 +60,6 @@ public class ProjectExplorerItem extends ExplorerElement {
         this.filename = file.getName();
         this.isDirectory = file.isDirectory();
 
-        if(!this.isDirectory) {
-            if(filename.endsWith(".craftr") || filename.endsWith(".png")) filename = filename.substring(0, filename.lastIndexOf('.'));
-        }
-
         this.addThemeListener();
 
         if(toOpen.contains(this.path)) {
