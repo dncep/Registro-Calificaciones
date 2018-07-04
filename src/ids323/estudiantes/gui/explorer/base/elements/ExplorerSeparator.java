@@ -1,5 +1,6 @@
 package ids323.estudiantes.gui.explorer.base.elements;
 
+import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.explorer.base.ExplorerMaster;
 
 import java.awt.*;
@@ -33,7 +34,7 @@ public class ExplorerSeparator extends ExplorerElement {
     }
 
     @Override
-    public String getIdentifier() {
+    public ModuleToken getIdentifier() {
         return null;
     }
 

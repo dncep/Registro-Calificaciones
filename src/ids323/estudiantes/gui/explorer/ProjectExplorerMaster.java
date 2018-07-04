@@ -1,21 +1,23 @@
 package ids323.estudiantes.gui.explorer;
 
+import ids323.estudiantes.Main;
+import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.explorer.base.ExplorerMaster;
 import ids323.estudiantes.gui.explorer.base.elements.ExplorerSeparator;
 import ids323.estudiantes.util.Commons;
 
 import java.awt.*;
-import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * Created by User on 5/16/2017.
  */
 public class ProjectExplorerMaster extends ExplorerMaster {
-    private File root;
+    private ModuleToken root;
 
     public ProjectExplorerMaster() {
-        root = new File("C:\\Users\\Usuario\\Craftr");
+        root = Main.registro.rootToken;
 
         colors.put("background",new Color(235, 235, 235));
         colors.put("item.background",new Color(235, 235, 235));
@@ -44,34 +46,14 @@ public class ProjectExplorerMaster extends ExplorerMaster {
         refresh(new ArrayList<>(this.getExpandedElements()));
     }
 
-    private void refresh(ArrayList<String> toOpen) {
+    private void refresh(ArrayList<ModuleToken> toOpen) {
         children.clear();
         flatList.clear();
         this.getExpandedElements().clear();
 
-        File[] subfiles = root.listFiles();
-        if(subfiles == null) return;
-
-        ArrayList<File> subfiles1 = new ArrayList<>();
-
-        for(File f : subfiles) {
-            if(f.isDirectory()) {
-                this.children.add(new ProjectExplorerItem(this, f, toOpen));
-            } else {
-                subfiles1.add(f);
-            }
-        }
-        for(File f : subfiles1) {
-            this.children.add(new ProjectExplorerItem(this, f, toOpen));
-        }
-
-        this.children.add(new ExplorerSeparator(this));
-
-        File[] resourceFiles = new File(System.getProperty("user.home") + File.separator + "Craftr").listFiles();
-        if(resourceFiles != null) {
-            for(File f : resourceFiles) {
-                this.children.add(new ProjectExplorerItem(this, f, toOpen));
-            }
+        Collection<ModuleToken> subTokens = root.getSubTokens();
+        for(ModuleToken token : subTokens) {
+            this.children.add(new ProjectExplorerItem(this, token, toOpen));
         }
 
         repaint();

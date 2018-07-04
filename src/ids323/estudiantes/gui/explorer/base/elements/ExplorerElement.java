@@ -1,5 +1,6 @@
 package ids323.estudiantes.gui.explorer.base.elements;
 
+import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.explorer.base.ExplorerMaster;
 
 import java.awt.*;
@@ -39,7 +40,7 @@ public abstract class ExplorerElement implements MouseListener {
         this.rollover = rollover;
     }
 
-    public abstract String getIdentifier();
+    public abstract ModuleToken getIdentifier();
 
     public abstract int getHeight();
 

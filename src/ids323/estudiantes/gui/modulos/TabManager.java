@@ -1,8 +1,9 @@
 package ids323.estudiantes.gui.modulos;
 
+import ids323.estudiantes.data.Estudiante;
+import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.Ventana;
 
-import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -15,24 +16,24 @@ public class TabManager {
 
     private static Tab selectedTab = null;
 
-    public static void openTab(String path, int index) {
+    public static void openTab(ModuleToken path, int index) {
         openTab(path);
         selectLocation(selectedTab, index, 0);
     }
 
-    public static void openTab(String path, int index, int length) {
+    public static void openTab(ModuleToken path, int index, int length) {
         openTab(path);
         selectLocation(selectedTab, index, length);
     }
 
-    public static void openTab(String path) {
+    public static void openTab(ModuleToken token) {
         for (int i = 0; i < openTabs.size(); i++) {
-            if (openTabs.get(i).path.equals(path)) {
+            if (openTabs.get(i).token.equals(token)) {
                 setSelectedTab(openTabs.get(i));
                 return;
             }
         }
-        Tab nt = new Tab(path);
+        Tab nt = new Tab(token);
         openTabs.add(nt);
         Ventana.tabList.addTab(nt);
         setSelectedTab(nt);
@@ -130,22 +131,10 @@ public class TabManager {
         return selectedTab;
     }
 
-    public static void renameTab(String oldPath, String newPath) {
-        File newFile = new File(newPath);
-        if (newFile.isFile()) {
-            for(Tab tab : openTabs) {
-                if (tab.path.equals(oldPath)) {
-                    tab.path = newPath;
-                    tab.updateName();
-                }
-            }
-        } else if (newFile.isDirectory()) {
-            for(Tab tab : openTabs) {
-                if (tab.path.startsWith(oldPath)) {
-                    tab.path = newPath + tab.path.substring(oldPath.length());
-                    tab.updateName();
-                }
-            }
+    public static Tab getTabForToken(ModuleToken token) {
+        for(Tab tab : openTabs) {
+            if(tab.token == token) return tab;
         }
+        return null;
     }
 }
