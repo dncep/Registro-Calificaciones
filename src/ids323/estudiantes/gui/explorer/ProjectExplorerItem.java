@@ -1,17 +1,15 @@
 package ids323.estudiantes.gui.explorer;
 
+import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.explorer.base.ExplorerFlag;
 import ids323.estudiantes.gui.explorer.base.ExplorerMaster;
 import ids323.estudiantes.gui.explorer.base.elements.ExplorerElement;
 import ids323.estudiantes.gui.modulos.TabManager;
-import ids323.estudiantes.util.Commons;
 
-import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -20,9 +18,7 @@ import java.util.ArrayList;
 public class ProjectExplorerItem extends ExplorerElement {
     private ProjectExplorerItem parent = null;
 
-    private String path = null;
-    private boolean isDirectory = false;
-    private String filename = null;
+    private ModuleToken token = null;
     private int indentation = 0;
 
     private boolean expanded = false;
@@ -31,88 +27,40 @@ public class ProjectExplorerItem extends ExplorerElement {
 
     private int x = 0;
 
-    ProjectExplorerItem(ExplorerMaster master, File file, ArrayList<String> toOpen) {
+    ProjectExplorerItem(ExplorerMaster master, ModuleToken token, ArrayList<ModuleToken> toOpen) {
         super(master);
-        this.path = file.getPath();
+        this.token = token;
 
-        this.isDirectory = file.isDirectory();
-
-        this.filename = file.getName();
-        if(!this.isDirectory) {
-            if(filename.endsWith(".craftr") || filename.endsWith(".png")) filename = filename.substring(0, filename.lastIndexOf('.'));
-        }
-
-        this.addThemeListener();
-
-        if(toOpen.contains(this.path)) {
+        if(toOpen.contains(this.token)) {
             expand(toOpen);
         }
+
+        this.icon = token.getIcon();
+        if(this.icon != null) this.icon = this.icon.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
     }
 
-    private ProjectExplorerItem(ProjectExplorerItem parent, File file, ArrayList<String> toOpen) {
+    private ProjectExplorerItem(ProjectExplorerItem parent, ModuleToken token, ArrayList<ModuleToken> toOpen) {
         super(parent.getMaster());
         this.parent = parent;
 
-        this.path = file.getPath();
+        this.token = token;
         this.indentation = parent.indentation + 1;
         this.x = indentation * master.getIndentPerLevel() + master.getInitialIndent();
 
-        this.filename = file.getName();
-        this.isDirectory = file.isDirectory();
-
-        this.addThemeListener();
-
-        if(toOpen.contains(this.path)) {
+        if(toOpen.contains(this.token)) {
             expand(toOpen);
         }
+
+        this.icon = token.getIcon();
+        if(this.icon != null) this.icon = this.icon.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
     }
 
-    private void addThemeListener() {
-        boolean useFileIcon = false;
-        if(path.endsWith(".png")) {
-            try {
-                useFileIcon = true;
-                BufferedImage img = ImageIO.read(new File(path));
-                Dimension size = new Dimension(img.getWidth(), img.getHeight());
-                if(img.getWidth() < img.getHeight()) {
-                    size.height = 16;
-                    size.width = Math.max(1,(int) Math.round(16 * (double) img.getWidth() / img.getHeight()));
-                } else {
-                    size.width = 16;
-                    size.height = Math.max(1,(int) Math.round(16 * (double) img.getHeight() / img.getWidth()));
-                }
-                this.icon = img.getScaledInstance(size.width,size.height, Image.SCALE_SMOOTH);
-            } catch (IOException ex) {
-                useFileIcon = false;
-            }
+    private void expand(ArrayList<ModuleToken> toOpen) {
+        for(ModuleToken subToken : token.getSubTokens()) {
+            this.children.add(new ProjectExplorerItem(this, subToken, toOpen));
         }
-        if(!useFileIcon) {
-
-            String iconName = "estudiante";
-
-            this.icon = Commons.getIcon(iconName).getScaledInstance(16, 16, Image.SCALE_SMOOTH);
-        }
-    }
-
-    private void expand(ArrayList<String> toOpen) {
-        File[] subfiles = new File(path).listFiles();
-        if(subfiles == null) return;
-
-        ArrayList<File> subfiles1 = new ArrayList<>();
-
-        for(File f : subfiles) {
-            if(f.isDirectory()) {
-                this.children.add(new ProjectExplorerItem(this, f, toOpen));
-            } else {
-                subfiles1.add(f);
-            }
-        }
-        for(File f : subfiles1) {
-            this.children.add(new ProjectExplorerItem(this, f, toOpen));
-        }
-
         expanded = true;
-        master.getExpandedElements().add(this.path);
+        master.getExpandedElements().add(this.token);
         master.repaint();
     }
 
@@ -124,7 +72,7 @@ public class ProjectExplorerItem extends ExplorerElement {
     }
 
     private void propagateCollapse() {
-        master.getExpandedElements().remove(this.path);
+        master.getExpandedElements().remove(this.token);
         for(ExplorerElement element : children) {
             if(element instanceof ProjectExplorerItem) ((ProjectExplorerItem) element).propagateCollapse();
         }
@@ -167,8 +115,7 @@ public class ProjectExplorerItem extends ExplorerElement {
         }
 
         //Expand/Collapse button
-        File[] listFiles = new File(path).listFiles();
-        if(isDirectory && listFiles != null && listFiles.length > 0){
+        if(token.isExpandable()){
             int margin = ((master.getRowHeight() - 16) / 2);
             if(expanded) {
                 g.drawImage(master.getAssetMap().get("collapse"),x,y + margin,16, 16,new Color(0,0,0,0),null);
@@ -179,11 +126,11 @@ public class ProjectExplorerItem extends ExplorerElement {
         x += 23;
 
         //File Icon
-        {
+        if(this.icon != null) {
             int margin = ((master.getRowHeight() - 16) / 2);
             g.drawImage(this.icon,x + 8 - icon.getWidth(null)/2,y + margin + 8 - icon.getHeight(null)/2, null);
+            x += 25;
         }
-        x += 25;
 
         //File Name
 
@@ -199,8 +146,8 @@ public class ProjectExplorerItem extends ExplorerElement {
         Graphics2D g2d = (Graphics2D) g;
         Composite oldComposite = g2d.getComposite();
 
-        g.drawString(filename, x, master.getOffsetY() + metrics.getAscent() + ((master.getRowHeight() - metrics.getHeight())/2));
-        x += metrics.stringWidth(filename);
+        g.drawString(token.getLabel(), x, master.getOffsetY() + metrics.getAscent() + ((master.getRowHeight() - metrics.getHeight())/2));
+        x += metrics.stringWidth(token.getLabel());
 
         g2d.setComposite(oldComposite);
 
@@ -219,12 +166,10 @@ public class ProjectExplorerItem extends ExplorerElement {
     }
 
     private void open() {
-        File file = new File(this.path);
-        if (file.isDirectory()) {
+        this.token.onInteract();
+        if(token.isExpandable()) {
             if(expanded) collapse();
             else expand(new ArrayList<>());
-        } else {
-            TabManager.openTab(this.path);
         }
     }
 
@@ -244,7 +189,7 @@ public class ProjectExplorerItem extends ExplorerElement {
     public void mousePressed(MouseEvent e) {
         if(e.getButton() == MouseEvent.BUTTON1) {
             //x = indentation * master.getIndentPerLevel() + master.getInitialIndent();
-            if(this.isDirectory && e.getX() >= x && e.getX() <= x + 20) {
+            if(token.isExpandable() && e.getX() >= x && e.getX() <= x + 20) {
                 if(expanded) collapse();
                 else expand(new ArrayList<>());
             } else {
@@ -252,8 +197,8 @@ public class ProjectExplorerItem extends ExplorerElement {
             }
         } else if(e.getButton() == MouseEvent.BUTTON3) {
             if(!this.selected) master.setSelected(this, new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), 0, e.getX(), e.getY(), e.getClickCount(), e.isPopupTrigger(), MouseEvent.BUTTON1));
-            //StyledPopupMenu menu = this.generatePopup();
-            //menu.show(e.getComponent(), e.getX(), e.getY());
+            JPopupMenu menu = token.generatePopup(this);
+            if(menu != null) menu.show(e.getComponent(), e.getX(), e.getY());
         }
     }
 
@@ -273,35 +218,35 @@ public class ProjectExplorerItem extends ExplorerElement {
     }
 
     @Override
-    public String getIdentifier() {
-        return path;
+    public ModuleToken getIdentifier() {
+        return token;
     }
 
-    /*private StyledPopupMenu generatePopup() {
-        StyledPopupMenu menu = new StyledPopupMenu();
+    /*private PopupMenu generatePopup() {
+        PopupMenu menu = new PopupMenu();
 
         String newPath;
-        if(this.isDirectory) newPath = this.path;
-        else if(this.parent != null) newPath = this.parent.path;
-        else newPath = new File(this.path).getParent();
+        if(this.isDirectory) newPath = this.token;
+        else if(this.parent != null) newPath = this.parent.token;
+        else newPath = new File(this.token).getParent();
 
         List<String> selectedFiles = master.getSelectedFiles();
 
         {
-            StyledMenu newMenu = new StyledMenu("New");
+            Menu newMenu = new Menu("New");
 
             menu.add(newMenu);
 
             // --------------------------------------------------
 
-            Project project = ProjectManager.getAssociatedProject(new File(path));
+            Project project = ProjectManager.getAssociatedProject(new File(token));
 
             String projectDir = (project != null) ? project.getDirectory().getPath() + File.separator : null;
 
             int lastGroup = 0;
 
             for(FileType type : FileType.values()) {
-                if(type.canCreate(projectDir, path + File.separator)) {
+                if(type.canCreate(projectDir, token + File.separator)) {
                     if(type.group != lastGroup) {
                         newMenu.addSeparator();
                         lastGroup = type.group;
@@ -318,24 +263,24 @@ public class ProjectExplorerItem extends ExplorerElement {
         menu.add(MenuItems.fileItem(MenuItems.FileMenuItem.COPY));
         menu.add(MenuItems.fileItem(MenuItems.FileMenuItem.PASTE));
 
-        StyledMenuItem deleteItem = MenuItems.fileItem(MenuItems.FileMenuItem.DELETE);
+        MenuItem deleteItem = MenuItems.fileItem(MenuItems.FileMenuItem.DELETE);
         deleteItem.setEnabled(selectedFiles.size() >= 1);
         deleteItem.addActionListener(e -> FileManager.delete(selectedFiles));
         menu.add(deleteItem);
 
         menu.addSeparator();
-        StyledMenu refactorMenu = new StyledMenu("Refactor");
+        Menu refactorMenu = new Menu("Refactor");
         menu.add(refactorMenu);
 
-        StyledMenuItem renameItem = MenuItems.fileItem(MenuItems.FileMenuItem.RENAME);
+        MenuItem renameItem = MenuItems.fileItem(MenuItems.FileMenuItem.RENAME);
 
         refactorMenu.add(renameItem);
         refactorMenu.add(MenuItems.fileItem(MenuItems.FileMenuItem.MOVE));
 
         menu.addSeparator();
 
-        StyledMenuItem openInSystemItem = new StyledMenuItem("Show in System Explorer", "explorer");
-        openInSystemItem.addActionListener(e -> Commons.showInExplorer(this.path));
+        MenuItem openInSystemItem = new MenuItem("Show in System Explorer", "explorer");
+        openInSystemItem.addActionListener(e -> Commons.showInExplorer(this.token));
 
         menu.add(openInSystemItem);
 

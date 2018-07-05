@@ -1,10 +1,10 @@
 package ids323.estudiantes.gui.modulos;
 
+import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.tablist.TabItem;
 
 import javax.swing.*;
-import java.io.File;
 import java.util.Date;
 
 /**
@@ -12,7 +12,7 @@ import java.util.Date;
  * the clickable tab element.
  */
 public class Tab {
-    public String path;
+    public ModuleToken token;
     public DisplayModule module;
     private Object savedValue;
     public boolean visible = true;
@@ -24,15 +24,15 @@ public class Tab {
 
     @Override
     public String toString() {
-        return "Tab [title=" + getName() + ", path=" + path + ", visible=" + visible + "]";
+        return "Tab [title=" + getName() + ", token=" + token + ", visible=" + visible + "]";
     }
 
-    public Tab(String path) {
-        this.path = path;
-        module = new ModuloVistaEstudiante();
-        /*if(path.endsWith(".png")) {
+    public Tab(ModuleToken token) {
+        this.token = token;
+        module = token.createModule();
+        /*if(token.endsWith(".png")) {
             module = new ImageViewer(this);
-        } else if(path.endsWith(".ogg") || path.endsWith(".mp3") || path.endsWith(".mid")) {
+        } else if(token.endsWith(".ogg") || token.endsWith(".mp3") || token.endsWith(".mid")) {
             module = new AudioPlayer(this);
         } else {
             module = new CraftrEditorModule(this);
@@ -41,7 +41,7 @@ public class Tab {
 
         openedTimeStamp = new Date().getTime();
 
-        this.name = new File(path).getName();
+        this.name = token.getLabel();
     }
 
     public void onSelect() {

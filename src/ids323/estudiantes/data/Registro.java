@@ -1,12 +1,11 @@
 package ids323.estudiantes.data;
 
+import ids323.estudiantes.gui.ModuleToken;
+import ids323.estudiantes.gui.modulos.ModuleTokenRoot;
 import ids323.estudiantes.saveio.SaveReader;
 import ids323.estudiantes.saveio.SaveWriter;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
@@ -25,23 +24,20 @@ public class Registro {
      * */
     public final ArrayList<Asignatura> asignaturas = new ArrayList<>();
     /**
-     * Lista para las secciones.
-     * */
-    public final ArrayList<Seccion> secciones = new ArrayList<>();
-    /**
      * El fichero en el cual almacenar los datos persistentes.
      * */
     private final File file;
 
     /**
+     * El ID del siguiente estudiante a crear.
+     * */
+    public int ID_ESTUDIANTE = 1100000;
+    /**
      * El ID de la siguiente asignatura a crear.
      * */
-    public int ID_MATERIA = 0;
+    public int ID_ASIGNATURA = 0;
 
-    /**
-     * El ID de la siguiente seccion a crear.
-     * */
-    public int ID_SECCION = 0;
+    public ModuleToken rootToken;
 
     /**
      * Construye un registro que se guarda en el fichero dado.
@@ -51,30 +47,27 @@ public class Registro {
     public Registro(File file) {
         this.file = file;
 
-        if(!file.exists()) {
-            try {
-                boolean success = file.createNewFile();
-            } catch(IOException x) {
-                x.printStackTrace();
-            }
-        }
+        rootToken = new ModuleTokenRoot();
     }
 
     /**
      * Borra los datos en este objeto y los llena con los datos presentes en el fichero correspondiente a este registro.
      * */
     public void cargar() {
-        ID_MATERIA = 0;
-        ID_SECCION = 0;
+        ID_ASIGNATURA = 0;
+        ID_ESTUDIANTE = 1100000;
         estudiantes.clear();
         asignaturas.clear();
+
+        if(!file.exists()) return;
 
         try(FileInputStream fis = new FileInputStream(file)) {
             SaveReader sr = new SaveReader(fis);
 
             int versionArchivo = sr.readByte();
 
-            int cantEstudiantes = sr.readByte();
+            ID_ESTUDIANTE = sr.readInt();
+            int cantEstudiantes = sr.readInt();
             for(int i = 0; i < cantEstudiantes; i++) {
                 Estudiante est = new Estudiante();
                 est.nombre = sr.readString();
@@ -88,54 +81,19 @@ public class Registro {
                 estudiantes.add(est);
             }
 
-            ID_MATERIA = (versionArchivo >= 2) ? sr.readInt() : sr.readByte();
-            int cantMaterias = sr.readByte();
-            for(int i = 0; i < cantMaterias; i++) {
-                Asignatura mat = new Asignatura();
-                mat.codigo = sr.readString();
-                mat.nombre = sr.readString();
-                mat.area = AreaAcademica.values()[sr.readByte()];
-                mat.id = sr.readByte();
-                asignaturas.add(mat);
+            ID_ASIGNATURA = sr.readInt();
+            int cantAsignaturas = sr.readInt();
+            for(int i = 0; i < cantAsignaturas; i++) {
+                Asignatura asig = new Asignatura();
+                asig.id = sr.readInt();
+                asig.codigo = sr.readString();
+                asig.nombre = sr.readString();
+                asig.area = AreaAcademica.values()[sr.readByte()];
+                asig.profesor = sr.readString();
+                asignaturas.add(asig);
             }
-
-            if(versionArchivo >= 2) ID_SECCION = sr.readInt();
-            if(versionArchivo >= 3) {
-                int cantSecciones = sr.readInt();
-                for(int i = 0; i < cantSecciones; i++) {
-                    Seccion sec = new Seccion();
-
-                    sec.id = sr.readInt();
-                    sec.profesor = sr.readString();
-                    sec.aula = sr.readString();
-
-                    int cantEstudiantesEnSeccion = sr.readInt();
-                    for(int j = 0; j < cantEstudiantesEnSeccion; j++) {
-                        int id = sr.readInt();
-                        for(Estudiante est : estudiantes) {
-                            if(est.id == id) {
-                                sec.estudiantes.add(est);
-                                break;
-                            }
-                        }
-                    }
-
-                    int idMateria = sr.readInt();
-                    for(Asignatura mat : asignaturas) {
-                        if(mat.id == idMateria) {
-                            sec.asignatura = mat;
-                            break;
-                        }
-                    }
-
-                    MesTrimestre mes = MesTrimestre.values()[sr.readByte()];
-                    int anio = sr.readInt();
-                    sec.trimestre = new Trimestre(mes, anio);
-                    sec.horario = sr.readHorario();
-                    sec.codigo = sr.readString();
-                    secciones.add(sec);
-                }
-            }
+        } catch(EOFException x) {
+            System.out.println("Corrupted save file");
         } catch(IOException x) {
             x.printStackTrace();
         }
@@ -146,13 +104,23 @@ public class Registro {
      * */
     public void guardar() {
 
+        if(!file.exists()) {
+            try {
+                if(!file.createNewFile()) return;
+            } catch(IOException x) {
+                x.printStackTrace();
+                return;
+            }
+        }
+
         try(FileOutputStream fos = new FileOutputStream(file)) {
             SaveWriter sw = new SaveWriter(fos);
 
             sw.writeByte(VERSION_DATA);
 
             //Estudiantes
-            sw.writeByte(estudiantes.size());
+            sw.writeInt(ID_ESTUDIANTE);
+            sw.writeInt(estudiantes.size());
 
             for(Estudiante est : estudiantes) {
                 sw.writeString(est.nombre);
@@ -165,33 +133,15 @@ public class Registro {
                 sw.writeBoolean(est.esExtranjero);
             }
 
-            sw.writeInt(ID_MATERIA);
-            sw.writeByte(asignaturas.size());
+            sw.writeInt(ID_ASIGNATURA);
+            sw.writeInt(asignaturas.size());
 
-            for(Asignatura mat : asignaturas) {
-                sw.writeString(mat.codigo);
-                sw.writeString(mat.nombre);
-                sw.writeByte(mat.area.ordinal());
-                sw.writeByte(mat.id);
-            }
-
-            sw.writeInt(ID_SECCION);
-            sw.writeInt(secciones.size());
-            for(Seccion sec : secciones) {
-                sw.writeInt(sec.id);
-                sw.writeString(sec.profesor);
-                sw.writeString(sec.aula);
-
-                sw.writeInt(sec.estudiantes.size());
-                for(Estudiante est : sec.estudiantes) {
-                    sw.writeInt(est.id);
-                }
-
-                sw.writeInt(sec.asignatura.id);
-                sw.writeByte(sec.trimestre.mes.ordinal());
-                sw.writeInt(sec.trimestre.anio);
-                sw.writeHorario(sec.horario);
-                sw.writeString(sec.codigo);
+            for(Asignatura asig : asignaturas) {
+                sw.writeInt(asig.id);
+                sw.writeString(asig.codigo);
+                sw.writeString(asig.nombre);
+                sw.writeByte(asig.area.ordinal());
+                sw.writeString(asig.profesor);
             }
         } catch(IOException x) {
             x.printStackTrace();

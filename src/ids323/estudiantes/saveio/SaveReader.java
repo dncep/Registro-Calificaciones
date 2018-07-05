@@ -4,6 +4,7 @@ import ids323.estudiantes.data.DiaSemana;
 import ids323.estudiantes.data.HoraDia;
 import ids323.estudiantes.data.Horario;
 
+import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Calendar;
@@ -37,7 +38,9 @@ public class SaveReader {
      * @return El byte leído.
      * */
     public int readByte() throws IOException {
-        return fis.read();
+        int read = fis.read();
+        if(read == -1) throw new EOFException();
+        return read;
     }
 
     /**

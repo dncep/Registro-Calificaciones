@@ -27,38 +27,11 @@ public class TabItem extends TabListElement {
         this.associatedTab = associatedTab;
 
         this.updateName();
-        this.updateIcon();
 
         associatedTab.linkTabItem(this);
-    }
 
-    void updateIcon() {
-        if(associatedTab.path.endsWith(".png")) {
-            try {
-                BufferedImage img = ImageIO.read(new File(associatedTab.path));
-                Dimension size = new Dimension(img.getWidth(), img.getHeight());
-                if(img.getWidth() < img.getHeight()) {
-                    size.height = 16;
-                    size.width = Math.max(1,(int) Math.round(16 * (double) img.getWidth() / img.getHeight()));
-                } else {
-                    size.width = 16;
-                    size.height = Math.max(1,(int) Math.round(16 * (double) img.getHeight() / img.getWidth()));
-                }
-                this.icon = img.getScaledInstance(size.width,size.height, Image.SCALE_SMOOTH);
-            } catch(IOException x) {
-                //this.icon = Commons.getIcon("file").getScaledInstance(16,16, Image.SCALE_SMOOTH);
-            }
-            return;
-        }
-
-        /*String icon = ProjectManager.getIconFor(new File(associatedTab.path));
-        if(icon != null) {
-            this.icon = Commons.getIcon(icon).getScaledInstance(16,16, Image.SCALE_SMOOTH);
-        } else if(name.endsWith(".craftr")) {
-            this.icon = Commons.getIcon("entity").getScaledInstance(16, 16,java.awt.Image.SCALE_SMOOTH);
-        } else {
-            this.icon = Commons.getIcon("file").getScaledInstance(16, 16, java.awt.Image.SCALE_SMOOTH);
-        }*/
+        this.icon = associatedTab.token.getIcon();
+        if(this.icon != null) this.icon = this.icon.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
     }
 
     @Override
@@ -152,7 +125,7 @@ public class TabItem extends TabListElement {
 
     @Override
     public String getToolTipText() {
-        return associatedTab.path;
+        return associatedTab.token.getHint();
     }
 
     @Override
