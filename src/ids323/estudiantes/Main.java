@@ -28,8 +28,8 @@ public class Main {
 
         Estudiante est2 = new Estudiante();
         est2.id = 2382034;
-        est2.nombre = "Tom";
-        est2.apellido = "Fawkes";
+        est2.nombre = "John";
+        est2.apellido = "Doe";
         est2.fechaNacimiento = Calendar.getInstance();
         est2.cedula = Cedula.crearCedula("10101010102");
         est2.estado = Estado.NORMAL;

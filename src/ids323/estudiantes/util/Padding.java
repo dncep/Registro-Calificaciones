@@ -8,12 +8,19 @@ import java.awt.*;
  */
 public class Padding extends JPanel {
 
-    public Padding() {
-        this.setOpaque(false);
+    public Padding(boolean opaque) {
+        this.setOpaque(opaque);
     }
 
     public Padding(int size) {
-        this();
+        this(false);
+        Dimension dim = new Dimension(size, size);
+        this.setPreferredSize(dim);
+        this.setMaximumSize(dim);
+    }
+
+    public Padding(int size, boolean opaque) {
+        this(opaque);
         Dimension dim = new Dimension(size, size);
         this.setPreferredSize(dim);
         this.setMaximumSize(dim);

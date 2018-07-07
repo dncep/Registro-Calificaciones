@@ -1,35 +1,39 @@
 package ids323.estudiantes.gui.modulos;
 
 import ids323.estudiantes.data.Estudiante;
+import ids323.estudiantes.gui.InfoPanel;
+import ids323.estudiantes.util.Padding;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Calendar;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class ModuloVistaEstudiante extends JPanel implements DisplayModule {
+import static java.awt.Color.BLUE;
+import static java.awt.Color.GREEN;
+
+public class ModuloVistaEstudiante extends ModuloVista {
 
     private Estudiante estudiante;
 
     public ModuloVistaEstudiante(Estudiante estudiante) {
+        super(estudiante.nombre + " " + estudiante.apellido, estudiante.id + "");
         this.estudiante = estudiante;
 
-        this.setLayout(new BorderLayout());
+        infoPanel.put("CARRERA", estudiante.carrera.getNombre());
+        infoPanel.put("CONDICIÓN", estudiante.estado.toString());
 
-        JPanel header = new JPanel(new BorderLayout());
+        infoPanel.put("FECHA DE NACIMIENTO",
+        estudiante.fechaNacimiento.get(Calendar.DAY_OF_MONTH) +
+                " de " +
+                "enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre".split(",")[estudiante.fechaNacimiento.get(Calendar.MONTH)] +
+                " " +
+                estudiante.fechaNacimiento.get(Calendar.YEAR));
 
-        JPanel titlePanel = new JPanel();
-        JLabel title = new JLabel(estudiante.nombre + " " + estudiante.apellido);
-        title.setFont(title.getFont().deriveFont(24f).deriveFont(Font.BOLD));
-        titlePanel.add(title);
-        header.add(titlePanel, BorderLayout.NORTH);
+        infoPanel.put("NACIONALIDAD", estudiante.esExtranjero ? "Extranjero/a" : "Dominicano/a");
 
-        JPanel subtitlePanel = new JPanel();
-        JLabel subtitle = new JLabel(estudiante.id + "");
-        subtitle.setFont(subtitle.getFont().deriveFont(18f).deriveFont(Font.PLAIN));
-        subtitlePanel.add(subtitle);
-        header.add(subtitlePanel);
-
-        this.add(header, BorderLayout.NORTH);
-        this.add(new JPanel());
+        construir();
     }
 
     @Override

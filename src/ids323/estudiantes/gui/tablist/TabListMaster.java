@@ -1,5 +1,6 @@
 package ids323.estudiantes.gui.tablist;
 
+import ids323.estudiantes.gui.Colors;
 import ids323.estudiantes.gui.modulos.Tab;
 
 import javax.swing.*;
@@ -33,7 +34,7 @@ public class TabListMaster extends JComponent implements MouseListener, MouseMot
         colors.put("tab.foreground",new Color(45, 45, 45));
         colors.put("tab.close.color",Color.DARK_GRAY);
         colors.put("tab.close.rollover.color",Color.LIGHT_GRAY);
-        colors.put("tab.selected.background",new Color(30,147,222));
+        colors.put("tab.selected.background", Colors.ACCENT);
         colors.put("tab.selected.foreground",new Color(45, 45, 45));
         colors.put("tab.rollover.background",new Color(225, 225, 225));
         colors.put("tab.rollover.foreground",new Color(45, 45, 45));

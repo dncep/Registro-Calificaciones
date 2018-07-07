@@ -1,6 +1,7 @@
 package ids323.estudiantes.gui.explorer;
 
 import ids323.estudiantes.Main;
+import ids323.estudiantes.gui.Colors;
 import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.explorer.base.ExplorerMaster;
 import ids323.estudiantes.gui.explorer.base.elements.ExplorerSeparator;
@@ -22,7 +23,7 @@ public class ProjectExplorerMaster extends ExplorerMaster {
         colors.put("background",new Color(235, 235, 235));
         colors.put("item.background",new Color(235, 235, 235));
         colors.put("item.foreground",new Color(45, 45, 45));
-        colors.put("item.selected.background",new Color(30,147,222));
+        colors.put("item.selected.background", Colors.ACCENT);
         colors.put("item.selected.foreground",new Color(45, 45, 45));
         colors.put("item.rollover.background",new Color(215, 215, 215));
         colors.put("item.rollover.foreground",new Color(45, 45, 45));
