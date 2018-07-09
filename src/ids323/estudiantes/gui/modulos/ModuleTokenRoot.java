@@ -1,15 +1,21 @@
 package ids323.estudiantes.gui.modulos;
 
 import ids323.estudiantes.Main;
+import ids323.estudiantes.data.Carrera;
+import ids323.estudiantes.data.Cedula;
+import ids323.estudiantes.data.Estado;
+import ids323.estudiantes.data.Estudiante;
 import ids323.estudiantes.gui.ModuleToken;
+import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
 import ids323.estudiantes.util.Commons;
+import ids323.estudiantes.xswing.menu.XMenuItem;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
+import java.util.*;
+
+import static ids323.estudiantes.Main.registro;
 
 public class ModuleTokenRoot implements ModuleToken {
 
@@ -74,7 +80,7 @@ class TokenModuloEstudiantes implements ModuleToken {
 
     @Override
     public Collection<ModuleToken> getSubTokens() {
-        return new ArrayList<>(Main.registro.estudiantes);
+        return new ArrayList<>(registro.estudiantes);
     }
 
     @Override
@@ -94,7 +100,24 @@ class TokenModuloEstudiantes implements ModuleToken {
 
     @Override
     public JPopupMenu generatePopup(ProjectExplorerItem explorerItem) {
-        return null;
+        JPopupMenu menu = new JPopupMenu();
+        {
+            XMenuItem item = new XMenuItem("Nuevo Estudiante");
+            item.addActionListener(e -> {
+
+                Calendar fechaNacimiento = Calendar.getInstance();
+                fechaNacimiento.set(Calendar.YEAR, fechaNacimiento.get(Calendar.YEAR)-18);
+                Random rand = new Random();
+                Cedula cedula = Cedula.crearCedula(rand.nextInt(100000-10000)+10000 + "" + rand.nextInt(1000000-100000)+100000);
+
+                Estudiante est = new Estudiante(Main.registro, "Nombre", "Apellido", fechaNacimiento, Estado.EN_PROCESO, Carrera.AGN, cedula, false);
+                Main.registro.estudiantes.add(est);
+                Ventana.projectExplorer.refresh();
+                TabManager.openTab(est);
+            });
+            menu.add(item);
+        }
+        return menu;
     }
 }
 
@@ -116,7 +139,7 @@ class TokenModuloAsignaturas implements ModuleToken {
 
     @Override
     public Collection<ModuleToken> getSubTokens() {
-        return new ArrayList<>(Main.registro.asignaturas);
+        return new ArrayList<>(registro.asignaturas);
     }
 
     @Override

@@ -18,20 +18,20 @@ public class ModuloVistaEstudiante extends ModuloVista {
     private Estudiante estudiante;
 
     public ModuloVistaEstudiante(Estudiante estudiante) {
-        super(estudiante.nombre + " " + estudiante.apellido, estudiante.id + "");
+        super(estudiante.getNombre() + " " + estudiante.getApellido(), estudiante.id + "");
         this.estudiante = estudiante;
 
-        infoPanel.put("CARRERA", estudiante.carrera.getNombre());
-        infoPanel.put("CONDICIÓN", estudiante.estado.toString());
+        infoPanel.put("CARRERA", estudiante.getCarrera().getNombre());
+        infoPanel.put("CONDICIÓN", estudiante.getEstado().toString());
 
         infoPanel.put("FECHA DE NACIMIENTO",
-        estudiante.fechaNacimiento.get(Calendar.DAY_OF_MONTH) +
+        estudiante.getFechaNacimiento().get(Calendar.DAY_OF_MONTH) +
                 " de " +
-                "enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre".split(",")[estudiante.fechaNacimiento.get(Calendar.MONTH)] +
+                "enero,febrero,marzo,abril,mayo,junio,julio,agosto,septiembre,octubre,noviembre,diciembre".split(",")[estudiante.getFechaNacimiento().get(Calendar.MONTH)] +
                 " " +
-                estudiante.fechaNacimiento.get(Calendar.YEAR));
+                estudiante.getFechaNacimiento().get(Calendar.YEAR));
 
-        infoPanel.put("NACIONALIDAD", estudiante.esExtranjero ? "Extranjero/a" : "Dominicano/a");
+        infoPanel.put("NACIONALIDAD", estudiante.isEsExtranjero() ? "Extranjero/a" : "Dominicano/a");
 
         construir();
     }

@@ -19,7 +19,7 @@ public class TabListMaster extends JComponent implements MouseListener, MouseMot
     private TabListElement selectedElement = null;
 
     private HashMap<String, Color> colors = new HashMap<>();
-    private String selectionStyle = "LINE_BOTTOM";
+    private String selectionStyle = "LINE_TOP";
     private int selectionLineThickness = 2;
 
     Point dragPoint = null;
@@ -29,15 +29,15 @@ public class TabListMaster extends JComponent implements MouseListener, MouseMot
 
     public TabListMaster() {
 
-        colors.put("background",new Color(215, 215, 215));
-        colors.put("tab.background",new Color(215, 215, 215));
-        colors.put("tab.foreground",new Color(45, 45, 45));
-        colors.put("tab.close.color",Color.DARK_GRAY);
-        colors.put("tab.close.rollover.color",Color.LIGHT_GRAY);
-        colors.put("tab.selected.background", Colors.ACCENT);
-        colors.put("tab.selected.foreground",new Color(45, 45, 45));
-        colors.put("tab.rollover.background",new Color(225, 225, 225));
-        colors.put("tab.rollover.foreground",new Color(45, 45, 45));
+        colors.put("background",Colors.ACCENT_DARKER);
+        colors.put("tab.background",Colors.ACCENT_DARKER);
+        colors.put("tab.foreground",Colors.TEXT);
+        colors.put("tab.close.color",Colors.TEXT.darker());
+        colors.put("tab.close.rollover.color",Colors.TEXT);
+        colors.put("tab.selected.background",Colors.ACCENT);
+        colors.put("tab.selected.foreground",Colors.TEXT);
+        colors.put("tab.rollover.background",Colors.ACCENT_LIGHT);
+        colors.put("tab.rollover.foreground",Colors.TEXT);
 
         this.addMouseListener(this);
         this.addMouseMotionListener(this);

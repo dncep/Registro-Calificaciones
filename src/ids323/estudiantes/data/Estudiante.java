@@ -22,18 +22,98 @@ public class Estudiante implements ModuleToken {
 
     private static final Image ICON = Commons.getIcon("estudiante");
 
-    public String nombre;
-    public String apellido;
-    public Calendar fechaNacimiento;
-    public Estado estado;
+    private String nombre;
+    private String apellido;
+    private Calendar fechaNacimiento;
+    private Estado estado;
     public int id;
-    public Carrera carrera;
-    public Cedula cedula;
-    public boolean esExtranjero = false;
+    private Carrera carrera;
+    private Cedula cedula;
+    private boolean esExtranjero = false;
 
     private boolean editando = false;
 
-    public Estudiante() {
+    public Estudiante(int id) {
+        this.id = id;
+    }
+
+    public Estudiante(Registro registro, String nombre, String apellido, Calendar fechaNacimiento, Estado estado, Carrera carrera, Cedula cedula, boolean esExtranjero) {
+        id = registro.ID_ESTUDIANTE++;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.estado = estado;
+        this.carrera = carrera;
+        this.cedula = cedula;
+        this.esExtranjero = esExtranjero;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public Calendar getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Calendar fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
+    }
+
+    public Cedula getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(Cedula cedula) {
+        this.cedula = cedula;
+    }
+
+    public boolean isEsExtranjero() {
+        return esExtranjero;
+    }
+
+    public void setExtranjero(boolean esExtranjero) {
+        this.esExtranjero = esExtranjero;
+    }
+
+    public boolean isEditando() {
+        return editando;
+    }
+
+    public void setEditando(boolean editando) {
+        this.editando = editando;
     }
 
     @Override

@@ -7,7 +7,7 @@ import ids323.estudiantes.util.Padding;
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class ModuloVista extends JComponent implements DisplayModule {
+public abstract class ModuloVista extends JPanel implements DisplayModule {
 
     protected final String title;
     protected final String subtitle;
@@ -23,20 +23,21 @@ public abstract class ModuloVista extends JComponent implements DisplayModule {
 
         JPanel inner = new JPanel(new BorderLayout());
         inner.setOpaque(true);
-        inner.setBackground(Colors.ACCENT_DARK);
+        inner.setBackground(Colors.ACCENT_LIGHT);
         JScrollPane sp = new JScrollPane(inner);
         sp.setBorder(BorderFactory.createEmptyBorder());
         this.add(sp);
 
         inner.add(new Padding(15), BorderLayout.NORTH);
-        inner.add(new Padding(30, true), BorderLayout.SOUTH);
+        inner.add(new Padding(30, Colors.BACKGROUND), BorderLayout.SOUTH);
 
         JPanel body = new JPanel(new BorderLayout());
         body.setOpaque(false);
         inner.add(body, BorderLayout.CENTER);
 
-        body.add(new Padding(250, true), BorderLayout.WEST);
-        body.add(new Padding(250, true), BorderLayout.EAST);
+
+        body.add(new Padding(250, Colors.BACKGROUND), BorderLayout.WEST);
+        body.add(new Padding(250, Colors.BACKGROUND), BorderLayout.EAST);
 
         {
             JPanel header = new JPanel(new BorderLayout());
@@ -48,7 +49,7 @@ public abstract class ModuloVista extends JComponent implements DisplayModule {
                 titlePanel.setOpaque(false);
                 JLabel title = new JLabel(this.title);
                 title.setFont(title.getFont().deriveFont(36f).deriveFont(Font.BOLD));
-                title.setForeground(new Color(250, 250, 250));
+                title.setForeground(Colors.TEXT);
                 titlePanel.add(title);
                 header.add(titlePanel, BorderLayout.NORTH);
             }
@@ -58,7 +59,7 @@ public abstract class ModuloVista extends JComponent implements DisplayModule {
                 subtitlePanel.setOpaque(false);
                 JLabel subtitle = new JLabel(this.subtitle);
                 subtitle.setFont(subtitle.getFont().deriveFont(24f).deriveFont(Font.PLAIN));
-                subtitle.setForeground(new Color(230, 230, 230));
+                subtitle.setForeground(Colors.TEXT_MINOR);
                 subtitlePanel.add(subtitle);
                 header.add(subtitlePanel, BorderLayout.CENTER);
             }
@@ -70,6 +71,7 @@ public abstract class ModuloVista extends JComponent implements DisplayModule {
         {
             JPanel content = new JPanel(new BorderLayout());
             body.add(content, BorderLayout.CENTER);
+            content.setBackground(Colors.BACKGROUND);
 
             content.add(infoPanel);
         }

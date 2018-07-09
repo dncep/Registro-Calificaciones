@@ -20,13 +20,13 @@ public class ProjectExplorerMaster extends ExplorerMaster {
     public ProjectExplorerMaster() {
         root = Main.registro.rootToken;
 
-        colors.put("background",new Color(235, 235, 235));
-        colors.put("item.background",new Color(235, 235, 235));
-        colors.put("item.foreground",new Color(45, 45, 45));
+        colors.put("background",Colors.ACCENT_DARKEST);
+        colors.put("item.background",Colors.ACCENT_DARKEST);
+        colors.put("item.foreground",Colors.TEXT);
         colors.put("item.selected.background", Colors.ACCENT);
-        colors.put("item.selected.foreground",new Color(45, 45, 45));
-        colors.put("item.rollover.background",new Color(215, 215, 215));
-        colors.put("item.rollover.foreground",new Color(45, 45, 45));
+        colors.put("item.selected.foreground",Colors.TEXT);
+        colors.put("item.rollover.background",Colors.ACCENT_DARKER);
+        colors.put("item.rollover.foreground",Colors.TEXT);
 
         rowHeight = 25;
         indentPerLevel = 20;

@@ -25,4 +25,9 @@ public class Padding extends JPanel {
         this.setPreferredSize(dim);
         this.setMaximumSize(dim);
     }
+
+    public Padding(int size, Color color) {
+        this(size, true);
+        this.setBackground(color);
+    }
 }

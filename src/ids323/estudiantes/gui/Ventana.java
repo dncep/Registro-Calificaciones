@@ -2,7 +2,6 @@ package ids323.estudiantes.gui;
 
 import ids323.estudiantes.Main;
 import ids323.estudiantes.gui.explorer.ProjectExplorerMaster;
-import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.tablist.TabListMaster;
 import ids323.estudiantes.util.Padding;
 
@@ -34,12 +33,16 @@ public class Ventana {
 
         JPanel sidebarHeader = new JPanel(new BorderLayout());
         sidebarHeader.add(new Padding(15), BorderLayout.WEST);
-        sidebarHeader.add(new JLabel("REGISTRO"));
+        JLabel sidebarLabel = new JLabel("REGISTRO");
+        sidebarHeader.add(sidebarLabel);
+        sidebarLabel.setForeground(Colors.TEXT);
         sidebarHeader.setPreferredSize(new Dimension(1, 35));
-        sidebarHeader.setBackground(new Color(215, 215, 215));
+        sidebarHeader.setBackground(Colors.ACCENT_DARKER);
         sidebar.add(sidebarHeader, BorderLayout.NORTH);
 
         contentPane.add(editArea, BorderLayout.CENTER);
+
+        welcomePane.setBackground(Colors.BACKGROUND);
 
         jframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
 

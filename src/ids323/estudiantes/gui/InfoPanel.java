@@ -7,9 +7,9 @@ import java.util.*;
 public class InfoPanel extends JComponent {
 
     private LinkedHashMap<String, String> info = new LinkedHashMap<>();
-    private Color keyColor = new Color(180, 180, 180);
+    private Color keyColor = Colors.DARK_TEXT_MINOR;
     private Font keyFont = new Font("Tahoma", Font.BOLD, 24);
-    private Color valueColor = new Color(120, 120, 120);
+    private Color valueColor = Colors.DARK_TEXT;
     private Font valueFont = new Font("Tahoma", Font.ITALIC, 28);
     private int margin = 70;
 

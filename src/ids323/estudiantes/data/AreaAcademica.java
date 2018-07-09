@@ -25,4 +25,9 @@ public enum AreaAcademica {
     public String getCodigo() {
         return name();
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

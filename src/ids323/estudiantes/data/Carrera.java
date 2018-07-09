@@ -82,4 +82,9 @@ public enum Carrera {
     public AreaAcademica getArea() {
         return area;
     }
+
+    @Override
+    public String toString() {
+        return name() + " - " + nombre;
+    }
 }
