@@ -17,16 +17,26 @@ public class Asignatura implements ModuleToken {
 
     private static final Image ICON = Commons.getIcon("asignatura");
 
-    public int id;
-    public AreaAcademica area;
-    public String codigo;
-    public String nombre;
-    public String profesor;
-    public int creditos;
+    private int id;
+    private AreaAcademica area;
+    private String codigo;
+    private String nombre;
+    private String profesor;
+    private int creditos;
 
     private boolean editando = false;
 
-    public Asignatura() {
+    public Asignatura(int id) {
+        this.id = id;
+    }
+
+    public Asignatura(Registro registro, AreaAcademica area, String codigo, String nombre, String profesor, int creditos) {
+        this.id = registro.ID_ASIGNATURA++;
+        this.area = area;
+        this.codigo = codigo;
+        this.nombre = nombre;
+        this.profesor = profesor;
+        this.creditos = creditos;
     }
 
     @Override
@@ -102,5 +112,61 @@ public class Asignatura implements ModuleToken {
             menu.add(item);
         }
         return menu;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public AreaAcademica getArea() {
+        return area;
+    }
+
+    public void setArea(AreaAcademica area) {
+        this.area = area;
+    }
+
+    public String getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(String profesor) {
+        this.profesor = profesor;
+    }
+
+    public int getCreditos() {
+        return creditos;
+    }
+
+    public void setCreditos(int creditos) {
+        this.creditos = creditos;
+    }
+
+    public boolean isEditando() {
+        return editando;
+    }
+
+    public void setEditando(boolean editando) {
+        this.editando = editando;
     }
 }

@@ -2,22 +2,19 @@ package ids323.estudiantes.gui.modulos;
 
 import ids323.estudiantes.data.Asignatura;
 
-import javax.swing.*;
-import java.util.Calendar;
-
 public class ModuloEdicionAsignatura extends ModuloEdicion {
 
     private Asignatura asignatura;
 
     public ModuloEdicionAsignatura(Asignatura asignatura) {
-        super("Editando asignatura " + asignatura.codigo);
+        super("Editando asignatura " + asignatura.getCodigo());
         this.asignatura = asignatura;
 
-        valores.add(new ValorEdicion<>("Nombre", asignatura.nombre, (v) -> v.length() > 0 ? null : "Nombre no debe estar vacío", (v) -> asignatura.nombre = v));
-        valores.add(new ValorEdicion<>("Código", asignatura.codigo, (v) -> v.length() > 0 ? null : "Código no debe estar vacío", (v) -> asignatura.codigo = v));
-        valores.add(new ValorEdicion<>("Área Académica", asignatura.area, (v) -> null, (v) -> asignatura.area = v));
-        valores.add(new ValorEdicion<>("Créditos", asignatura.creditos, (v) -> null, (v) -> asignatura.creditos = v));
-        valores.add(new ValorEdicion<>("Profesor", asignatura.profesor, (v) -> null, (v) -> asignatura.profesor = v));
+        valores.add(new ValorEdicion<>("Nombre", asignatura.getNombre(), (v) -> v.length() > 0 ? null : "Nombre no debe estar vacío", (v) -> asignatura.setNombre(v)));
+        valores.add(new ValorEdicion<>("Código", asignatura.getCodigo(), (v) -> v.length() > 0 ? null : "Código no debe estar vacío", (v) -> asignatura.setCodigo(v)));
+        valores.add(new ValorEdicion<>("Área Académica", asignatura.getArea(), (v) -> null, asignatura::setArea));
+        valores.add(new ValorEdicion<>("Créditos", asignatura.getCreditos(), (v) -> null, asignatura::setCreditos));
+        valores.add(new ValorEdicion<>("Profesor", asignatura.getProfesor(), (v) -> null, asignatura::setProfesor));
 
         construir();
     }

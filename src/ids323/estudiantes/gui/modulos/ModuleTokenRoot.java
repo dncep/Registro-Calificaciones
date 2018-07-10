@@ -1,10 +1,7 @@
 package ids323.estudiantes.gui.modulos;
 
 import ids323.estudiantes.Main;
-import ids323.estudiantes.data.Carrera;
-import ids323.estudiantes.data.Cedula;
-import ids323.estudiantes.data.Estado;
-import ids323.estudiantes.data.Estudiante;
+import ids323.estudiantes.data.*;
 import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
@@ -108,11 +105,13 @@ class TokenModuloEstudiantes implements ModuleToken {
                 Calendar fechaNacimiento = Calendar.getInstance();
                 fechaNacimiento.set(Calendar.YEAR, fechaNacimiento.get(Calendar.YEAR)-18);
                 Random rand = new Random();
-                Cedula cedula = Cedula.crearCedula(rand.nextInt(100000-10000)+10000 + "" + rand.nextInt(1000000-100000)+100000);
+                Cedula cedula = Cedula.crearCedula(rand.nextInt(100000-10000)+10000 + "" + (rand.nextInt(1000000-100000)+100000));
+                System.out.println(cedula);
 
                 Estudiante est = new Estudiante(Main.registro, "Nombre", "Apellido", fechaNacimiento, Estado.EN_PROCESO, Carrera.AGN, cedula, false);
                 Main.registro.estudiantes.add(est);
                 Ventana.projectExplorer.refresh();
+                est.setEditando(true);
                 TabManager.openTab(est);
             });
             menu.add(item);
@@ -159,6 +158,18 @@ class TokenModuloAsignaturas implements ModuleToken {
 
     @Override
     public JPopupMenu generatePopup(ProjectExplorerItem explorerItem) {
-        return null;
+        JPopupMenu menu = new JPopupMenu();
+        {
+            XMenuItem item = new XMenuItem("Nueva Asignatura");
+            item.addActionListener(e -> {
+                Asignatura asig = new Asignatura(Main.registro, AreaAcademica.BASICAS, "Codigo", "Nombre", "Profesor", 1);
+                Main.registro.asignaturas.add(asig);
+                Ventana.projectExplorer.refresh();
+                asig.setEditando(true);
+                TabManager.openTab(asig);
+            });
+            menu.add(item);
+        }
+        return menu;
     }
 }

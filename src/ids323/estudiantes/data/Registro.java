@@ -69,12 +69,11 @@ public class Registro {
             ID_ESTUDIANTE = sr.readInt();
             int cantEstudiantes = sr.readInt();
             for(int i = 0; i < cantEstudiantes; i++) {
-                Estudiante est = new Estudiante(0);
+                Estudiante est = new Estudiante(sr.readInt());
                 est.setNombre(sr.readString());
                 est.setApellido(sr.readString());
                 est.setFechaNacimiento(sr.readDate());
                 est.setEstado(Estado.values()[sr.readByte()]);
-                est.id = sr.readInt();
                 est.setCarrera(Carrera.values()[sr.readByte()]);
                 est.setCedula(Cedula.crearCedula(sr.readString()));
                 est.setExtranjero(sr.readBoolean());
@@ -84,12 +83,11 @@ public class Registro {
             ID_ASIGNATURA = sr.readInt();
             int cantAsignaturas = sr.readInt();
             for(int i = 0; i < cantAsignaturas; i++) {
-                Asignatura asig = new Asignatura();
-                asig.id = sr.readInt();
-                asig.codigo = sr.readString();
-                asig.nombre = sr.readString();
-                asig.area = AreaAcademica.values()[sr.readByte()];
-                asig.profesor = sr.readString();
+                Asignatura asig = new Asignatura(sr.readInt());
+                asig.setCodigo(sr.readString());
+                asig.setNombre(sr.readString());
+                asig.setArea(AreaAcademica.values()[sr.readByte()]);
+                asig.setProfesor(sr.readString());
                 asignaturas.add(asig);
             }
         } catch(EOFException x) {
@@ -137,11 +135,11 @@ public class Registro {
             sw.writeInt(asignaturas.size());
 
             for(Asignatura asig : asignaturas) {
-                sw.writeInt(asig.id);
-                sw.writeString(asig.codigo);
-                sw.writeString(asig.nombre);
-                sw.writeByte(asig.area.ordinal());
-                sw.writeString(asig.profesor);
+                sw.writeInt(asig.getId());
+                sw.writeString(asig.getCodigo());
+                sw.writeString(asig.getNombre());
+                sw.writeByte(asig.getArea().ordinal());
+                sw.writeString(asig.getProfesor());
             }
         } catch(IOException x) {
             x.printStackTrace();

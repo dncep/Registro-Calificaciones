@@ -1,5 +1,6 @@
 package ids323.estudiantes.data;
 
+import ids323.estudiantes.Main;
 import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
@@ -14,6 +15,8 @@ import java.awt.*;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
+
+import static ids323.estudiantes.Main.registro;
 
 /**
  * Representación de un estudiante como objeto.
@@ -178,6 +181,9 @@ public class Estudiante implements ModuleToken {
             JMenuItem item = new JMenuItem("Borrar");
 
             item.addActionListener(e -> {
+                TabManager.closeTab(TabManager.getTabForToken(this));
+                Main.registro.estudiantes.remove(this);
+                Ventana.projectExplorer.refresh();
                 System.out.println("Action not supported yet");
             });
 

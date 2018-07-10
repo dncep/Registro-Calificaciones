@@ -1,5 +1,6 @@
 package ids323.estudiantes.gui.modulos;
 
+import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.util.StringUtil;
 import ids323.estudiantes.xswing.XButton;
 import ids323.estudiantes.xswing.XDropdownMenu;
@@ -14,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
-public class ModuloEdicion extends JPanel implements DisplayModule {
+public abstract class ModuloEdicion extends JPanel implements DisplayModule {
 
     protected static final HashMap<Class, InputAdapter> inputAdapters = new HashMap<>();
 
@@ -166,6 +167,7 @@ public class ModuloEdicion extends JPanel implements DisplayModule {
             if(valid) {
                 entrada.forEach(EntradaValor::setInput);
                 TabManager.closeSelectedTab();
+                Ventana.projectExplorer.refresh();
             }
         });
         XButton cancelar = new XButton("Cancelar");
