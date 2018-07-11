@@ -5,6 +5,7 @@ import ids323.estudiantes.data.Asignatura;
 import ids323.estudiantes.data.Estudiante;
 import ids323.estudiantes.data.Profesor;
 import ids323.estudiantes.gui.explorer.ProjectExplorerMaster;
+import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.tablist.TabListMaster;
 import ids323.estudiantes.util.Commons;
 import ids323.estudiantes.util.Padding;
@@ -93,6 +94,18 @@ public class Ventana {
             button.setBorder(Colors.ACCENT_DARKEST, 1);
             button.addActionListener(e -> projectExplorer.triggerSearch());
             button.setToolTipText("Buscar");
+            toolbar.add(button);
+        }
+
+        {
+            XButton button = new XButton("", new ImageIcon(Commons.getIcon("calificaciones").getScaledInstance(26, 26, Image.SCALE_SMOOTH)));
+            button.setPreferredSize(new Dimension(32, 32));
+            button.setBackground(Colors.ACCENT_DARKER);
+            button.setRolloverColor(Colors.ACCENT_DARKEST);
+            button.setPressedColor(Colors.ACCENT_LIGHT);
+            button.setBorder(Colors.ACCENT_DARKEST, 1);
+            button.addActionListener(e -> TabManager.openTab(Main.registro.rankingToken));
+            button.setToolTipText("Generar Ranking");
             toolbar.add(button);
         }
 

@@ -114,7 +114,7 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
         XButton guardar = new XButton("Guardar");
 
         guardar.addActionListener(e -> {
-            guardar();
+            associatedTab.save();
             TabManager.closeSelectedTab();
             endEditing();
         });
@@ -140,20 +140,6 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
 
     protected abstract void endEditing();
 
-    private void guardar() {
-        boolean valid = true;
-        for(EntradaValor valor : entradas) {
-            String validation = valor.validateInput();
-            if(validation != null) {
-                valid = false;
-            }
-        }
-        if(valid) {
-            entradas.forEach(EntradaValor::setInput);
-            Ventana.projectExplorer.refresh();
-        }
-    }
-
     public void onEdit() {
         associatedTab.onEdit();
     }
@@ -174,7 +160,17 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
 
     @Override
     public Object save() {
-        guardar();
+        boolean valid = true;
+        for(EntradaValor valor : entradas) {
+            String validation = valor.validateInput();
+            if(validation != null) {
+                valid = false;
+            }
+        }
+        if(valid) {
+            entradas.forEach(EntradaValor::setInput);
+            Ventana.projectExplorer.refresh();
+        }
         return getValue();
     }
 

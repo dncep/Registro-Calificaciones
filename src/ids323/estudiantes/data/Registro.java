@@ -1,6 +1,7 @@
 package ids323.estudiantes.data;
 
 import ids323.estudiantes.gui.ModuleToken;
+import ids323.estudiantes.gui.modulos.ModuleRankingToken;
 import ids323.estudiantes.gui.modulos.ModuleTokenRoot;
 import ids323.estudiantes.saveio.SaveReader;
 import ids323.estudiantes.saveio.SaveWriter;
@@ -51,6 +52,7 @@ public class Registro {
     public int ID_PROFESOR = 1100000;
 
     public ModuleToken rootToken;
+    public ModuleToken rankingToken;
 
     /**
      * Construye un registro que se guarda en el fichero dado.
@@ -61,6 +63,7 @@ public class Registro {
         this.file = file;
 
         rootToken = new ModuleTokenRoot();
+        rankingToken = new ModuleRankingToken();
     }
 
     /**
