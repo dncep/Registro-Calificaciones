@@ -28,24 +28,4 @@ public class ModuloEdicionAsignatura extends ModuloEdicion {
         asignatura.setEditando(false);
         TabManager.openTab(asignatura);
     }
-
-    @Override
-    public Object getValue() {
-        return null;
-    }
-
-    @Override
-    public boolean canSave() {
-        return false;
-    }
-
-    @Override
-    public Object save() {
-        return null;
-    }
-
-    @Override
-    public void focus() {
-
-    }
 }

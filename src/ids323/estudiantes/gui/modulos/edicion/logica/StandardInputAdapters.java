@@ -140,6 +140,8 @@ public class StandardInputAdapters {
 
                 error.setFont(error.getFont().deriveFont(16f));
                 error.setForeground(Colors.ERROR_TEXT);
+
+                field.addChoiceListener(c -> validateInput());
             }
 
             @Override
@@ -167,7 +169,7 @@ public class StandardInputAdapters {
 
             @Override
             public int getValueCode() {
-                return field.getValueIndex();
+                return field.getValue().hashCode();
             }
         });
         inputAdapters.put(Calendar.class, (valor, modulo) -> new EntradaValor() {
@@ -295,7 +297,7 @@ public class StandardInputAdapters {
 
             @Override
             public int getValueCode() {
-                return field.getValueIndex();
+                return field.getValue().hashCode();
             }
         };
 

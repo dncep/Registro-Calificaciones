@@ -233,4 +233,15 @@ public class Estudiante implements ModuleToken {
         Main.registro.estudiantes.remove(this);
         Ventana.projectExplorer.refresh();
     }
+
+    @Override
+    public String getSearchInfo() {
+        return nombre + " " + apellido + "\n" +
+                id + "\n" +
+                estado + "\n" +
+                carrera.getCodigo() + "\n" +
+                carrera.getNombre() + "\n" +
+                ((esExtranjero) ? "Extranjero\nExtranjera" : "Dominicano\nDominicana") +
+                (getHonores().length()>1 ? "\n" + getHonores() : "");
+    }
 }

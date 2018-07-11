@@ -165,4 +165,10 @@ public class Profesor implements ModuleToken {
         Main.registro.profesores.remove(this);
         Ventana.projectExplorer.refresh();
     }
+
+    @Override
+    public String getSearchInfo() {
+        return "Prof. " + nombre + " " + apellido + "\n" +
+                "P" + id;
+    }
 }

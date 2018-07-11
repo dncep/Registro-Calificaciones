@@ -204,4 +204,13 @@ public class Asignatura implements ModuleToken {
         Main.registro.asignaturas.remove(this);
         Ventana.projectExplorer.refresh();
     }
+
+    @Override
+    public String getSearchInfo() {
+        return nombre + "\n" +
+                codigo + "\n" +
+                area.getNombre() + "\n" +
+                creditos + " créditos" + "\n" +
+                profesor.getSearchInfo();
+    }
 }

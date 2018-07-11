@@ -19,4 +19,8 @@ public interface ModuleToken {
     void onInteract();
 
     JPopupMenu generatePopup(ProjectExplorerItem explorerItem);
+
+    default String getSearchInfo() {
+        return null;
+    }
 }

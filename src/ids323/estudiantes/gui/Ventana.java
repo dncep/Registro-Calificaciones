@@ -6,6 +6,7 @@ import ids323.estudiantes.data.Estudiante;
 import ids323.estudiantes.data.Profesor;
 import ids323.estudiantes.gui.explorer.ProjectExplorerMaster;
 import ids323.estudiantes.gui.tablist.TabListMaster;
+import ids323.estudiantes.util.Commons;
 import ids323.estudiantes.util.Padding;
 import ids323.estudiantes.xswing.XButton;
 
@@ -83,14 +84,22 @@ public class Ventana {
             button.setToolTipText("Nuevo Profesor");
             toolbar.add(button);
         }
+        {
+            XButton button = new XButton("", new ImageIcon(Commons.getIcon("buscar").getScaledInstance(26, 26, Image.SCALE_SMOOTH)));
+            button.setPreferredSize(new Dimension(32, 32));
+            button.setBackground(Colors.ACCENT_DARKER);
+            button.setRolloverColor(Colors.ACCENT_DARKEST);
+            button.setPressedColor(Colors.ACCENT_LIGHT);
+            button.setBorder(Colors.ACCENT_DARKEST, 1);
+            button.addActionListener(e -> projectExplorer.triggerSearch());
+            button.setToolTipText("Buscar");
+            toolbar.add(button);
+        }
 
 
         welcomePane.setBackground(Colors.BACKGROUND);
 
         jframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-        //TabManager.openTab("C:\\Users\\Usuario\\Craftr\\natives\\src\\craftr\\lang\\Enum.craftr");
-        //TabManager.openTab("C:\\Users\\Usuario\\Craftr\\natives\\src\\craftr\\lang\\Object.craftr");
 
         jframe.pack();
         jframe.setVisible(true);
