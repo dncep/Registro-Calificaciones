@@ -7,8 +7,6 @@ import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.util.Commons;
 import ids323.estudiantes.util.Padding;
 import ids323.estudiantes.xswing.XButton;
-import ids323.estudiantes.xswing.XIcon;
-import javafx.scene.control.ScrollBar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,7 +80,7 @@ public abstract class ModuloVista extends JPanel implements DisplayModule {
             JPanel actionPanel = new JPanel(new BorderLayout());
             actionPanel.setOpaque(false);
 
-            XButton editButton = new XButton("", new ImageIcon(Commons.getIcon("cog")));
+            XButton editButton = new XButton("", new ImageIcon(Commons.getIcon("edit")));
             editButton.setBorder(new Color(0,0,0,0), 0);
             editButton.setOpaque(false);
             editButton.setBackground(new Color(255,255,255,0));

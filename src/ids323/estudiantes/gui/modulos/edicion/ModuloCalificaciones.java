@@ -24,6 +24,7 @@ public class ModuloCalificaciones extends ModuloEdicion {
 
     private Calificaciones calificaciones;
 
+    @SuppressWarnings("unchecked")
     private InputAdapter gradeInputAdapter = (valor, modulo) -> new EntradaValor() {
 
         private JPanel panel;
@@ -49,15 +50,7 @@ public class ModuloCalificaciones extends ModuloEdicion {
             fieldPanel.setOpaque(false);
             panel.add(fieldPanel, BorderLayout.CENTER);
 
-            Object[] opciones = new Object[map.size()+1];
-            opciones[0] = "Seleccione asignatura a calificar";
-
-            int i = 1;
-            for(Object asig : map.keySet()) {
-                opciones[i++] = asig;
-            }
-
-            keyField = new XDropdownMenu<>(opciones);
+            keyField = new XDropdownMenu<>(getNewSelectOptions());
 
             valueField = new XNumberField();
 
@@ -125,7 +118,7 @@ public class ModuloCalificaciones extends ModuloEdicion {
 
             keyField.addChoiceListener(c -> update());
 
-            keyField.setValue(opciones[0]);
+            keyField.setValueIndex(0);
         }
 
         private void refresh() {

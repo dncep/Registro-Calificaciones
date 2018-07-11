@@ -6,14 +6,17 @@ import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
 import ids323.estudiantes.gui.modulos.DisplayModule;
 import ids323.estudiantes.gui.modulos.Tab;
+import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.modulos.edicion.ModuloEdicionEstudiante;
 import ids323.estudiantes.gui.modulos.vista.ModuloVistaEstudiante;
-import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.util.Commons;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Representación de un estudiante como objeto.
@@ -29,7 +32,6 @@ public class Estudiante implements ModuleToken {
     private Estado estado;
     private int id;
     private Carrera carrera;
-    private Cedula cedula;
     private boolean esExtranjero = false;
 
     private boolean editando = false;
@@ -38,14 +40,13 @@ public class Estudiante implements ModuleToken {
         this.id = id;
     }
 
-    public Estudiante(Registro registro, String nombre, String apellido, Calendar fechaNacimiento, Estado estado, Carrera carrera, Cedula cedula, boolean esExtranjero) {
+    public Estudiante(Registro registro, String nombre, String apellido, Calendar fechaNacimiento, Estado estado, Carrera carrera, boolean esExtranjero) {
         id = registro.ID_ESTUDIANTE++;
         this.nombre = nombre;
         this.apellido = apellido;
         this.fechaNacimiento = fechaNacimiento;
         this.estado = estado;
         this.carrera = carrera;
-        this.cedula = cedula;
         this.esExtranjero = esExtranjero;
     }
 
@@ -119,14 +120,6 @@ public class Estudiante implements ModuleToken {
 
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
-    }
-
-    public Cedula getCedula() {
-        return cedula;
-    }
-
-    public void setCedula(Cedula cedula) {
-        this.cedula = cedula;
     }
 
     public boolean isExtranjero() {
@@ -212,14 +205,7 @@ public class Estudiante implements ModuleToken {
         {
             JMenuItem item = new JMenuItem("Borrar");
 
-            item.addActionListener(e -> {
-                int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere borrar " + this + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
-                if(result != JOptionPane.YES_OPTION) return;
-
-                TabManager.closeTab(TabManager.getTabForToken(this));
-                Main.registro.estudiantes.remove(this);
-                Ventana.projectExplorer.refresh();
-            });
+            item.addActionListener(e -> borrar());
 
             menu.add(item);
         }
@@ -229,15 +215,22 @@ public class Estudiante implements ModuleToken {
     public static Estudiante crearNuevo() {
         Calendar fechaNacimiento = Calendar.getInstance();
         fechaNacimiento.set(Calendar.YEAR, fechaNacimiento.get(Calendar.YEAR)-18);
-        Random rand = new Random();
-        Cedula cedula = Cedula.crearCedula(rand.nextInt(100000-10000)+10000 + "" + (rand.nextInt(1000000-100000)+100000));
 
-        Estudiante est = new Estudiante(Main.registro, "Nombre", "Apellido", fechaNacimiento, Estado.EN_PROCESO, Carrera.AGN, cedula, false);
+        Estudiante est = new Estudiante(Main.registro, "Nombre", "Apellido", fechaNacimiento, Estado.EN_PROCESO, Carrera.AGN, false);
         Main.registro.estudiantes.add(est);
         Ventana.projectExplorer.refresh();
         est.setEditando(true);
         TabManager.openTab(est);
 
         return est;
+    }
+
+    public void borrar() {
+        int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere borrar " + this + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
+        if(result != JOptionPane.YES_OPTION) return;
+
+        TabManager.closeTab(TabManager.getTabForToken(this));
+        Main.registro.estudiantes.remove(this);
+        Ventana.projectExplorer.refresh();
     }
 }

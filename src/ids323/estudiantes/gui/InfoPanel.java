@@ -2,7 +2,10 @@ package ids323.estudiantes.gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class InfoPanel extends JComponent {
 

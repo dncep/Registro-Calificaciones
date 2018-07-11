@@ -5,7 +5,6 @@ import ids323.estudiantes.data.Calificaciones;
 import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorer.base.ExplorerFlag;
-import ids323.estudiantes.gui.explorer.base.ExplorerMaster;
 import ids323.estudiantes.gui.explorer.base.elements.ExplorerElement;
 import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.util.StringUtil;
@@ -13,7 +12,6 @@ import ids323.estudiantes.util.StringUtil;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 public class GradeExplorerItem extends ExplorerElement {
     private GradeExplorerMaster parent = null;

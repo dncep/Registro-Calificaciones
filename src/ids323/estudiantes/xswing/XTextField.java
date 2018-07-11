@@ -1,10 +1,8 @@
 package ids323.estudiantes.xswing;
 
-import ids323.estudiantes.gui.Colors;
+import ids323.estudiantes.util.DocumentAdapter;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.util.regex.Pattern;
 
@@ -32,22 +30,7 @@ public class XTextField extends JTextField {
     public XTextField(String text, Pattern pattern) {
         super(text);
         if(pattern != null) this.pattern = pattern;
-        this.getDocument().addDocumentListener(new DocumentListener() {
-            @Override
-            public void insertUpdate(DocumentEvent e) {
-                validateText();
-            }
-
-            @Override
-            public void removeUpdate(DocumentEvent e) {
-                validateText();
-            }
-
-            @Override
-            public void changedUpdate(DocumentEvent e) {
-                validateText();
-            }
-        });
+        this.getDocument().addDocumentListener((DocumentAdapter) e -> validateText());
     }
 
 	protected void validateText() {

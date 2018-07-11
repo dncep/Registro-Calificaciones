@@ -1,9 +1,7 @@
 package ids323.estudiantes.gui.modulos;
 
-import ids323.estudiantes.data.Estudiante;
 import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.Ventana;
-import jdk.nashorn.internal.scripts.JO;
 
 import javax.swing.*;
 import java.util.ArrayList;

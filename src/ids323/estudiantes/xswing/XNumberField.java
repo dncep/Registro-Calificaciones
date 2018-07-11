@@ -1,12 +1,10 @@
 package ids323.estudiantes.xswing;
 
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.regex.Pattern;
 
-public class XNumberField extends XTextField implements KeyListener, DocumentListener {
+public class XNumberField extends XTextField implements KeyListener {
 
     private int min = Integer.MIN_VALUE;
     private int max = Integer.MAX_VALUE;
@@ -22,7 +20,6 @@ public class XNumberField extends XTextField implements KeyListener, DocumentLis
         super("" + text, Pattern.compile("[-+]?\\d+"));
 
         this.addKeyListener(this);
-        this.getDocument().addDocumentListener(this);
     }
 
     public int getValue() {
@@ -48,20 +45,5 @@ public class XNumberField extends XTextField implements KeyListener, DocumentLis
 
     @Override
     public void keyReleased(KeyEvent e) {
-    }
-
-    @Override
-    public void insertUpdate(DocumentEvent e) {
-        System.out.println(e);
-    }
-
-    @Override
-    public void removeUpdate(DocumentEvent e) {
-        System.out.println(e);
-    }
-
-    @Override
-    public void changedUpdate(DocumentEvent e) {
-        System.out.println(e);
     }
 }

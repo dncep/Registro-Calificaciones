@@ -34,7 +34,6 @@ public class AreaModulo extends JPanel {
 
         JScrollPane tabSP = new JScrollPane(Ventana.tabList);
         tabSP.setBorder(BorderFactory.createEmptyBorder());
-        //tabSP.setLayout(new InvisibleScrollPaneLayout(tabSP));
         tabSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tabListHolder.add(tabSP, BorderLayout.CENTER);

@@ -10,9 +10,6 @@ import ids323.estudiantes.gui.modulos.TabManager;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 
 public class GradeExplorerNewItem extends ExplorerElement {
 

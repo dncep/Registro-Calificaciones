@@ -6,9 +6,9 @@ import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
 import ids323.estudiantes.gui.modulos.DisplayModule;
 import ids323.estudiantes.gui.modulos.Tab;
+import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.modulos.edicion.ModuloEdicionProfesor;
 import ids323.estudiantes.gui.modulos.vista.ModuloVistaProfesor;
-import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.util.Commons;
 
 import javax.swing.*;
@@ -63,6 +63,11 @@ public class Profesor implements ModuleToken {
 
     public void setEditando(boolean editando) {
         this.editando = editando;
+    }
+
+    @Override
+    public String toString() {
+        return "Prof. " + nombre + " " + apellido;
     }
 
     @Override
@@ -127,30 +132,11 @@ public class Profesor implements ModuleToken {
         {
             JMenuItem item = new JMenuItem("Borrar");
 
-            item.addActionListener(e -> {
-                int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere borrar " + this + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
-                if(result != JOptionPane.YES_OPTION) return;
-
-                for(Asignatura asig : Main.registro.asignaturas) {
-                    if(asig.getProfesor() == this) {
-                        JOptionPane.showMessageDialog(Ventana.jframe, "<html>No se puede borrar " + this + ":<br>La asignatura " + asig + " está registrada con su nombre</html>", "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(Asignatura.ICON));
-                        return;
-                    }
-                }
-
-                TabManager.closeTab(TabManager.getTabForToken(this));
-                Main.registro.profesores.remove(this);
-                Ventana.projectExplorer.refresh();
-            });
+            item.addActionListener(e -> borrar());
 
             menu.add(item);
         }
         return menu;
-    }
-
-    @Override
-    public String toString() {
-        return "Prof. " + nombre + " " + apellido;
     }
 
     public static Profesor crearNuevo() {
@@ -162,5 +148,21 @@ public class Profesor implements ModuleToken {
         TabManager.openTab(prof);
 
         return prof;
+    }
+
+    public void borrar() {
+        int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere borrar " + this + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
+        if(result != JOptionPane.YES_OPTION) return;
+
+        for(Asignatura asig : Main.registro.asignaturas) {
+            if(asig.getProfesor() == this) {
+                JOptionPane.showMessageDialog(Ventana.jframe, "<html>No se puede borrar " + this + ":<br>La asignatura " + asig + " está registrada con su nombre</html>", "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(Asignatura.ICON));
+                return;
+            }
+        }
+
+        TabManager.closeTab(TabManager.getTabForToken(this));
+        Main.registro.profesores.remove(this);
+        Ventana.projectExplorer.refresh();
     }
 }

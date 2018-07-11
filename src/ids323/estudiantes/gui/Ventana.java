@@ -6,17 +6,13 @@ import ids323.estudiantes.data.Estudiante;
 import ids323.estudiantes.data.Profesor;
 import ids323.estudiantes.gui.explorer.ProjectExplorerMaster;
 import ids323.estudiantes.gui.tablist.TabListMaster;
-import ids323.estudiantes.util.Commons;
 import ids323.estudiantes.util.Padding;
 import ids323.estudiantes.xswing.XButton;
-import ids323.estudiantes.xswing.XIcon;
-import org.omg.PortableServer.ServantManagerOperations;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.Collections;
 
 public class Ventana {
 
@@ -50,13 +46,9 @@ public class Ventana {
 
         contentPane.add(editArea, BorderLayout.CENTER);
 
-        JPanel topbar = new JPanel(new BorderLayout());
-        topbar.setBackground(Colors.ACCENT_DARKER);
-        contentPane.add(topbar, BorderLayout.NORTH);
-
         JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        toolbar.setOpaque(false);
-        topbar.add(toolbar);
+        toolbar.setBackground(Colors.ACCENT_DARKER.brighter());
+        contentPane.add(toolbar, BorderLayout.NORTH);
 
         {
             XButton button = new XButton("", new ImageIcon(Estudiante.ICON_NUEVO.getScaledInstance(26, 26, Image.SCALE_SMOOTH)));
@@ -90,15 +82,6 @@ public class Ventana {
             button.addActionListener(e -> Profesor.crearNuevo());
             button.setToolTipText("Nuevo Profesor");
             toolbar.add(button);
-        }
-
-        {
-            JPanel logoPanel = new JPanel(new FlowLayout());
-            logoPanel.setOpaque(false);
-
-            logoPanel.add(new XIcon(Commons.getIcon("cog")));
-
-            topbar.add(logoPanel, BorderLayout.EAST);
         }
 
 

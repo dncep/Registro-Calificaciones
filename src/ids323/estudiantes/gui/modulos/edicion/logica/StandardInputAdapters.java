@@ -3,7 +3,6 @@ package ids323.estudiantes.gui.modulos.edicion.logica;
 import ids323.estudiantes.data.MesTrimestre;
 import ids323.estudiantes.data.Trimestre;
 import ids323.estudiantes.gui.Colors;
-import ids323.estudiantes.gui.modulos.edicion.ModuloEdicion;
 import ids323.estudiantes.util.DocumentAdapter;
 import ids323.estudiantes.util.StringUtil;
 import ids323.estudiantes.xswing.XDropdownMenu;
@@ -17,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+@SuppressWarnings("unchecked")
 public class StandardInputAdapters {
 
     public static final HashMap<Class, InputAdapter> inputAdapters = new HashMap<>();

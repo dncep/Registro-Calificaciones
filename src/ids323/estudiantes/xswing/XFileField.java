@@ -1,8 +1,8 @@
 package ids323.estudiantes.xswing;
 
+import ids323.estudiantes.util.DocumentAdapter;
+
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.io.File;
 
@@ -37,8 +37,6 @@ public class XFileField extends JPanel {
 				x.printStackTrace();
 			}
 
-
-
 			JFileChooser jfc = new JFileChooser();
 			int[] modes = new int[] {JFileChooser.FILES_AND_DIRECTORIES,JFileChooser.FILES_ONLY,JFileChooser.DIRECTORIES_ONLY,JFileChooser.FILES_AND_DIRECTORIES};
 			jfc.setFileSelectionMode(modes[operation]);
@@ -57,43 +55,25 @@ public class XFileField extends JPanel {
 			}
 		});
 
-		field.getDocument().addDocumentListener(new DocumentListener() {
-
-			protected void update() {
-				switch(operation) {
-					case OPEN_ALL: {
-						File file = new File(field.getText());
-						if(file.exists()) XFileField.this.value = file;
-						break;
-					} case OPEN_FILE: {
-						File file = new File(field.getText());
-						if(file.exists() && file.isFile()) XFileField.this.value = file;
-						break;
-					} case OPEN_DIRECTORY: {
-						File file = new File(field.getText());
-						if(file.exists() && file.isDirectory()) XFileField.this.value = file;
-						break;
-					} case SAVE: {
-						XFileField.this.value = new File(field.getText());
-						break;
-					}
-				}
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent arg0) {
-				update();
-			}
-
-			@Override
-			public void insertUpdate(DocumentEvent arg0) {
-				update();
-			}
-
-			@Override
-			public void removeUpdate(DocumentEvent arg0) {
-				update();
-			}
+		field.getDocument().addDocumentListener((DocumentAdapter) e -> {
+		    switch(operation) {
+                case OPEN_ALL: {
+                    File file = new File(field.getText());
+                    if(file.exists()) XFileField.this.value = file;
+                    break;
+                } case OPEN_FILE: {
+                    File file = new File(field.getText());
+                    if(file.exists() && file.isFile()) XFileField.this.value = file;
+                    break;
+                } case OPEN_DIRECTORY: {
+                    File file = new File(field.getText());
+                    if(file.exists() && file.isDirectory()) XFileField.this.value = file;
+                    break;
+                } case SAVE: {
+                    XFileField.this.value = new File(field.getText());
+                    break;
+                }
+            }
 		});
 
 		this.add(field, BorderLayout.CENTER);

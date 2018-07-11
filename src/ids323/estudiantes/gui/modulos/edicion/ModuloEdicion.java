@@ -12,9 +12,6 @@ import ids323.estudiantes.xswing.XButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.InputEvent;
-import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -50,8 +47,6 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
             fieldLabel.setFont(fieldLabel.getFont().deriveFont(20f));
 
             row.add(fieldLabel, BorderLayout.NORTH);
-
-
 
             EntradaValor entrada = null;
             for(EntradaValor entradaAnterior : entradas) {

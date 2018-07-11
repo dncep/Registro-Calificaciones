@@ -4,12 +4,10 @@ import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.explorer.base.ExplorerFlag;
 import ids323.estudiantes.gui.explorer.base.ExplorerMaster;
 import ids323.estudiantes.gui.explorer.base.elements.ExplorerElement;
-import ids323.estudiantes.gui.modulos.TabManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.io.File;
 import java.util.ArrayList;
 
 /**

@@ -2,7 +2,9 @@ package ids323.estudiantes.data;
 
 import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
-import ids323.estudiantes.gui.modulos.*;
+import ids323.estudiantes.gui.modulos.DisplayModule;
+import ids323.estudiantes.gui.modulos.Tab;
+import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.modulos.edicion.ModuloCalificaciones;
 import ids323.estudiantes.util.Commons;
 

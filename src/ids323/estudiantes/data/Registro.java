@@ -14,7 +14,7 @@ import java.util.Map;
  * */
 public class Registro {
 
-    public static final byte VERSION_DATA = 1;
+    public static final byte VERSION_DATA = 2;
 
     /**
      * Lista para los estudiantes.
@@ -89,7 +89,7 @@ public class Registro {
                 est.setFechaNacimiento(sr.readDate());
                 est.setEstado(Estado.values()[sr.readByte()]);
                 est.setCarrera(Carrera.values()[sr.readByte()]);
-                est.setCedula(Cedula.crearCedula(sr.readString()));
+                if(versionArchivo < 2) sr.readString();
                 est.setExtranjero(sr.readBoolean());
                 estudiantes.add(est);
             }
@@ -122,7 +122,6 @@ public class Registro {
                 asignaturas.add(asig);
             }
 
-
             int cantCalificaciones = sr.readInt();
             for(int i = 0; i < cantCalificaciones; i++) {
                 Calificaciones calif = new Calificaciones();
@@ -148,20 +147,6 @@ public class Registro {
                 }
                 calificaciones.add(calif);
             }
-            /*
-
-            sw.writeInt(calificaciones.size());
-            for(Calificaciones calif : calificaciones) {
-                sw.writeByte(calif.getTrimestre().mes.ordinal());
-                sw.writeInt(calif.getTrimestre().anio);
-                sw.writeInt(calif.getEstudiante().getId());
-                Map<Asignatura, Integer> notas = calif.getCalificaciones();
-                sw.writeInt(notas.size());
-                for(Map.Entry<Asignatura, Integer> nota : notas.entrySet()) {
-                    sw.writeInt(nota.getKey().getId());
-                    sw.writeInt(nota.getValue());
-                }
-            }*/
         } catch(EOFException x) {
             System.out.println("Corrupted save file");
         } catch(IOException x) {
@@ -199,7 +184,6 @@ public class Registro {
                 sw.writeDate(est.getFechaNacimiento());
                 sw.writeByte(est.getEstado().ordinal());
                 sw.writeByte(est.getCarrera().ordinal());
-                sw.writeString(est.getCedula().toString());
                 sw.writeBoolean(est.isExtranjero());
             }
 

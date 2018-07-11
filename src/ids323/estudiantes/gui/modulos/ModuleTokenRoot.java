@@ -1,17 +1,18 @@
 package ids323.estudiantes.gui.modulos;
 
-import ids323.estudiantes.Main;
-import ids323.estudiantes.data.*;
+import ids323.estudiantes.data.Asignatura;
+import ids323.estudiantes.data.Estudiante;
+import ids323.estudiantes.data.Profesor;
 import ids323.estudiantes.gui.ModuleToken;
-import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
 import ids323.estudiantes.util.Commons;
 import ids323.estudiantes.xswing.menu.XMenuItem;
-import jdk.nashorn.internal.scripts.JD;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 import static ids323.estudiantes.Main.registro;
 

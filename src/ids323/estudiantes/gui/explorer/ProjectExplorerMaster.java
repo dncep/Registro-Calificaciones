@@ -4,7 +4,6 @@ import ids323.estudiantes.Main;
 import ids323.estudiantes.gui.Colors;
 import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.explorer.base.ExplorerMaster;
-import ids323.estudiantes.gui.explorer.base.elements.ExplorerSeparator;
 import ids323.estudiantes.util.Commons;
 
 import java.awt.*;
