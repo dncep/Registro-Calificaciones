@@ -7,6 +7,7 @@ import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
 import ids323.estudiantes.util.Commons;
 import ids323.estudiantes.xswing.menu.XMenuItem;
+import jdk.nashorn.internal.scripts.JD;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +17,7 @@ import static ids323.estudiantes.Main.registro;
 
 public class ModuleTokenRoot implements ModuleToken {
 
-    Collection<ModuleToken> subTokens = Arrays.asList(new TokenModuloEstudiantes(), new TokenModuloAsignaturas());
+    private Collection<ModuleToken> subTokens = Arrays.asList(new TokenModuloEstudiantes(), new TokenModuloAsignaturas(), new TokenModuloProfesores());
 
     @Override
     public String getLabel() {
@@ -44,7 +45,7 @@ public class ModuleTokenRoot implements ModuleToken {
     }
 
     @Override
-    public DisplayModule createModule() {
+    public DisplayModule createModule(Tab tab) {
         return null;
     }
 
@@ -86,7 +87,7 @@ class TokenModuloEstudiantes implements ModuleToken {
     }
 
     @Override
-    public DisplayModule createModule() {
+    public DisplayModule createModule(Tab tab) {
         return null;
     }
 
@@ -100,20 +101,7 @@ class TokenModuloEstudiantes implements ModuleToken {
         JPopupMenu menu = new JPopupMenu();
         {
             XMenuItem item = new XMenuItem("Nuevo Estudiante");
-            item.addActionListener(e -> {
-
-                Calendar fechaNacimiento = Calendar.getInstance();
-                fechaNacimiento.set(Calendar.YEAR, fechaNacimiento.get(Calendar.YEAR)-18);
-                Random rand = new Random();
-                Cedula cedula = Cedula.crearCedula(rand.nextInt(100000-10000)+10000 + "" + (rand.nextInt(1000000-100000)+100000));
-                System.out.println(cedula);
-
-                Estudiante est = new Estudiante(Main.registro, "Nombre", "Apellido", fechaNacimiento, Estado.EN_PROCESO, Carrera.AGN, cedula, false);
-                Main.registro.estudiantes.add(est);
-                Ventana.projectExplorer.refresh();
-                est.setEditando(true);
-                TabManager.openTab(est);
-            });
+            item.addActionListener(e -> Estudiante.crearNuevo());
             menu.add(item);
         }
         return menu;
@@ -147,7 +135,7 @@ class TokenModuloAsignaturas implements ModuleToken {
     }
 
     @Override
-    public DisplayModule createModule() {
+    public DisplayModule createModule(Tab tab) {
         return null;
     }
 
@@ -161,13 +149,55 @@ class TokenModuloAsignaturas implements ModuleToken {
         JPopupMenu menu = new JPopupMenu();
         {
             XMenuItem item = new XMenuItem("Nueva Asignatura");
-            item.addActionListener(e -> {
-                Asignatura asig = new Asignatura(Main.registro, AreaAcademica.BASICAS, "Codigo", "Nombre", "Profesor", 1);
-                Main.registro.asignaturas.add(asig);
-                Ventana.projectExplorer.refresh();
-                asig.setEditando(true);
-                TabManager.openTab(asig);
-            });
+            item.addActionListener(e -> Asignatura.crearNueva());
+            menu.add(item);
+        }
+        return menu;
+    }
+}
+
+class TokenModuloProfesores implements ModuleToken {
+    @Override
+    public String getLabel() {
+        return "PROFESORES";
+    }
+
+    @Override
+    public Image getIcon() {
+        return null;
+    }
+
+    @Override
+    public String getHint() {
+        return null;
+    }
+
+    @Override
+    public Collection<ModuleToken> getSubTokens() {
+        return new ArrayList<>(registro.profesores);
+    }
+
+    @Override
+    public boolean isExpandable() {
+        return true;
+    }
+
+    @Override
+    public DisplayModule createModule(Tab tab) {
+        return null;
+    }
+
+    @Override
+    public void onInteract() {
+
+    }
+
+    @Override
+    public JPopupMenu generatePopup(ProjectExplorerItem explorerItem) {
+        JPopupMenu menu = new JPopupMenu();
+        {
+            XMenuItem item = new XMenuItem("Nuevo Profesor");
+            item.addActionListener(e -> Profesor.crearNuevo());
             menu.add(item);
         }
         return menu;

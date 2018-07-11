@@ -126,6 +126,8 @@ public class ExplorerMaster extends JComponent implements MouseListener, MouseMo
     public void mouseExited(MouseEvent e) {
         if(rolloverItem != null) {
             rolloverItem.setRollover(false);
+            rolloverItem.mouseExited(e);
+            rolloverItem = null;
             repaint();
         }
     }
@@ -139,11 +141,19 @@ public class ExplorerMaster extends JComponent implements MouseListener, MouseMo
     public void mouseMoved(MouseEvent e) {
         ExplorerElement element = getElementAtMousePos(e);
         if(element != null) {
+            element.mouseMoved(e);
             if(rolloverItem != null) rolloverItem.setRollover(false);
+            if(rolloverItem != element) {
+                if(rolloverItem != null) rolloverItem.mouseExited(e);
+                element.mouseEntered(e);
+            }
             rolloverItem = element;
             rolloverItem.setRollover(true);
         } else {
-            if(rolloverItem != null) rolloverItem.setRollover(false);
+            if(rolloverItem != null) {
+                rolloverItem.setRollover(false);
+                rolloverItem.mouseExited(e);
+            }
             rolloverItem = null;
         }
         repaint();

@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 @SuppressWarnings("unused")
@@ -22,16 +23,10 @@ public class XDropdownMenu<T> extends XButton {
 
     private ArrayList<ChoiceListener<T>> choiceListeners = new ArrayList<>();
 
-    public XDropdownMenu() {
-        super(" ");
-    }
-
     public XDropdownMenu(T[] options) {
         super(" ");
         setOptions(options);
-    }
 
-    {
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -47,6 +42,7 @@ public class XDropdownMenu<T> extends XButton {
 
     public void setOptions(T[] options) {
         this.options.clear();
+        selected = -1;
         addOptions(options);
     }
 
@@ -122,7 +118,6 @@ public class XDropdownMenu<T> extends XButton {
     }
 
     public void mouseClicked(MouseEvent e) {
-
         JPopupMenu pm = popupFactory.createInstance();
 
         int height = 2;
@@ -138,7 +133,6 @@ public class XDropdownMenu<T> extends XButton {
             height += item.getPreferredSize().getHeight();
         }
 
-        pm.setPreferredSize(new Dimension(Math.max(this.getWidth(), pm.getPreferredSize().width),height));
         pm.show(this,0 ,this.getHeight()-1);
     }
 }

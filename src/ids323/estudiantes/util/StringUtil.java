@@ -124,5 +124,10 @@ public class StringUtil {
         }
     }
 
+    public static String stripDecimals(double n, int p) {
+        double pow = Math.pow(10,p);
+        return "" + (((int) (n*pow))/pow);
+    }
+
     private StringUtil() {}
 }

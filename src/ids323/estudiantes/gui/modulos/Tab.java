@@ -19,7 +19,6 @@ public class Tab {
 
     public long openedTimeStamp;
     private boolean saved = true;
-    private String name;
     private TabItem tabItem;
 
     @Override
@@ -29,19 +28,10 @@ public class Tab {
 
     public Tab(ModuleToken token) {
         this.token = token;
-        module = token.createModule();
-        /*if(token.endsWith(".png")) {
-            module = new ImageViewer(this);
-        } else if(token.endsWith(".ogg") || token.endsWith(".mp3") || token.endsWith(".mid")) {
-            module = new AudioPlayer(this);
-        } else {
-            module = new CraftrEditorModule(this);
-        }*/
+        module = token.createModule(this);
         savedValue = module.getValue();
 
         openedTimeStamp = new Date().getTime();
-
-        this.name = token.getLabel();
     }
 
     public void onSelect() {
@@ -52,10 +42,6 @@ public class Tab {
 
     public void onEdit() {
         this.setSaved(savedValue == null || savedValue.equals(module.getValue()));
-    }
-
-    public void updateName() {
-        tabItem.updateName();
     }
 
     public boolean isVisible() {
@@ -100,7 +86,7 @@ public class Tab {
     }
 
     public String getName() {
-        return name;
+        return token.getLabel();
     }
 
     public TabItem getLinkedTabItem() {

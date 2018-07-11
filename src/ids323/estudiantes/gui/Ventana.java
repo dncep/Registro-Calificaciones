@@ -1,14 +1,22 @@
 package ids323.estudiantes.gui;
 
 import ids323.estudiantes.Main;
+import ids323.estudiantes.data.Asignatura;
+import ids323.estudiantes.data.Estudiante;
+import ids323.estudiantes.data.Profesor;
 import ids323.estudiantes.gui.explorer.ProjectExplorerMaster;
 import ids323.estudiantes.gui.tablist.TabListMaster;
+import ids323.estudiantes.util.Commons;
 import ids323.estudiantes.util.Padding;
+import ids323.estudiantes.xswing.XButton;
+import ids323.estudiantes.xswing.XIcon;
+import org.omg.PortableServer.ServantManagerOperations;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Collections;
 
 public class Ventana {
 
@@ -41,6 +49,58 @@ public class Ventana {
         sidebar.add(sidebarHeader, BorderLayout.NORTH);
 
         contentPane.add(editArea, BorderLayout.CENTER);
+
+        JPanel topbar = new JPanel(new BorderLayout());
+        topbar.setBackground(Colors.ACCENT_DARKER);
+        contentPane.add(topbar, BorderLayout.NORTH);
+
+        JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        toolbar.setOpaque(false);
+        topbar.add(toolbar);
+
+        {
+            XButton button = new XButton("", new ImageIcon(Estudiante.ICON_NUEVO.getScaledInstance(26, 26, Image.SCALE_SMOOTH)));
+            button.setPreferredSize(new Dimension(32, 32));
+            button.setBackground(Colors.ACCENT_DARKER);
+            button.setRolloverColor(Colors.ACCENT_DARKEST);
+            button.setPressedColor(Colors.ACCENT_LIGHT);
+            button.setBorder(Colors.ACCENT_DARKEST, 1);
+            button.addActionListener(e -> Estudiante.crearNuevo());
+            button.setToolTipText("Nuevo Estudiante");
+            toolbar.add(button);
+        }
+        {
+            XButton button = new XButton("", new ImageIcon(Asignatura.ICON_NUEVO.getScaledInstance(26, 26, Image.SCALE_SMOOTH)));
+            button.setPreferredSize(new Dimension(32, 32));
+            button.setBackground(Colors.ACCENT_DARKER);
+            button.setRolloverColor(Colors.ACCENT_DARKEST);
+            button.setPressedColor(Colors.ACCENT_LIGHT);
+            button.setBorder(Colors.ACCENT_DARKEST, 1);
+            button.addActionListener(e -> Asignatura.crearNueva());
+            button.setToolTipText("Nueva Asignatura");
+            toolbar.add(button);
+        }
+        {
+            XButton button = new XButton("", new ImageIcon(Profesor.ICON_NUEVO.getScaledInstance(26, 26, Image.SCALE_SMOOTH)));
+            button.setPreferredSize(new Dimension(32, 32));
+            button.setBackground(Colors.ACCENT_DARKER);
+            button.setRolloverColor(Colors.ACCENT_DARKEST);
+            button.setPressedColor(Colors.ACCENT_LIGHT);
+            button.setBorder(Colors.ACCENT_DARKEST, 1);
+            button.addActionListener(e -> Profesor.crearNuevo());
+            button.setToolTipText("Nuevo Profesor");
+            toolbar.add(button);
+        }
+
+        {
+            JPanel logoPanel = new JPanel(new FlowLayout());
+            logoPanel.setOpaque(false);
+
+            logoPanel.add(new XIcon(Commons.getIcon("cog")));
+
+            topbar.add(logoPanel, BorderLayout.EAST);
+        }
+
 
         welcomePane.setBackground(Colors.BACKGROUND);
 

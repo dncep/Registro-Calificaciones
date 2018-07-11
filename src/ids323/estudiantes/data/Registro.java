@@ -7,6 +7,7 @@ import ids323.estudiantes.saveio.SaveWriter;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Objeto destinado a almacenar los datos del sistema, incluyendo los estudiantes y las asignaturas.
@@ -24,6 +25,14 @@ public class Registro {
      * */
     public final ArrayList<Asignatura> asignaturas = new ArrayList<>();
     /**
+     * Lista para los profesores.
+     * */
+    public final ArrayList<Profesor> profesores = new ArrayList<>();
+    /**
+     * Lista para los reportes de calificaciones.
+     * */
+    public final ArrayList<Calificaciones> calificaciones = new ArrayList<>();
+    /**
      * El fichero en el cual almacenar los datos persistentes.
      * */
     private final File file;
@@ -36,6 +45,10 @@ public class Registro {
      * El ID de la siguiente asignatura a crear.
      * */
     public int ID_ASIGNATURA = 0;
+    /**
+     * El ID del siguiente profesor a crear.
+     * */
+    public int ID_PROFESOR = 1100000;
 
     public ModuleToken rootToken;
 
@@ -56,6 +69,7 @@ public class Registro {
     public void cargar() {
         ID_ASIGNATURA = 0;
         ID_ESTUDIANTE = 1100000;
+        ID_PROFESOR = 0;
         estudiantes.clear();
         asignaturas.clear();
 
@@ -80,6 +94,15 @@ public class Registro {
                 estudiantes.add(est);
             }
 
+            ID_PROFESOR = sr.readInt();
+            int cantProfesores = sr.readInt();
+            for(int i = 0; i < cantProfesores; i++) {
+                Profesor prof = new Profesor(sr.readInt());
+                prof.setNombre(sr.readString());
+                prof.setApellido(sr.readString());
+                profesores.add(prof);
+            }
+
             ID_ASIGNATURA = sr.readInt();
             int cantAsignaturas = sr.readInt();
             for(int i = 0; i < cantAsignaturas; i++) {
@@ -87,9 +110,58 @@ public class Registro {
                 asig.setCodigo(sr.readString());
                 asig.setNombre(sr.readString());
                 asig.setArea(AreaAcademica.values()[sr.readByte()]);
-                asig.setProfesor(sr.readString());
+                asig.setCreditos(sr.readInt());
+
+                int profId = sr.readInt();
+                for(Profesor prof : profesores) {
+                    if(prof.getId() == profId) {
+                        asig.setProfesor(prof);
+                        break;
+                    }
+                }
                 asignaturas.add(asig);
             }
+
+
+            int cantCalificaciones = sr.readInt();
+            for(int i = 0; i < cantCalificaciones; i++) {
+                Calificaciones calif = new Calificaciones();
+                calif.setTrimestre(new Trimestre(MesTrimestre.values()[sr.readByte()], sr.readInt()));
+                int idEst = sr.readInt();
+                for(Estudiante est : estudiantes) {
+                    if(est.getId() == idEst) {
+                        calif.setEstudiante(est);
+                        break;
+                    }
+                }
+                int cantNotas = sr.readInt();
+                for(int j = 0; j < cantNotas; j++) {
+                    int idAsig = sr.readInt();
+                    Asignatura asigKey = null;
+                    for(Asignatura asig : asignaturas) {
+                        if(asig.getId() == idAsig) {
+                            asigKey = asig;
+                            break;
+                        }
+                    }
+                    calif.getCalificaciones().put(asigKey, sr.readInt());
+                }
+                calificaciones.add(calif);
+            }
+            /*
+
+            sw.writeInt(calificaciones.size());
+            for(Calificaciones calif : calificaciones) {
+                sw.writeByte(calif.getTrimestre().mes.ordinal());
+                sw.writeInt(calif.getTrimestre().anio);
+                sw.writeInt(calif.getEstudiante().getId());
+                Map<Asignatura, Integer> notas = calif.getCalificaciones();
+                sw.writeInt(notas.size());
+                for(Map.Entry<Asignatura, Integer> nota : notas.entrySet()) {
+                    sw.writeInt(nota.getKey().getId());
+                    sw.writeInt(nota.getValue());
+                }
+            }*/
         } catch(EOFException x) {
             System.out.println("Corrupted save file");
         } catch(IOException x) {
@@ -128,7 +200,16 @@ public class Registro {
                 sw.writeByte(est.getEstado().ordinal());
                 sw.writeByte(est.getCarrera().ordinal());
                 sw.writeString(est.getCedula().toString());
-                sw.writeBoolean(est.isEsExtranjero());
+                sw.writeBoolean(est.isExtranjero());
+            }
+
+            sw.writeInt(ID_PROFESOR);
+            sw.writeInt(profesores.size());
+
+            for(Profesor prof : profesores) {
+                sw.writeInt(prof.getId());
+                sw.writeString(prof.getNombre());
+                sw.writeString(prof.getApellido());
             }
 
             sw.writeInt(ID_ASIGNATURA);
@@ -139,7 +220,21 @@ public class Registro {
                 sw.writeString(asig.getCodigo());
                 sw.writeString(asig.getNombre());
                 sw.writeByte(asig.getArea().ordinal());
-                sw.writeString(asig.getProfesor());
+                sw.writeInt(asig.getCreditos());
+                sw.writeInt(asig.getProfesor().getId());
+            }
+
+            sw.writeInt(calificaciones.size());
+            for(Calificaciones calif : calificaciones) {
+                sw.writeByte(calif.getTrimestre().getMes().ordinal());
+                sw.writeInt(calif.getTrimestre().getAnio());
+                sw.writeInt(calif.getEstudiante().getId());
+                Map<Asignatura, Integer> notas = calif.getCalificaciones();
+                sw.writeInt(notas.size());
+                for(Map.Entry<Asignatura, Integer> nota : notas.entrySet()) {
+                    sw.writeInt(nota.getKey().getId());
+                    sw.writeInt(nota.getValue());
+                }
             }
         } catch(IOException x) {
             x.printStackTrace();

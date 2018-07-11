@@ -1,19 +1,29 @@
-package ids323.estudiantes.gui.modulos;
+package ids323.estudiantes.gui.modulos.vista;
 
 import ids323.estudiantes.gui.Colors;
 import ids323.estudiantes.gui.InfoPanel;
+import ids323.estudiantes.gui.modulos.DisplayModule;
+import ids323.estudiantes.gui.modulos.Tab;
+import ids323.estudiantes.util.Commons;
 import ids323.estudiantes.util.Padding;
+import ids323.estudiantes.xswing.XButton;
+import ids323.estudiantes.xswing.XIcon;
+import javafx.scene.control.ScrollBar;
 
 import javax.swing.*;
 import java.awt.*;
 
 public abstract class ModuloVista extends JPanel implements DisplayModule {
+    protected final Tab associatedTab;
 
     protected final String title;
     protected final String subtitle;
     protected final InfoPanel infoPanel = new InfoPanel();
 
-    public ModuloVista(String title, String subtitle) {
+    private JPanel content;
+
+    public ModuloVista(Tab tab, String title, String subtitle) {
+        this.associatedTab = tab;
         this.title = title;
         this.subtitle = subtitle;
     }
@@ -25,7 +35,9 @@ public abstract class ModuloVista extends JPanel implements DisplayModule {
         inner.setOpaque(true);
         inner.setBackground(Colors.ACCENT_LIGHT);
         JScrollPane sp = new JScrollPane(inner);
+        sp.getVerticalScrollBar().setUnitIncrement(20);
         sp.setBorder(BorderFactory.createEmptyBorder());
+        sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         this.add(sp);
 
         inner.add(new Padding(15), BorderLayout.NORTH);
@@ -35,7 +47,6 @@ public abstract class ModuloVista extends JPanel implements DisplayModule {
         body.setOpaque(false);
         inner.add(body, BorderLayout.CENTER);
 
-
         body.add(new Padding(250, Colors.BACKGROUND), BorderLayout.WEST);
         body.add(new Padding(250, Colors.BACKGROUND), BorderLayout.EAST);
 
@@ -43,6 +54,9 @@ public abstract class ModuloVista extends JPanel implements DisplayModule {
             JPanel header = new JPanel(new BorderLayout());
             header.setOpaque(false);
 
+            JPanel mainHeader = new JPanel(new BorderLayout());
+            header.add(mainHeader);
+            mainHeader.setOpaque(false);
             {
                 //Title
                 JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 0,0));
@@ -51,7 +65,7 @@ public abstract class ModuloVista extends JPanel implements DisplayModule {
                 title.setFont(title.getFont().deriveFont(36f).deriveFont(Font.BOLD));
                 title.setForeground(Colors.TEXT);
                 titlePanel.add(title);
-                header.add(titlePanel, BorderLayout.NORTH);
+                mainHeader.add(titlePanel, BorderLayout.NORTH);
             }
             {
                 //Subtitle
@@ -61,19 +75,47 @@ public abstract class ModuloVista extends JPanel implements DisplayModule {
                 subtitle.setFont(subtitle.getFont().deriveFont(24f).deriveFont(Font.PLAIN));
                 subtitle.setForeground(Colors.TEXT_MINOR);
                 subtitlePanel.add(subtitle);
-                header.add(subtitlePanel, BorderLayout.CENTER);
+                mainHeader.add(subtitlePanel, BorderLayout.CENTER);
             }
             header.add(new Padding(15), BorderLayout.SOUTH);
+
+            JPanel actionPanel = new JPanel(new BorderLayout());
+            actionPanel.setOpaque(false);
+
+            XButton editButton = new XButton("", new ImageIcon(Commons.getIcon("cog")));
+            editButton.setBorder(new Color(0,0,0,0), 0);
+            editButton.setOpaque(false);
+            editButton.setBackground(new Color(255,255,255,0));
+            editButton.setRolloverColor(new Color(255,255,255,64));
+            editButton.setPressedColor(new Color(255,255,255,128));
+            editButton.setToolTipText("Editar");
+
+            editButton.addActionListener(e -> startEditing());
+
+            actionPanel.add(editButton);
+            actionPanel.add(new Padding(40), BorderLayout.EAST);
+            actionPanel.add(new Padding(40), BorderLayout.WEST);
+            actionPanel.add(new Padding(7), BorderLayout.NORTH);
+            actionPanel.add(new Padding(7), BorderLayout.SOUTH);
+
+            header.add(actionPanel, BorderLayout.EAST);
+            header.add(new Padding(146,1), BorderLayout.WEST);
 
             body.add(header, BorderLayout.NORTH);
         }
 
         {
-            JPanel content = new JPanel(new BorderLayout());
+            content = new JPanel(new BorderLayout());
             body.add(content, BorderLayout.CENTER);
             content.setBackground(Colors.BACKGROUND);
 
-            content.add(infoPanel);
+            content.add(infoPanel, BorderLayout.NORTH);
         }
+    }
+
+    protected abstract void startEditing();
+
+    protected void addSouthComponent(JComponent component) {
+        content.add(component, BorderLayout.CENTER);
     }
 }

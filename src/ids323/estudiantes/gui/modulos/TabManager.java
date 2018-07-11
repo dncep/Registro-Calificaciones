@@ -3,7 +3,9 @@ package ids323.estudiantes.gui.modulos;
 import ids323.estudiantes.data.Estudiante;
 import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.Ventana;
+import jdk.nashorn.internal.scripts.JO;
 
+import javax.swing.*;
 import java.util.ArrayList;
 
 /**
@@ -56,15 +58,13 @@ public class TabManager {
 
     public static void closeTab(Tab tab, boolean force) {
         if(tab == null) return;
-        /*if(!force) {
+        if(!force) {
             if(!tab.isSaved()) {
-                String confirmation = new OptionDialog("Unsaved changes", "'" + tab.getName() + "' has changes; do you want to save them?", new String[] {"Save", "Don't Save", "Cancel"}).result;
-                if("Save".equals(confirmation)) {
-                    tab.save();
-                }
-                if(confirmation == null || "Cancel".equals(confirmation)) return;
+                int result = JOptionPane.showOptionDialog(Ventana.jframe, "Hay cambios sin guardar. ¿Desea guardarlos?", "Cambios sin guardar", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Guardar", "No guardar", "Cancelar"}, "Guardar");
+                if(result == JOptionPane.CANCEL_OPTION) return;
+                if(result == JOptionPane.YES_OPTION) tab.save();
             }
-        }*/
+        }
         for (int i = 0; i < openTabs.size(); i++) {
             if (openTabs.get(i) == tab) {
                 if (selectedTab == openTabs.get(i)) setSelectedTab(Ventana.tabList.getFallbackTab(tab));

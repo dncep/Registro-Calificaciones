@@ -26,8 +26,6 @@ public class TabItem extends TabListElement {
         super(master);
         this.associatedTab = associatedTab;
 
-        this.updateName();
-
         associatedTab.linkTabItem(this);
 
         this.icon = associatedTab.token.getIcon();
@@ -38,6 +36,8 @@ public class TabItem extends TabListElement {
     public void render(Graphics g) {
         g.setFont(master.getFont());
         FontMetrics fm = g.getFontMetrics();
+
+        this.name = StringUtil.ellipsis(associatedTab.getName(),32);
 
         this.x = master.getOffsetX();
         this.lastRecordedOffset = x;
@@ -174,10 +174,6 @@ public class TabItem extends TabListElement {
 
     public Image getIcon() {
         return icon;
-    }
-
-    public void updateName() {
-        this.name = StringUtil.ellipsis(associatedTab.getName(),32);
     }
 
     /*private StyledPopupMenu generatePopup() {

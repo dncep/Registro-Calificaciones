@@ -4,13 +4,15 @@ import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.explorer.base.ExplorerMaster;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 /**
  * Created by User on 4/8/2017.
  */
-public abstract class ExplorerElement implements MouseListener {
+public abstract class ExplorerElement implements MouseListener, MouseMotionListener {
     protected final ExplorerMaster master;
     protected boolean selected;
     protected boolean rollover;
@@ -46,5 +48,40 @@ public abstract class ExplorerElement implements MouseListener {
 
     public ExplorerMaster getMaster() {
         return master;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
     }
 }

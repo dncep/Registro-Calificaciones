@@ -1,10 +1,10 @@
 package ids323.estudiantes.data;
 
 public enum MesTrimestre {
-    FEBRERO("Febrero-Mayo %d", "Febrero %d"),
-    MAYO("Mayo-Agosto %d", "Mayo %d"),
-    AGOSTO("Agosto-Noviembre %d", "Agosto %d"),
-    NOVIEMBRE("Noviembre %d-Febrero %d", "Noviembre %d");
+    FEBRERO("Febrero-Abril %d", "Febrero %d"), //1
+    MAYO("Mayo-Julio %d", "Mayo %d"), //4
+    AGOSTO("Agosto-Octubre %d", "Agosto %d"), //7
+    NOVIEMBRE("Noviembre %d-Enero %d", "Noviembre %d"); //10
 
     String formato;
     String corto;
@@ -24,5 +24,10 @@ public enum MesTrimestre {
 
     public String getNombre() {
         return corto.substring(0, corto.indexOf(' '));
+    }
+
+    @Override
+    public String toString() {
+        return formato.replace("%d","").replace(" -","-").trim();
     }
 }

@@ -13,6 +13,10 @@ public class InfoPanel extends JComponent {
     private Font valueFont = new Font("Tahoma", Font.ITALIC, 28);
     private int margin = 70;
 
+    public InfoPanel() {
+        setOpaque(false);
+    }
+
     public String put(String key, String value) {
         return info.put(key, value);
     }
@@ -81,6 +85,12 @@ public class InfoPanel extends JComponent {
             h = Math.max(h, y - oldY);
 
             left = !left;
+
+        }
+
+        if(!this.isPreferredSizeSet()) {
+            this.setPreferredSize(new Dimension(this.getWidth(), Math.max(oldY, y)));
+            revalidate();
         }
     }
 

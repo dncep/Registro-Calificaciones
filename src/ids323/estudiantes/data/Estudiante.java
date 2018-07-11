@@ -5,31 +5,29 @@ import ids323.estudiantes.gui.ModuleToken;
 import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
 import ids323.estudiantes.gui.modulos.DisplayModule;
-import ids323.estudiantes.gui.modulos.ModuloEdicionEstudiante;
-import ids323.estudiantes.gui.modulos.ModuloVistaEstudiante;
+import ids323.estudiantes.gui.modulos.Tab;
+import ids323.estudiantes.gui.modulos.edicion.ModuloEdicionEstudiante;
+import ids323.estudiantes.gui.modulos.vista.ModuloVistaEstudiante;
 import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.util.Commons;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Collections;
-
-import static ids323.estudiantes.Main.registro;
+import java.util.*;
 
 /**
  * Representación de un estudiante como objeto.
  * */
 public class Estudiante implements ModuleToken {
 
-    private static final Image ICON = Commons.getIcon("estudiante");
+    public static final Image ICON = Commons.getIcon("estudiante");
+    public static final Image ICON_NUEVO = Commons.getIcon("estudiante_nuevo");
 
     private String nombre;
     private String apellido;
     private Calendar fechaNacimiento;
     private Estado estado;
-    public int id;
+    private int id;
     private Carrera carrera;
     private Cedula cedula;
     private boolean esExtranjero = false;
@@ -49,6 +47,34 @@ public class Estudiante implements ModuleToken {
         this.carrera = carrera;
         this.cedula = cedula;
         this.esExtranjero = esExtranjero;
+    }
+
+    public Collection<Calificaciones> getAllCalificaciones() {
+        ArrayList<Calificaciones> lista = new ArrayList<>();
+        for(Calificaciones calif : Main.registro.calificaciones) {
+            if(calif.getEstudiante() == this) lista.add(calif);
+        }
+        return lista;
+    }
+
+    public double getIndiceGeneral() {
+        Collection<Calificaciones> califs = getAllCalificaciones();
+        if(califs.isEmpty()) return -1;
+        double puntos = 0;
+        double creditos = 0;
+        for(Calificaciones calif : califs) {
+            puntos += calif.getPuntosDeHonor();
+            creditos += calif.getCreditos();
+        }
+        return creditos != 0 ? puntos / creditos : -1;
+    }
+
+    public String getHonores() {
+        double indice = getIndiceGeneral();
+        if(indice == -1) return "-";
+        if(indice >= 3.8) return "Summa Cum Laude";
+        if(indice >= 3.5) return "Magna Cum Laude";
+        return indice >= 3.2 ? "Cum Laude" : "Sin honor";
     }
 
     public String getNombre() {
@@ -103,7 +129,7 @@ public class Estudiante implements ModuleToken {
         this.cedula = cedula;
     }
 
-    public boolean isEsExtranjero() {
+    public boolean isExtranjero() {
         return esExtranjero;
     }
 
@@ -120,8 +146,13 @@ public class Estudiante implements ModuleToken {
     }
 
     @Override
+    public String toString() {
+        return nombre + " " + apellido;
+    }
+
+    @Override
     public String getLabel() {
-        return id + " - " + apellido.toUpperCase() + ", " + nombre.toUpperCase();
+        return id + " - " + apellido + ", " + nombre;
     }
 
     @Override
@@ -145,8 +176,8 @@ public class Estudiante implements ModuleToken {
     }
 
     @Override
-    public DisplayModule createModule() {
-        return (editando) ? new ModuloEdicionEstudiante(this) : new ModuloVistaEstudiante(this);
+    public DisplayModule createModule(Tab tab) {
+        return (editando) ? new ModuloEdicionEstudiante(tab, this) : new ModuloVistaEstudiante(tab, this);
     }
 
     @Override
@@ -177,18 +208,36 @@ public class Estudiante implements ModuleToken {
 
             menu.add(item);
         }
+        menu.addSeparator();
         {
             JMenuItem item = new JMenuItem("Borrar");
 
             item.addActionListener(e -> {
+                int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere borrar " + this + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
+                if(result != JOptionPane.YES_OPTION) return;
+
                 TabManager.closeTab(TabManager.getTabForToken(this));
                 Main.registro.estudiantes.remove(this);
                 Ventana.projectExplorer.refresh();
-                System.out.println("Action not supported yet");
             });
 
             menu.add(item);
         }
         return menu;
+    }
+
+    public static Estudiante crearNuevo() {
+        Calendar fechaNacimiento = Calendar.getInstance();
+        fechaNacimiento.set(Calendar.YEAR, fechaNacimiento.get(Calendar.YEAR)-18);
+        Random rand = new Random();
+        Cedula cedula = Cedula.crearCedula(rand.nextInt(100000-10000)+10000 + "" + (rand.nextInt(1000000-100000)+100000));
+
+        Estudiante est = new Estudiante(Main.registro, "Nombre", "Apellido", fechaNacimiento, Estado.EN_PROCESO, Carrera.AGN, cedula, false);
+        Main.registro.estudiantes.add(est);
+        Ventana.projectExplorer.refresh();
+        est.setEditando(true);
+        TabManager.openTab(est);
+
+        return est;
     }
 }

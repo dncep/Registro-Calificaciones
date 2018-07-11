@@ -1,7 +1,13 @@
 package ids323.estudiantes.gui;
 
+import ids323.estudiantes.gui.modulos.Tab;
+import ids323.estudiantes.gui.modulos.TabManager;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyEvent;
 
 public class AreaModulo extends JPanel {
 
@@ -34,6 +40,33 @@ public class AreaModulo extends JPanel {
         tabListHolder.add(tabSP, BorderLayout.CENTER);
 
         this.setContent(Ventana.welcomePane);
+
+
+        KeyStroke saveKeystroke = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
+
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(saveKeystroke, "saveKeystroke");
+
+        this.getActionMap().put("saveKeystroke", new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Tab st = TabManager.getSelectedTab();
+                if(st != null) st.save();
+            }
+        });
+
+
+        KeyStroke closeKeystroke = KeyStroke.getKeyStroke(KeyEvent.VK_W, InputEvent.CTRL_MASK);
+
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(closeKeystroke, "closeKeystroke");
+
+        this.getActionMap().put("closeKeystroke", new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TabManager.closeSelectedTab();
+            }
+        });
     }
 
     public void setContent(JComponent content) {

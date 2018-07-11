@@ -33,7 +33,6 @@ public class Cedula {
      * @return Un objeto Cedula si la cadena es una cédula válida, <code>null</code> si no lo es.
      * */
     public static Cedula crearCedula(String input) {
-        System.out.println("input = " + input);
         if(REGEX_CEDULA.matcher(input).matches()) {
             if(input.length() == 11) input = input.substring(0,3) + "-" + input.substring(3,10) + "-" + input.substring(10,11);
             return new Cedula(input);

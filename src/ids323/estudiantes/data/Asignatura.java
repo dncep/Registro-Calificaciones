@@ -1,8 +1,12 @@
 package ids323.estudiantes.data;
 
+import ids323.estudiantes.Main;
 import ids323.estudiantes.gui.ModuleToken;
+import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
 import ids323.estudiantes.gui.modulos.*;
+import ids323.estudiantes.gui.modulos.edicion.ModuloEdicionAsignatura;
+import ids323.estudiantes.gui.modulos.vista.ModuloVistaAsignatura;
 import ids323.estudiantes.util.Commons;
 
 import javax.swing.*;
@@ -15,13 +19,14 @@ import java.util.Collections;
  * */
 public class Asignatura implements ModuleToken {
 
-    private static final Image ICON = Commons.getIcon("asignatura");
+    public static final Image ICON = Commons.getIcon("asignatura");
+    public static final Image ICON_NUEVO = Commons.getIcon("asignatura_nueva");
 
     private int id;
     private AreaAcademica area;
     private String codigo;
     private String nombre;
-    private String profesor;
+    private Profesor profesor;
     private int creditos;
 
     private boolean editando = false;
@@ -30,7 +35,7 @@ public class Asignatura implements ModuleToken {
         this.id = id;
     }
 
-    public Asignatura(Registro registro, AreaAcademica area, String codigo, String nombre, String profesor, int creditos) {
+    public Asignatura(Registro registro, AreaAcademica area, String codigo, String nombre, Profesor profesor, int creditos) {
         this.id = registro.ID_ASIGNATURA++;
         this.area = area;
         this.codigo = codigo;
@@ -66,12 +71,12 @@ public class Asignatura implements ModuleToken {
 
     @Override
     public String toString() {
-        return codigo + " - " + nombre + " (ID: " + id + ")";
+        return codigo + " - " + nombre;
     }
 
     @Override
-    public DisplayModule createModule() {
-        return (editando) ? new ModuloEdicionAsignatura(this) : new ModuloVistaAsignatura(this);
+    public DisplayModule createModule(Tab tab) {
+        return (editando) ? new ModuloEdicionAsignatura(tab, this) : new ModuloVistaAsignatura(tab, this);
     }
 
     @Override
@@ -102,11 +107,24 @@ public class Asignatura implements ModuleToken {
 
             menu.add(item);
         }
+        menu.addSeparator();
         {
             JMenuItem item = new JMenuItem("Borrar");
 
             item.addActionListener(e -> {
-                System.out.println("Action not supported yet");
+                int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere borrar " + this + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
+                if(result != JOptionPane.YES_OPTION) return;
+
+                for(Calificaciones calif : Main.registro.calificaciones) {
+                    if(calif.getCalificaciones().containsKey(this)) {
+                        JOptionPane.showMessageDialog(Ventana.jframe, "<html>No se puede borrar " + this + ":<br>El reporte de calificaciones de " + calif.getEstudiante() + " para trimestre " + calif.getTrimestre() + " contiene esta asignatura</html>", "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(Calificaciones.ICON));
+                        return;
+                    }
+                }
+
+                TabManager.closeTab(TabManager.getTabForToken(this));
+                Main.registro.asignaturas.remove(this);
+                Ventana.projectExplorer.refresh();
             });
 
             menu.add(item);
@@ -146,11 +164,11 @@ public class Asignatura implements ModuleToken {
         this.nombre = nombre;
     }
 
-    public String getProfesor() {
+    public Profesor getProfesor() {
         return profesor;
     }
 
-    public void setProfesor(String profesor) {
+    public void setProfesor(Profesor profesor) {
         this.profesor = profesor;
     }
 
@@ -168,5 +186,18 @@ public class Asignatura implements ModuleToken {
 
     public void setEditando(boolean editando) {
         this.editando = editando;
+    }
+
+    public static Asignatura crearNueva() {
+        if(Main.registro.profesores.isEmpty()) {
+            JOptionPane.showMessageDialog(Ventana.jframe, "No existen profesores registrados para la nueva asignatura", "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(Asignatura.ICON));
+            return null;
+        }
+        Asignatura asig = new Asignatura(Main.registro, AreaAcademica.BASICAS, "Codigo", "Nombre", Main.registro.profesores.get(0), 1);
+        Main.registro.asignaturas.add(asig);
+        Ventana.projectExplorer.refresh();
+        asig.setEditando(true);
+        TabManager.openTab(asig);
+        return asig;
     }
 }
