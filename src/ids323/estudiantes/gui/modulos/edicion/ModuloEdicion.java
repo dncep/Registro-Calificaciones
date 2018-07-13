@@ -80,7 +80,12 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
     }
 
     void construir() {
-        this.setBackground(Colors.BACKGROUND);
+        JPanel wrapper = new JPanel(new BorderLayout());
+        JScrollPane sp = new JScrollPane(wrapper);
+        sp.getVerticalScrollBar().setUnitIncrement(20);
+        sp.setBorder(BorderFactory.createEmptyBorder());
+        this.add(sp);
+        wrapper.setBackground(Colors.BACKGROUND);
 
         JPanel header = new JPanel(new BorderLayout());
         header.setBackground(Colors.ACCENT_LIGHT);
@@ -93,7 +98,7 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
         titlePanel.setOpaque(false);
         titlePanel.add(titleLabel);
         header.add(titlePanel);
-        this.add(header, BorderLayout.NORTH);
+        wrapper.add(header, BorderLayout.NORTH);
         JPanel contentWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT));
         contentWrapper.setOpaque(false);
 
@@ -133,7 +138,7 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
 
         content.add(buttonPanel);
 
-        this.add(contentWrapper, BorderLayout.CENTER);
+        wrapper.add(contentWrapper, BorderLayout.CENTER);
 
         actualizarEntradas();
     }

@@ -248,7 +248,7 @@ public class StandardInputAdapters {
 
             @Override
             public int getValueCode() {
-                return field.getText().hashCode();
+                return (field.getText() != null) ? field.getText().hashCode() : 0;
             }
         });
 
