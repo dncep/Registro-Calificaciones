@@ -1,10 +1,10 @@
 package ids323.estudiantes.data;
 
-import ids323.estudiantes.gui.ModuleToken;
+import ids323.estudiantes.gui.TokenModulo;
 import ids323.estudiantes.gui.modulos.ModuleRankingToken;
 import ids323.estudiantes.gui.modulos.ModuleTokenRoot;
-import ids323.estudiantes.saveio.SaveReader;
-import ids323.estudiantes.saveio.SaveWriter;
+import ids323.estudiantes.saveio.EscritorData;
+import ids323.estudiantes.saveio.LectorData;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,19 +18,19 @@ public class Registro {
     public static final byte VERSION_DATA = 2;
 
     /**
-     * Lista para los estudiantes.
+     * CLista para los estudiantes.
      * */
     public final ArrayList<Estudiante> estudiantes = new ArrayList<>();
     /**
-     * Lista para las asignaturas.
+     * CLista para las asignaturas.
      * */
     public final ArrayList<Asignatura> asignaturas = new ArrayList<>();
     /**
-     * Lista para los profesores.
+     * CLista para los profesores.
      * */
     public final ArrayList<Profesor> profesores = new ArrayList<>();
     /**
-     * Lista para los reportes de calificaciones.
+     * CLista para los reportes de calificaciones.
      * */
     public final ArrayList<Calificaciones> calificaciones = new ArrayList<>();
     /**
@@ -51,8 +51,8 @@ public class Registro {
      * */
     public int ID_PROFESOR = 1100000;
 
-    public ModuleToken rootToken;
-    public ModuleToken rankingToken;
+    public TokenModulo rootToken;
+    public TokenModulo rankingToken;
 
     /**
      * Construye un registro que se guarda en el fichero dado.
@@ -79,7 +79,7 @@ public class Registro {
         if(!file.exists()) return;
 
         try(FileInputStream fis = new FileInputStream(file)) {
-            SaveReader sr = new SaveReader(fis);
+            LectorData sr = new LectorData(fis);
 
             int versionArchivo = sr.readByte();
 
@@ -151,7 +151,7 @@ public class Registro {
                 calificaciones.add(calif);
             }
         } catch(EOFException x) {
-            System.out.println("Corrupted save file");
+            System.out.println("Corrupted guardar file");
         } catch(IOException x) {
             x.printStackTrace();
         }
@@ -172,7 +172,7 @@ public class Registro {
         }
 
         try(FileOutputStream fos = new FileOutputStream(file)) {
-            SaveWriter sw = new SaveWriter(fos);
+            EscritorData sw = new EscritorData(fos);
 
             sw.writeByte(VERSION_DATA);
 

@@ -1,6 +1,6 @@
 package ids323.estudiantes.gui.modulos;
 
-import ids323.estudiantes.gui.ModuleToken;
+import ids323.estudiantes.gui.TokenModulo;
 import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.tablist.TabItem;
 
@@ -12,36 +12,36 @@ import java.util.Date;
  * the clickable tab element.
  */
 public class Tab {
-    public ModuleToken token;
-    public DisplayModule module;
-    private Object savedValue;
+    public TokenModulo token;
+    public ModuloPantalla modulo;
+    private Object valorGuardado;
     public boolean visible = true;
 
-    public long openedTimeStamp;
-    private boolean saved = true;
+    public long tiempoAbierto;
+    private boolean guardado = true;
     private TabItem tabItem;
 
     @Override
     public String toString() {
-        return "Tab [title=" + getName() + ", token=" + token + ", visible=" + visible + "]";
+        return "Tab [title=" + getTitulo() + ", token=" + token + ", visible=" + visible + "]";
     }
 
-    public Tab(ModuleToken token) {
+    public Tab(TokenModulo token) {
         this.token = token;
-        module = token.createModule(this);
-        savedValue = module.getValue();
+        modulo = token.crearModulo(this);
+        valorGuardado = modulo.getValor();
 
-        openedTimeStamp = new Date().getTime();
+        tiempoAbierto = new Date().getTime();
     }
 
     public void onSelect() {
-        openedTimeStamp = new Date().getTime();
-        module.focus();
-        //module.displayCaretInfo();
+        tiempoAbierto = new Date().getTime();
+        modulo.enfocar();
+        //modulo.displayCaretInfo();
     }
 
-    public void onEdit() {
-        this.setSaved(savedValue == null || savedValue.equals(module.getValue()));
+    public void enEdicion() {
+        this.setGuardado(valorGuardado == null || valorGuardado.equals(modulo.getValor()));
     }
 
     public boolean isVisible() {
@@ -56,37 +56,37 @@ public class Tab {
         return this.tabItem != null && this.tabItem.isSelected();
     }
 
-    public void save() {
-        if(!module.canSave()) return;
+    public void guardar() {
+        if(!modulo.puedeGuardar()) return;
 
-        Object val = module.save();
+        Object val = modulo.guardar();
         if(val != null) {
-            savedValue = val;
-            setSaved(true);
+            valorGuardado = val;
+            setGuardado(true);
         }
     }
 
-    public JComponent getModuleComponent() {
-        return (JComponent) module;
+    public JComponent getComponenteModulo() {
+        return (JComponent) modulo;
     }
 
-    public boolean isSaved() {
-        return saved;
+    public boolean isGuardado() {
+        return guardado;
     }
 
-    public void setSaved(boolean saved) {
-        if(this.saved != saved) {
-            this.saved = saved;
-            updateList();
+    public void setGuardado(boolean guardado) {
+        if(this.guardado != guardado) {
+            this.guardado = guardado;
+            actualizarLista();
         }
     }
 
-    private void updateList() {
+    private void actualizarLista() {
         Ventana.tabList.repaint();
     }
 
-    public String getName() {
-        return token.getLabel();
+    public String getTitulo() {
+        return token.getTitulo();
     }
 
     public TabItem getLinkedTabItem() {

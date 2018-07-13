@@ -1,24 +1,24 @@
 package ids323.estudiantes.gui.modulos;
 
-import ids323.estudiantes.gui.ModuleToken;
-import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
-import ids323.estudiantes.util.Commons;
+import ids323.estudiantes.gui.TokenModulo;
+import ids323.estudiantes.gui.explorador.ItemExploradorRegistro;
+import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Collection;
 
-public class ModuleRankingToken implements ModuleToken {
+public class ModuleRankingToken implements TokenModulo {
 
-    public static final Image ICON = Commons.getIcon("calificaciones");
+    public static final Image ICON = Comunes.getIcono("calificaciones");
 
     @Override
-    public String getLabel() {
+    public String getTitulo() {
         return "Ranking";
     }
 
     @Override
-    public Image getIcon() {
+    public Image getIcono() {
         return ICON;
     }
 
@@ -28,27 +28,27 @@ public class ModuleRankingToken implements ModuleToken {
     }
 
     @Override
-    public Collection<ModuleToken> getSubTokens() {
+    public Collection<TokenModulo> getSubTokens() {
         return null;
     }
 
     @Override
-    public boolean isExpandable() {
+    public boolean isExpandible() {
         return false;
     }
 
     @Override
-    public DisplayModule createModule(Tab tab) {
-        return new ModuleRanking();
+    public ModuloPantalla crearModulo(Tab tab) {
+        return new ModuloRanking();
     }
 
     @Override
-    public void onInteract() {
+    public void enInteraccion() {
 
     }
 
     @Override
-    public JPopupMenu generatePopup(ProjectExplorerItem explorerItem) {
+    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
         return null;
     }
 }

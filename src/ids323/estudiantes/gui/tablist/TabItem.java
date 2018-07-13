@@ -24,7 +24,7 @@ public class TabItem extends TabListElement {
 
         associatedTab.linkTabItem(this);
 
-        this.icon = associatedTab.token.getIcon();
+        this.icon = associatedTab.token.getIcono();
         if(this.icon != null) this.icon = this.icon.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
     }
 
@@ -33,7 +33,7 @@ public class TabItem extends TabListElement {
         g.setFont(master.getFont());
         FontMetrics fm = g.getFontMetrics();
 
-        this.name = StringUtil.ellipsis(associatedTab.getName(),32);
+        this.name = StringUtil.ellipsis(associatedTab.getTitulo(),32);
 
         this.x = master.getOffsetX();
         this.lastRecordedOffset = x;
@@ -44,11 +44,11 @@ public class TabItem extends TabListElement {
         int offsetX = x;
         if(master.draggedElement == this) offsetX = (int) (master.dragPoint.x - (w * master.dragPivot));
 
-        g.setColor((this.rollover || this.selected) ? master.getColors().get("tab.rollover.background") : master.getColors().get("tab.background"));
+        g.setColor((this.rollover || this.selected) ? master.getColors().get("tab.rollover.fondo") : master.getColors().get("tab.fondo"));
         g.fillRect(offsetX, 0, w, h);
 
         if(this.selected) {
-            g.setColor(master.getColors().get("tab.selected.background"));
+            g.setColor(master.getColors().get("tab.seleccionado.fondo"));
 
             switch(master.getSelectionStyle()) {
                 case "FULL": {
@@ -78,11 +78,11 @@ public class TabItem extends TabListElement {
         offsetX += 26;
 
         if(this.selected) {
-            g.setColor(master.getColors().get("tab.selected.foreground"));
+            g.setColor(master.getColors().get("tab.seleccionado.texto"));
         } else if(this.rollover) {
-            g.setColor(master.getColors().get("tab.rollover.foreground"));
+            g.setColor(master.getColors().get("tab.rollover.texto"));
         } else {
-            g.setColor(master.getColors().get("tab.foreground"));
+            g.setColor(master.getColors().get("tab.texto"));
         }
 
         g.drawString(this.name, offsetX + 3, (h+fm.getAscent()-fm.getDescent())/2);
@@ -94,7 +94,7 @@ public class TabItem extends TabListElement {
         } else {
             g.setColor(master.getColors().get("tab.close.color"));
         }
-        if(associatedTab.isSaved()) {
+        if(associatedTab.isGuardado()) {
             g.drawLine(offsetX, (h - 6) / 2, offsetX + 6, (h + 6) / 2);
             g.drawLine(offsetX, (h + 6) / 2, offsetX + 6, (h - 6) / 2);
         } else {
@@ -143,8 +143,8 @@ public class TabItem extends TabListElement {
     @Override
     public void mouseReleased(MouseEvent e) {
         if(e.isPopupTrigger()) {
-            //StyledPopupMenu menu = this.generatePopup();
-            //menu.show(e.getComponent(), e.getX(), e.getY());
+            //StyledPopupMenu menu = this.generarMenu();
+            //menu.mostrar(e.getComponente(), e.getX(), e.getY());
         }
     }
 
@@ -172,7 +172,7 @@ public class TabItem extends TabListElement {
         return icon;
     }
 
-    /*private StyledPopupMenu generatePopup() {
+    /*private StyledPopupMenu generarMenu() {
         StyledPopupMenu menu = new StyledPopupMenu();
 
         {

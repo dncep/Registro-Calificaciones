@@ -1,12 +1,12 @@
 package ids323.estudiantes.data;
 
-import ids323.estudiantes.gui.ModuleToken;
-import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
-import ids323.estudiantes.gui.modulos.DisplayModule;
+import ids323.estudiantes.gui.TokenModulo;
+import ids323.estudiantes.gui.explorador.ItemExploradorRegistro;
+import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.modulos.edicion.ModuloCalificaciones;
-import ids323.estudiantes.util.Commons;
+import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,9 +15,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Calificaciones implements ModuleToken {
+public class Calificaciones implements TokenModulo {
 
-    public static final Image ICON = Commons.getIcon("calificaciones");
+    public static final Image ICON = Comunes.getIcono("calificaciones");
 
     private Trimestre trimestre;
     private Estudiante estudiante;
@@ -31,18 +31,18 @@ public class Calificaciones implements ModuleToken {
         this.estudiante = estudiante;
     }
 
-    private char getLetra(int val) {
-        if(val == -1) return 'R';
-        if(val == -2) return 'I';
-        if(val < 60) return 'F';
-        if(val < 70) return 'D';
-        if(val < 80) return 'C';
-        if(val < 90) return 'B';
-        return 'A';
+    private String getLetra(int val) {
+        if(val == -1) return "R";
+        if(val == -2) return "I";
+        if(val < 60) return "F";
+        if(val < 70) return "D";
+        if(val < 80) return "C" + ((val >= 75) ? "+" : "");
+        if(val < 90) return "B" + ((val >= 85) ? "+" : "");
+        return "A";
     }
 
-    private double valorLetra(char letra) {
-        return "FDCBA".indexOf(letra);
+    private double valorLetra(String letra) {
+        return "FDCBA".indexOf(letra.charAt(0)) + (letra.endsWith("+") ? 0.5 : 0);
     }
 
     public double getIndiceTrimestral() {
@@ -75,7 +75,7 @@ public class Calificaciones implements ModuleToken {
         int puntos = 0;
 
         for(Map.Entry<Asignatura, Integer> nota : calificaciones.entrySet()) {
-            char letra = getLetra(nota.getValue());
+            String letra = getLetra(nota.getValue());
             double valorLetra = valorLetra(letra);
             if(valorLetra >= 0) {
                 int creditos = nota.getKey().getCreditos();
@@ -95,12 +95,12 @@ public class Calificaciones implements ModuleToken {
     }
 
     @Override
-    public String getLabel() {
+    public String getTitulo() {
         return estudiante.getId() + " | " + trimestre;
     }
 
     @Override
-    public Image getIcon() {
+    public Image getIcono() {
         return ICON;
     }
 
@@ -110,27 +110,27 @@ public class Calificaciones implements ModuleToken {
     }
 
     @Override
-    public Collection<ModuleToken> getSubTokens() {
+    public Collection<TokenModulo> getSubTokens() {
         return Collections.emptyList();
     }
 
     @Override
-    public boolean isExpandable() {
+    public boolean isExpandible() {
         return false;
     }
 
     @Override
-    public DisplayModule createModule(Tab tab) {
+    public ModuloPantalla crearModulo(Tab tab) {
         return new ModuloCalificaciones(tab, this);
     }
 
     @Override
-    public void onInteract() {
+    public void enInteraccion() {
         TabManager.openTab(this);
     }
 
     @Override
-    public JPopupMenu generatePopup(ProjectExplorerItem explorerItem) {
+    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
         return null;
     }
 }

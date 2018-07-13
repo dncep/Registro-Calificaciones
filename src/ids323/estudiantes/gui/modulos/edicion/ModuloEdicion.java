@@ -1,21 +1,21 @@
 package ids323.estudiantes.gui.modulos.edicion;
 
-import ids323.estudiantes.gui.Colors;
+import ids323.estudiantes.componentes.CBoton;
+import ids323.estudiantes.componentes.Relleno;
+import ids323.estudiantes.gui.Colores;
 import ids323.estudiantes.gui.Ventana;
-import ids323.estudiantes.gui.modulos.DisplayModule;
+import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.modulos.edicion.logica.EntradaValor;
 import ids323.estudiantes.gui.modulos.edicion.logica.ValorEdicion;
-import ids323.estudiantes.util.Padding;
-import ids323.estudiantes.xswing.XButton;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public abstract class ModuloEdicion extends JPanel implements DisplayModule {
+public abstract class ModuloEdicion extends JPanel implements ModuloPantalla {
     protected final Tab associatedTab;
 
     protected final String title;
@@ -43,7 +43,7 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
             JPanel row = new JPanel(new BorderLayout());
             row.setOpaque(false);
 
-            JLabel fieldLabel = new JLabel(v.getLabel());
+            JLabel fieldLabel = new JLabel(v.getTitulo());
             fieldLabel.setFont(fieldLabel.getFont().deriveFont(20f));
 
             row.add(fieldLabel, BorderLayout.NORTH);
@@ -66,7 +66,7 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
             nuevasEntradas.add(entrada);
             JPanel fieldWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT));
             fieldWrapper.setOpaque(false);
-            fieldWrapper.add(entrada.getComponent());
+            fieldWrapper.add(entrada.getComponente());
             row.add(fieldWrapper);
 
             row.setMaximumSize(new Dimension(10000,50));
@@ -85,15 +85,15 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
         sp.getVerticalScrollBar().setUnitIncrement(20);
         sp.setBorder(BorderFactory.createEmptyBorder());
         this.add(sp);
-        wrapper.setBackground(Colors.BACKGROUND);
+        wrapper.setBackground(Colores.FONDO);
 
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(Colors.ACCENT_LIGHT);
+        header.setBackground(Colores.PRIMARIO_CLARO);
         JLabel titleLabel = new JLabel(this.title);
-        titleLabel.setForeground(Colors.TEXT);
+        titleLabel.setForeground(Colores.TEXTO);
         titleLabel.setFont(titleLabel.getFont().deriveFont(36f).deriveFont(Font.BOLD));
-        header.add(new Padding(15), BorderLayout.NORTH);
-        header.add(new Padding(15), BorderLayout.SOUTH);
+        header.add(new Relleno(15), BorderLayout.NORTH);
+        header.add(new Relleno(15), BorderLayout.SOUTH);
         JPanel titlePanel = new JPanel();
         titlePanel.setOpaque(false);
         titlePanel.add(titleLabel);
@@ -110,27 +110,27 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
                 BorderFactory.createCompoundBorder(
                         BorderFactory.createEmptyBorder(50,50,0,0),
                         BorderFactory.createCompoundBorder(
-                                BorderFactory.createMatteBorder(0,3,0,0, Colors.DARK_TEXT_MINOR),
+                                BorderFactory.createMatteBorder(0,3,0,0, Colores.TEXTO_OSCURO_MENOR),
                                 BorderFactory.createEmptyBorder(0,20,0,100)
                         )
                 )
         );
 
-        XButton guardar = new XButton("Guardar");
+        CBoton guardar = new CBoton("Guardar");
 
         guardar.addActionListener(e -> {
-            associatedTab.save();
+            associatedTab.guardar();
             TabManager.closeSelectedTab();
-            endEditing();
+            finalizarEdicion();
         });
 
         buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         buttonPanel.setOpaque(false);
 
-        XButton cancelar = new XButton("Cancelar");
+        CBoton cancelar = new CBoton("Cancelar");
         cancelar.addActionListener(e -> {
             TabManager.closeSelectedTab();
-            endEditing();
+            finalizarEdicion();
         });
 
         buttonPanel.add(guardar);
@@ -143,44 +143,44 @@ public abstract class ModuloEdicion extends JPanel implements DisplayModule {
         actualizarEntradas();
     }
 
-    protected abstract void endEditing();
+    protected abstract void finalizarEdicion();
 
-    public void onEdit() {
-        associatedTab.onEdit();
+    public void enEdicion() {
+        associatedTab.enEdicion();
     }
 
     @Override
-    public Object getValue() {
+    public Object getValor() {
         ArrayList<Integer> valueHashes = new ArrayList<>();
         for(EntradaValor entrada : entradas) {
-            valueHashes.add(entrada.getValueCode());
+            valueHashes.add(entrada.getCodigoValor());
         }
         return Objects.hash(valueHashes.toArray());
     }
 
     @Override
-    public boolean canSave() {
+    public boolean puedeGuardar() {
         return true;
     }
 
     @Override
-    public Object save() {
+    public Object guardar() {
         boolean valid = true;
         for(EntradaValor valor : entradas) {
-            String validation = valor.validateInput();
+            String validation = valor.validarEntrada();
             if(validation != null) {
                 valid = false;
             }
         }
         if(valid) {
-            entradas.forEach(EntradaValor::setInput);
+            entradas.forEach(EntradaValor::guardarEntrada);
             Ventana.projectExplorer.refresh();
         }
-        return getValue();
+        return getValor();
     }
 
     @Override
-    public void focus() {
+    public void enfocar() {
 
     }
 }

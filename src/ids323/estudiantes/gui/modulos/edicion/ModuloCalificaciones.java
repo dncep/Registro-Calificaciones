@@ -1,19 +1,20 @@
 package ids323.estudiantes.gui.modulos.edicion;
 
 import ids323.estudiantes.Main;
+import ids323.estudiantes.componentes.CBoton;
+import ids323.estudiantes.componentes.CMenuOpciones;
+import ids323.estudiantes.componentes.CampoNumerico;
 import ids323.estudiantes.data.Asignatura;
 import ids323.estudiantes.data.Calificaciones;
-import ids323.estudiantes.gui.Colors;
+import ids323.estudiantes.gui.Colores;
 import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
+import ids323.estudiantes.gui.modulos.edicion.logica.AdaptadorEntrada;
 import ids323.estudiantes.gui.modulos.edicion.logica.EntradaValor;
-import ids323.estudiantes.gui.modulos.edicion.logica.InputAdapter;
 import ids323.estudiantes.gui.modulos.edicion.logica.ValorEdicion;
+import ids323.estudiantes.util.Comunes;
 import ids323.estudiantes.util.DocumentAdapter;
-import ids323.estudiantes.xswing.XButton;
-import ids323.estudiantes.xswing.XDropdownMenu;
-import ids323.estudiantes.xswing.XNumberField;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,15 +26,15 @@ public class ModuloCalificaciones extends ModuloEdicion {
     private Calificaciones calificaciones;
 
     @SuppressWarnings("unchecked")
-    private InputAdapter gradeInputAdapter = (valor, modulo) -> new EntradaValor() {
+    private AdaptadorEntrada adaptadorEntradaCalificaciones = (valor, modulo) -> new EntradaValor() {
 
         private JPanel panel;
-        private XDropdownMenu<Object> keyField;
-        private XNumberField valueField;
+        private CMenuOpciones<Object> campoClave;
+        private CampoNumerico campoValor;
         private JLabel error;
-        private XButton removeButton;
+        private CBoton botonBorrar;
 
-        private XDropdownMenu<Object> addField;
+        private CMenuOpciones<Object> campoAgregar;
 
         private HashMap<Object, Integer> map = new HashMap<>();
 
@@ -41,7 +42,7 @@ public class ModuloCalificaciones extends ModuloEdicion {
             Dimension defFieldSize = new Dimension(400, 45);
             float defFieldFontSize = 20f;
 
-            map.putAll(((HashMap<Asignatura, Integer>) valor.getDefaultValue()));
+            map.putAll(((HashMap<Asignatura, Integer>) valor.getValorDefecto()));
 
             panel = new JPanel(new BorderLayout());
             panel.setOpaque(false);
@@ -50,92 +51,94 @@ public class ModuloCalificaciones extends ModuloEdicion {
             fieldPanel.setOpaque(false);
             panel.add(fieldPanel, BorderLayout.CENTER);
 
-            keyField = new XDropdownMenu<>(getNewSelectOptions());
+            campoClave = new CMenuOpciones<>(getOpcionesSeleccionNuevas());
+            campoClave.setIcono(campoClave.getOpciones().get(0), Comunes.getIcono("dropdown"));
 
-            valueField = new XNumberField();
+            campoValor = new CampoNumerico();
 
-            fieldPanel.add(keyField);
-            fieldPanel.add(valueField);
+            fieldPanel.add(campoClave);
+            fieldPanel.add(campoValor);
 
             error = new JLabel();
 
-            removeButton = new XButton("X"/*, new ImageIcon(Commons.getIcon("remove").getScaledInstance(24, 24, Image.SCALE_SMOOTH))*/);
-            removeButton.setPreferredSize(new Dimension(defFieldSize.height, defFieldSize.height));
-            removeButton.setToolTipText("Remover asignatura de registro de calificaciones");
-            removeButton.setFont(removeButton.getFont().deriveFont(16f));
-            removeButton.setBackground(Colors.ACCENT_LIGHT);
-            removeButton.setRolloverColor(Colors.ACCENT_DARKER);
-            removeButton.setPressedColor(Colors.ACCENT_DARKEST);
-            removeButton.setForeground(Colors.TEXT);
-            fieldPanel.add(removeButton);
+            botonBorrar = new CBoton("X");
+            botonBorrar.setPreferredSize(new Dimension(defFieldSize.height, defFieldSize.height));
+            botonBorrar.setToolTipText("Remover asignatura de registro de calificaciones");
+            botonBorrar.setFont(botonBorrar.getFont().deriveFont(16f));
+            botonBorrar.setBackground(Colores.PRIMARIO_CLARO);
+            botonBorrar.setRolloverColor(Colores.PRIMARIO_OSCURO);
+            botonBorrar.setPressedColor(Colores.PRIMARIO_MAS_OSCURO);
+            botonBorrar.setForeground(Colores.TEXTO);
+            fieldPanel.add(botonBorrar);
 
-            removeButton.addActionListener(e -> {
-                int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere remover la asignatura " + keyField.getValue() + " de este reporte de calificaciones?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(Calificaciones.ICON), new String[] {"Si", "No"}, "Si");
+            botonBorrar.addActionListener(e -> {
+                int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere remover la asignatura " + campoClave.getValor() + " de este reporte de calificaciones?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(Calificaciones.ICON), new String[] {"Si", "No"}, "Si");
                 if(result != JOptionPane.YES_OPTION) return;
 
-                map.remove(keyField.getValue());
-                refresh();
+                map.remove(campoClave.getValor());
+                refrescar();
             });
 
             fieldPanel.add(error);
 
-            keyField.setForeground(Colors.INPUT_TEXT);
-            keyField.setPreferredSize(defFieldSize);
-            keyField.setFont(keyField.getFont().deriveFont(defFieldFontSize).deriveFont(Font.PLAIN));
+            campoClave.setForeground(Colores.TEXTO_ENTRADA);
+            campoClave.setPreferredSize(defFieldSize);
+            campoClave.setFont(campoClave.getFont().deriveFont(defFieldFontSize).deriveFont(Font.PLAIN));
 
-            valueField.setForeground(Colors.INPUT_TEXT);
-            valueField.setPreferredSize(defFieldSize);
-            valueField.setFont(valueField.getFont().deriveFont(defFieldFontSize));
+            campoValor.setForeground(Colores.TEXTO_ENTRADA);
+            campoValor.setPreferredSize(defFieldSize);
+            campoValor.setFont(campoValor.getFont().deriveFont(defFieldFontSize));
 
             error.setFont(error.getFont().deriveFont(16f));
-            error.setForeground(Colors.ERROR_TEXT);
+            error.setForeground(Colores.TEXTO_ERROR);
 
             JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
             buttonPanel.setOpaque(false);
             panel.add(buttonPanel, BorderLayout.SOUTH);
 
-            addField = new XDropdownMenu<>(getNewAddOptions());
-            addField.setPreferredSize(defFieldSize);
-            addField.setFont(addField.getFont().deriveFont(defFieldFontSize*0.9f).deriveFont(Font.PLAIN));
-            addField.addChoiceListener(c -> {
+            campoAgregar = new CMenuOpciones<>(getOpcionesAdicionNuevas());
+            campoAgregar.setPreferredSize(defFieldSize);
+            campoAgregar.setFont(campoAgregar.getFont().deriveFont(defFieldFontSize*0.9f).deriveFont(Font.PLAIN));
+            campoAgregar.agregarOpcionListener(c -> {
                 if(c instanceof Asignatura) {
-                    addField.setValueIndex(0);
+                    campoAgregar.setIndiceValor(0);
                     map.put(c, 100);
-                    refresh();
-                    keyField.setValue(c);
+                    refrescar();
+                    campoClave.setValor(c);
                 }
             });
 
-            addField.setValueIndex(0);
+            campoAgregar.setIndiceValor(0);
 
-            buttonPanel.add(addField);
+            buttonPanel.add(campoAgregar);
 
-            valueField.getDocument().addDocumentListener((DocumentAdapter) e -> {
-                if(validateInput() == null && keyField.getValue() instanceof Asignatura) {
-                    map.put(keyField.getValue(), valueField.getValue());
+            campoValor.getDocument().addDocumentListener((DocumentAdapter) e -> {
+                if(validarEntrada() == null && campoClave.getValor() instanceof Asignatura) {
+                    map.put(campoClave.getValor(), campoValor.getValue());
                 }
             });
 
-            keyField.addChoiceListener(c -> update());
+            campoClave.agregarOpcionListener(c -> actualizar());
 
-            keyField.setValueIndex(0);
+            campoClave.setIndiceValor(0);
         }
 
-        private void refresh() {
-            keyField.setOptions(getNewSelectOptions());
-            addField.setOptions(getNewAddOptions());
-            update();
+        private void refrescar() {
+            campoClave.setOpciones(getOpcionesSeleccionNuevas());
+            campoClave.setIcono(campoClave.getOpciones().get(0), Comunes.getIcono("dropdown"));
+            campoAgregar.setOpciones(getOpcionesAdicionNuevas());
+            actualizar();
         }
 
-        private void update() {
-            valueField.setVisible(keyField.getValue() instanceof Asignatura);
-            removeButton.setVisible(keyField.getValue() instanceof Asignatura);
-            if(!(keyField.getValue() instanceof Asignatura)) valueField.setValue(0);
-            else valueField.setValue(map.get(keyField.getValue()));
-            validateInput();
+        private void actualizar() {
+            campoValor.setVisible(campoClave.getValor() instanceof Asignatura);
+            botonBorrar.setVisible(campoClave.getValor() instanceof Asignatura);
+            if(!(campoClave.getValor() instanceof Asignatura)) campoValor.setValue(0);
+            else campoValor.setValue(map.get(campoClave.getValor()));
+            validarEntrada();
         }
 
-        private Object[] getNewSelectOptions() {
+        private Object[] getOpcionesSeleccionNuevas() {
             ArrayList<Object> options = new ArrayList<>();
             if(map.isEmpty()) {
                 options.add("No hay asignaturas seleccionadas");
@@ -146,12 +149,12 @@ public class ModuloCalificaciones extends ModuloEdicion {
             return options.toArray();
         }
 
-        private Object[] getNewAddOptions() {
+        private Object[] getOpcionesAdicionNuevas() {
             ArrayList<Object> options = new ArrayList<>();
             if(map.size() == Main.registro.asignaturas.size()) {
                 options.add("No existen más asignaturas");
             } else {
-                options.add("+ Agregar asignatura (" + map.size() + "/" + Main.registro.asignaturas.size() + ")");
+                options.add("+ Agregar asignatura a la selección (" + map.size() + "/" + Main.registro.asignaturas.size() + ")");
                 for(Asignatura asig : Main.registro.asignaturas) {
                     if(!map.containsKey(asig)) options.add(asig);
                 }
@@ -160,20 +163,20 @@ public class ModuloCalificaciones extends ModuloEdicion {
         }
 
         @Override
-        public JComponent getComponent() {
+        public JComponent getComponente() {
             return panel;
         }
 
         @Override
-        public String validateInput() {
-            modulo.onEdit();
-            String result = valueField.getText() == null ? "Formato inválido" : valueField.getValue() >= 0 && valueField.getValue() <= 100 ? null : "Calificación debe estar entre 0 y 100";
+        public String validarEntrada() {
+            modulo.enEdicion();
+            String result = campoValor.getText() == null ? "Formato inválido" : campoValor.getValue() >= 0 && campoValor.getValue() <= 100 ? null : "Calificación debe estar entre 0 y 100";
             error.setText(result != null ? "*" + result : null);
             return result;
         }
 
         @Override
-        public void setInput() {
+        public void guardarEntrada() {
             valor.getSetter().set(map);
         }
 
@@ -183,7 +186,7 @@ public class ModuloCalificaciones extends ModuloEdicion {
         }
 
         @Override
-        public int getValueCode() {
+        public int getCodigoValor() {
             return map.hashCode();
         }
     };
@@ -201,13 +204,13 @@ public class ModuloCalificaciones extends ModuloEdicion {
             return null;
         }, calificaciones::setTrimestre));
 
-        valores.add(new ValorEdicion<>("Calificaciones", calificaciones.getCalificaciones(), v -> null, v -> {calificaciones.getCalificaciones().clear(); calificaciones.getCalificaciones().putAll(v);}, gradeInputAdapter));
+        valores.add(new ValorEdicion<>("Calificaciones", calificaciones.getCalificaciones(), v -> null, v -> {calificaciones.getCalificaciones().clear(); calificaciones.getCalificaciones().putAll(v);}, adaptadorEntradaCalificaciones));
 
         construir();
     }
 
     @Override
-    protected void endEditing() {
+    protected void finalizarEdicion() {
         TabManager.closeTab(TabManager.getTabForToken(calificaciones.getEstudiante()));
         TabManager.openTab(calificaciones.getEstudiante());
     }

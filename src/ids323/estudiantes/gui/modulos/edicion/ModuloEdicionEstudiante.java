@@ -29,7 +29,7 @@ public class ModuloEdicionEstudiante extends ModuloEdicion {
     }
 
     @Override
-    protected void endEditing() {
+    protected void finalizarEdicion() {
         estudiante.setEditando(false);
         TabManager.openTab(estudiante);
     }

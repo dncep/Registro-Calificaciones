@@ -1,22 +1,21 @@
 package ids323.estudiantes.gui.modulos.vista;
 
-import ids323.estudiantes.gui.Colors;
-import ids323.estudiantes.gui.InfoPanel;
-import ids323.estudiantes.gui.modulos.DisplayModule;
+import ids323.estudiantes.componentes.CBoton;
+import ids323.estudiantes.gui.Colores;
+import ids323.estudiantes.gui.PanelInfo;
+import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
-import ids323.estudiantes.util.Commons;
-import ids323.estudiantes.util.Padding;
-import ids323.estudiantes.xswing.XButton;
+import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class ModuloVista extends JPanel implements DisplayModule {
+public abstract class ModuloVista extends JPanel implements ModuloPantalla {
     protected final Tab associatedTab;
 
     protected final String title;
     protected final String subtitle;
-    protected final InfoPanel infoPanel = new InfoPanel();
+    protected final PanelInfo panelInfo = new PanelInfo();
 
     private JPanel content;
 
@@ -31,22 +30,22 @@ public abstract class ModuloVista extends JPanel implements DisplayModule {
 
         JPanel inner = new JPanel(new BorderLayout());
         inner.setOpaque(true);
-        inner.setBackground(Colors.ACCENT_LIGHT);
+        inner.setBackground(Colores.PRIMARIO_CLARO);
         JScrollPane sp = new JScrollPane(inner);
         sp.getVerticalScrollBar().setUnitIncrement(20);
         sp.setBorder(BorderFactory.createEmptyBorder());
         sp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         this.add(sp);
 
-        inner.add(new Padding(15), BorderLayout.NORTH);
-        inner.add(new Padding(30, Colors.BACKGROUND), BorderLayout.SOUTH);
+        inner.add(new Relleno(15), BorderLayout.NORTH);
+        inner.add(new Relleno(30, Colores.FONDO), BorderLayout.SOUTH);
 
         JPanel body = new JPanel(new BorderLayout());
         body.setOpaque(false);
         inner.add(body, BorderLayout.CENTER);
 
-        body.add(new Padding(250, Colors.BACKGROUND), BorderLayout.WEST);
-        body.add(new Padding(250, Colors.BACKGROUND), BorderLayout.EAST);
+        body.add(new Relleno(250, Colores.FONDO), BorderLayout.WEST);
+        body.add(new Relleno(250, Colores.FONDO), BorderLayout.EAST);
 
         {
             JPanel header = new JPanel(new BorderLayout());
@@ -61,7 +60,7 @@ public abstract class ModuloVista extends JPanel implements DisplayModule {
                 titlePanel.setOpaque(false);
                 JLabel title = new JLabel(this.title);
                 title.setFont(title.getFont().deriveFont(36f).deriveFont(Font.BOLD));
-                title.setForeground(Colors.TEXT);
+                title.setForeground(Colores.TEXTO);
                 titlePanel.add(title);
                 mainHeader.add(titlePanel, BorderLayout.NORTH);
             }
@@ -71,16 +70,16 @@ public abstract class ModuloVista extends JPanel implements DisplayModule {
                 subtitlePanel.setOpaque(false);
                 JLabel subtitle = new JLabel(this.subtitle);
                 subtitle.setFont(subtitle.getFont().deriveFont(24f).deriveFont(Font.PLAIN));
-                subtitle.setForeground(Colors.TEXT_MINOR);
+                subtitle.setForeground(Colores.TEXTO_MENOR);
                 subtitlePanel.add(subtitle);
                 mainHeader.add(subtitlePanel, BorderLayout.CENTER);
             }
-            header.add(new Padding(15), BorderLayout.SOUTH);
+            header.add(new Relleno(15), BorderLayout.SOUTH);
 
             JPanel actionPanel = new JPanel(new BorderLayout());
             actionPanel.setOpaque(false);
 
-            XButton editButton = new XButton("", new ImageIcon(Commons.getIcon("edit")));
+            CBoton editButton = new CBoton("", new ImageIcon(Comunes.getIcono("edit")));
             editButton.setBorder(new Color(0,0,0,0), 0);
             editButton.setOpaque(false);
             editButton.setBackground(new Color(255,255,255,0));
@@ -91,13 +90,13 @@ public abstract class ModuloVista extends JPanel implements DisplayModule {
             editButton.addActionListener(e -> startEditing());
 
             actionPanel.add(editButton);
-            actionPanel.add(new Padding(40), BorderLayout.EAST);
-            actionPanel.add(new Padding(40), BorderLayout.WEST);
-            actionPanel.add(new Padding(7), BorderLayout.NORTH);
-            actionPanel.add(new Padding(7), BorderLayout.SOUTH);
+            actionPanel.add(new Relleno(40), BorderLayout.EAST);
+            actionPanel.add(new Relleno(40), BorderLayout.WEST);
+            actionPanel.add(new Relleno(7), BorderLayout.NORTH);
+            actionPanel.add(new Relleno(7), BorderLayout.SOUTH);
 
             header.add(actionPanel, BorderLayout.EAST);
-            header.add(new Padding(146,1), BorderLayout.WEST);
+            header.add(new Relleno(146,1), BorderLayout.WEST);
 
             body.add(header, BorderLayout.NORTH);
         }
@@ -105,9 +104,9 @@ public abstract class ModuloVista extends JPanel implements DisplayModule {
         {
             content = new JPanel(new BorderLayout());
             body.add(content, BorderLayout.CENTER);
-            content.setBackground(Colors.BACKGROUND);
+            content.setBackground(Colores.FONDO);
 
-            content.add(infoPanel, BorderLayout.NORTH);
+            content.add(panelInfo, BorderLayout.NORTH);
         }
     }
 

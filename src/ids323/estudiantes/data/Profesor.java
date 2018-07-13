@@ -1,25 +1,25 @@
 package ids323.estudiantes.data;
 
 import ids323.estudiantes.Main;
-import ids323.estudiantes.gui.ModuleToken;
+import ids323.estudiantes.gui.TokenModulo;
 import ids323.estudiantes.gui.Ventana;
-import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
-import ids323.estudiantes.gui.modulos.DisplayModule;
+import ids323.estudiantes.gui.explorador.ItemExploradorRegistro;
+import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.modulos.edicion.ModuloEdicionProfesor;
 import ids323.estudiantes.gui.modulos.vista.ModuloVistaProfesor;
-import ids323.estudiantes.util.Commons;
+import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Collection;
 import java.util.Collections;
 
-public class Profesor implements ModuleToken {
+public class Profesor implements TokenModulo {
 
-    public static final Image ICON = Commons.getIcon("profesor");
-    public static final Image ICON_NUEVO = Commons.getIcon("profesor_nuevo");
+    public static final Image ICON = Comunes.getIcono("profesor");
+    public static final Image ICON_NUEVO = Comunes.getIcono("profesor_nuevo");
 
     private String nombre;
     private String apellido;
@@ -71,12 +71,12 @@ public class Profesor implements ModuleToken {
     }
 
     @Override
-    public String getLabel() {
+    public String getTitulo() {
         return "P" + id + " - " + apellido + ", " + nombre;
     }
 
     @Override
-    public Image getIcon() {
+    public Image getIcono() {
         return ICON;
     }
 
@@ -86,34 +86,34 @@ public class Profesor implements ModuleToken {
     }
 
     @Override
-    public Collection<ModuleToken> getSubTokens() {
+    public Collection<TokenModulo> getSubTokens() {
         return Collections.emptyList();
     }
 
     @Override
-    public boolean isExpandable() {
+    public boolean isExpandible() {
         return false;
     }
 
     @Override
-    public DisplayModule createModule(Tab tab) {
+    public ModuloPantalla crearModulo(Tab tab) {
         return editando ? new ModuloEdicionProfesor(tab, this) : new ModuloVistaProfesor(tab, this);
     }
 
     @Override
-    public void onInteract() {
+    public void enInteraccion() {
         editando = editando && TabManager.getTabForToken(this) != null;
         TabManager.openTab(this);
     }
 
     @Override
-    public JPopupMenu generatePopup(ProjectExplorerItem explorerItem) {
+    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
         JPopupMenu menu = new JPopupMenu();
 
         {
             JMenuItem item = new JMenuItem("Ver");
 
-            item.addActionListener(e -> onInteract());
+            item.addActionListener(e -> enInteraccion());
 
             menu.add(item);
         }
@@ -167,7 +167,7 @@ public class Profesor implements ModuleToken {
     }
 
     @Override
-    public String getSearchInfo() {
+    public String getInformacionBusqueda() {
         return "Prof. " + nombre + " " + apellido + "\n" +
                 "P" + id;
     }

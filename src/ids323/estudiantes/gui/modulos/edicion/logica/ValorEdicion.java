@@ -5,38 +5,38 @@ import ids323.estudiantes.gui.modulos.edicion.ModuloEdicion;
 import java.util.Collection;
 
 public class ValorEdicion<T> {
-    private final String label;
-    private final T defaultValue;
+    private final String titulo;
+    private final T valorDefecto;
     private final ValidacionValor<T> validacion;
     private final SetterValor<T> setter;
-    private Collection<T> possibleValues;
+    private Collection<T> valoresPosibles;
 
-    private InputAdapter adapter;
+    private AdaptadorEntrada adapter;
 
-    public ValorEdicion(String label, T defaultValue, ValidacionValor<T> validacion, SetterValor<T> setter) {
-        this(label, defaultValue, validacion, setter, StandardInputAdapters.getAdapterForClass(defaultValue.getClass()));
+    public ValorEdicion(String titulo, T valorDefecto, ValidacionValor<T> validacion, SetterValor<T> setter) {
+        this(titulo, valorDefecto, validacion, setter, AdaptadoresEntradaEstandar.getAdaptadorParaClase(valorDefecto.getClass()));
     }
 
-    public ValorEdicion(String label, T defaultValue, ValidacionValor<T> validacion, SetterValor<T> setter, InputAdapter adapter) {
-        this.label = label;
-        this.defaultValue = defaultValue;
+    public ValorEdicion(String titulo, T valorDefecto, ValidacionValor<T> validacion, SetterValor<T> setter, AdaptadorEntrada adapter) {
+        this.titulo = titulo;
+        this.valorDefecto = valorDefecto;
         this.validacion = validacion;
         this.setter = setter;
 
         this.adapter = adapter;
     }
 
-    public ValorEdicion(String label, T defaultValue, ValidacionValor<T> validacion, SetterValor<T> setter, Collection<T> possibleValues) {
-        this(label, defaultValue, validacion, setter, StandardInputAdapters.customInputAdapter);
-        this.possibleValues = possibleValues;
+    public ValorEdicion(String titulo, T valorDefecto, ValidacionValor<T> validacion, SetterValor<T> setter, Collection<T> valoresPosibles) {
+        this(titulo, valorDefecto, validacion, setter, AdaptadoresEntradaEstandar.ADAPTADOR_ENTRADA_OPCION_MULTIPLE);
+        this.valoresPosibles = valoresPosibles;
     }
 
-    public String getLabel() {
-        return label;
+    public String getTitulo() {
+        return titulo;
     }
 
-    public T getDefaultValue() {
-        return defaultValue;
+    public T getValorDefecto() {
+        return valorDefecto;
     }
 
     public ValidacionValor<T> getValidacion() {
@@ -47,8 +47,8 @@ public class ValorEdicion<T> {
         return setter;
     }
 
-    public Collection<T> getPossibleValues() {
-        return possibleValues;
+    public Collection<T> getValoresPosibles() {
+        return valoresPosibles;
     }
 
     public EntradaValor crearEntrada(ModuloEdicion modulo) {

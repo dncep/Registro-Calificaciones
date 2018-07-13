@@ -23,22 +23,22 @@ public class ModuloVistaProfesor extends ModuloVista {
     }
 
     @Override
-    public Object getValue() {
+    public Object getValor() {
         return null;
     }
 
     @Override
-    public boolean canSave() {
+    public boolean puedeGuardar() {
         return false;
     }
 
     @Override
-    public Object save() {
+    public Object guardar() {
         return null;
     }
 
     @Override
-    public void focus() {
+    public void enfocar() {
 
     }
 }

@@ -50,7 +50,7 @@ public class AreaModulo extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 Tab st = TabManager.getSelectedTab();
-                if(st != null) st.save();
+                if(st != null) st.guardar();
             }
         });
 

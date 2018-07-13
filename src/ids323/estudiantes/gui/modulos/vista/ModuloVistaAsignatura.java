@@ -12,9 +12,9 @@ public class ModuloVistaAsignatura extends ModuloVista {
         super(tab, asignatura.getNombre(), asignatura.getCodigo());
         this.asignatura = asignatura;
 
-        infoPanel.put("PROFESOR", "" + asignatura.getProfesor());
-        infoPanel.put("CRÉDITOS", asignatura.getCreditos() + " crédito" + ((asignatura.getCreditos() == 1) ? "" : "s"));
-        infoPanel.put("AREA ACADÉMICA", asignatura.getArea().getNombre());
+        panelInfo.put("PROFESOR", "" + asignatura.getProfesor());
+        panelInfo.put("CRÉDITOS", asignatura.getCreditos() + " crédito" + ((asignatura.getCreditos() == 1) ? "" : "s"));
+        panelInfo.put("AREA ACADÉMICA", asignatura.getArea().getNombre());
 
         construir();
     }
@@ -27,22 +27,22 @@ public class ModuloVistaAsignatura extends ModuloVista {
     }
 
     @Override
-    public Object getValue() {
+    public Object getValor() {
         return null;
     }
 
     @Override
-    public boolean canSave() {
+    public boolean puedeGuardar() {
         return false;
     }
 
     @Override
-    public Object save() {
+    public Object guardar() {
         return null;
     }
 
     @Override
-    public void focus() {
+    public void enfocar() {
 
     }
 }

@@ -1,12 +1,12 @@
 package ids323.estudiantes.gui.modulos;
 
+import ids323.estudiantes.componentes.menu.CItemMenu;
 import ids323.estudiantes.data.Asignatura;
 import ids323.estudiantes.data.Estudiante;
 import ids323.estudiantes.data.Profesor;
-import ids323.estudiantes.gui.ModuleToken;
-import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
-import ids323.estudiantes.util.Commons;
-import ids323.estudiantes.xswing.menu.XMenuItem;
+import ids323.estudiantes.gui.TokenModulo;
+import ids323.estudiantes.gui.explorador.ItemExploradorRegistro;
+import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,18 +16,18 @@ import java.util.Collection;
 
 import static ids323.estudiantes.Main.registro;
 
-public class ModuleTokenRoot implements ModuleToken {
+public class ModuleTokenRoot implements TokenModulo {
 
-    private Collection<ModuleToken> subTokens = Arrays.asList(new TokenModuloEstudiantes(), new TokenModuloAsignaturas(), new TokenModuloProfesores());
+    private Collection<TokenModulo> subTokens = Arrays.asList(new TokenModuloEstudiantes(), new TokenModuloAsignaturas(), new TokenModuloProfesores());
 
     @Override
-    public String getLabel() {
+    public String getTitulo() {
         return "root";
     }
 
     @Override
-    public Image getIcon() {
-        return Commons.getIcon("file");
+    public Image getIcono() {
+        return Comunes.getIcono("file");
     }
 
     @Override
@@ -36,39 +36,39 @@ public class ModuleTokenRoot implements ModuleToken {
     }
 
     @Override
-    public Collection<ModuleToken> getSubTokens() {
+    public Collection<TokenModulo> getSubTokens() {
         return subTokens;
     }
 
     @Override
-    public boolean isExpandable() {
+    public boolean isExpandible() {
         return true;
     }
 
     @Override
-    public DisplayModule createModule(Tab tab) {
+    public ModuloPantalla crearModulo(Tab tab) {
         return null;
     }
 
     @Override
-    public void onInteract() {
+    public void enInteraccion() {
 
     }
 
     @Override
-    public JPopupMenu generatePopup(ProjectExplorerItem explorerItem) {
+    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
         return null;
     }
 }
 
-class TokenModuloEstudiantes implements ModuleToken {
+class TokenModuloEstudiantes implements TokenModulo {
     @Override
-    public String getLabel() {
+    public String getTitulo() {
         return "ESTUDIANTES";
     }
 
     @Override
-    public Image getIcon() {
+    public Image getIcono() {
         return null;
     }
 
@@ -78,30 +78,30 @@ class TokenModuloEstudiantes implements ModuleToken {
     }
 
     @Override
-    public Collection<ModuleToken> getSubTokens() {
+    public Collection<TokenModulo> getSubTokens() {
         return new ArrayList<>(registro.estudiantes);
     }
 
     @Override
-    public boolean isExpandable() {
+    public boolean isExpandible() {
         return true;
     }
 
     @Override
-    public DisplayModule createModule(Tab tab) {
+    public ModuloPantalla crearModulo(Tab tab) {
         return null;
     }
 
     @Override
-    public void onInteract() {
+    public void enInteraccion() {
 
     }
 
     @Override
-    public JPopupMenu generatePopup(ProjectExplorerItem explorerItem) {
+    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
         JPopupMenu menu = new JPopupMenu();
         {
-            XMenuItem item = new XMenuItem("Nuevo Estudiante");
+            CItemMenu item = new CItemMenu("Nuevo Estudiante");
             item.addActionListener(e -> Estudiante.crearNuevo());
             menu.add(item);
         }
@@ -109,14 +109,14 @@ class TokenModuloEstudiantes implements ModuleToken {
     }
 }
 
-class TokenModuloAsignaturas implements ModuleToken {
+class TokenModuloAsignaturas implements TokenModulo {
     @Override
-    public String getLabel() {
+    public String getTitulo() {
         return "ASIGNATURAS";
     }
 
     @Override
-    public Image getIcon() {
+    public Image getIcono() {
         return null;
     }
 
@@ -126,30 +126,30 @@ class TokenModuloAsignaturas implements ModuleToken {
     }
 
     @Override
-    public Collection<ModuleToken> getSubTokens() {
+    public Collection<TokenModulo> getSubTokens() {
         return new ArrayList<>(registro.asignaturas);
     }
 
     @Override
-    public boolean isExpandable() {
+    public boolean isExpandible() {
         return true;
     }
 
     @Override
-    public DisplayModule createModule(Tab tab) {
+    public ModuloPantalla crearModulo(Tab tab) {
         return null;
     }
 
     @Override
-    public void onInteract() {
+    public void enInteraccion() {
 
     }
 
     @Override
-    public JPopupMenu generatePopup(ProjectExplorerItem explorerItem) {
+    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
         JPopupMenu menu = new JPopupMenu();
         {
-            XMenuItem item = new XMenuItem("Nueva Asignatura");
+            CItemMenu item = new CItemMenu("Nueva Asignatura");
             item.addActionListener(e -> Asignatura.crearNueva());
             menu.add(item);
         }
@@ -157,14 +157,14 @@ class TokenModuloAsignaturas implements ModuleToken {
     }
 }
 
-class TokenModuloProfesores implements ModuleToken {
+class TokenModuloProfesores implements TokenModulo {
     @Override
-    public String getLabel() {
+    public String getTitulo() {
         return "PROFESORES";
     }
 
     @Override
-    public Image getIcon() {
+    public Image getIcono() {
         return null;
     }
 
@@ -174,30 +174,30 @@ class TokenModuloProfesores implements ModuleToken {
     }
 
     @Override
-    public Collection<ModuleToken> getSubTokens() {
+    public Collection<TokenModulo> getSubTokens() {
         return new ArrayList<>(registro.profesores);
     }
 
     @Override
-    public boolean isExpandable() {
+    public boolean isExpandible() {
         return true;
     }
 
     @Override
-    public DisplayModule createModule(Tab tab) {
+    public ModuloPantalla crearModulo(Tab tab) {
         return null;
     }
 
     @Override
-    public void onInteract() {
+    public void enInteraccion() {
 
     }
 
     @Override
-    public JPopupMenu generatePopup(ProjectExplorerItem explorerItem) {
+    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
         JPopupMenu menu = new JPopupMenu();
         {
-            XMenuItem item = new XMenuItem("Nuevo Profesor");
+            CItemMenu item = new CItemMenu("Nuevo Profesor");
             item.addActionListener(e -> Profesor.crearNuevo());
             menu.add(item);
         }

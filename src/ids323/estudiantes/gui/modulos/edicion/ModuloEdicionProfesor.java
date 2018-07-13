@@ -20,7 +20,7 @@ public class ModuloEdicionProfesor extends ModuloEdicion {
     }
 
     @Override
-    protected void endEditing() {
+    protected void finalizarEdicion() {
         profesor.setEditando(false);
         TabManager.openTab(profesor);
     }

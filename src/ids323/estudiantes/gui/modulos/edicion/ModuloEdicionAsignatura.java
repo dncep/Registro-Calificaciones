@@ -24,7 +24,7 @@ public class ModuloEdicionAsignatura extends ModuloEdicion {
     }
 
     @Override
-    protected void endEditing() {
+    protected void finalizarEdicion() {
         asignatura.setEditando(false);
         TabManager.openTab(asignatura);
     }

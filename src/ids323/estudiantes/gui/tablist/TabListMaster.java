@@ -1,6 +1,6 @@
 package ids323.estudiantes.gui.tablist;
 
-import ids323.estudiantes.gui.Colors;
+import ids323.estudiantes.gui.Colores;
 import ids323.estudiantes.gui.modulos.Tab;
 
 import javax.swing.*;
@@ -29,15 +29,15 @@ public class TabListMaster extends JComponent implements MouseListener, MouseMot
 
     public TabListMaster() {
 
-        colors.put("background",Colors.ACCENT_DARKER);
-        colors.put("tab.background",Colors.ACCENT_DARKER);
-        colors.put("tab.foreground",Colors.TEXT);
-        colors.put("tab.close.color",Colors.TEXT.darker());
-        colors.put("tab.close.rollover.color",Colors.TEXT);
-        colors.put("tab.selected.background",Colors.ACCENT);
-        colors.put("tab.selected.foreground",Colors.TEXT);
-        colors.put("tab.rollover.background",Colors.ACCENT_LIGHT);
-        colors.put("tab.rollover.foreground",Colors.TEXT);
+        colors.put("background", Colores.PRIMARIO_OSCURO);
+        colors.put("tab.background", Colores.PRIMARIO_OSCURO);
+        colors.put("tab.texto", Colores.TEXTO);
+        colors.put("tab.close.color", Colores.TEXTO.darker());
+        colors.put("tab.close.rollover.color", Colores.TEXTO);
+        colors.put("tab.seleccionado.background", Colores.ENFASIS);
+        colors.put("tab.seleccionado.texto", Colores.TEXTO);
+        colors.put("tab.rollover.background", Colores.PRIMARIO_CLARO);
+        colors.put("tab.rollover.texto", Colores.TEXTO);
 
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
@@ -258,6 +258,6 @@ public class TabListMaster extends JComponent implements MouseListener, MouseMot
         if(left == null) return right;
         if(right == null) return left;
 
-        return (left.openedTimeStamp > right.openedTimeStamp) ? left : right;
+        return (left.tiempoAbierto > right.tiempoAbierto) ? left : right;
     }
 }

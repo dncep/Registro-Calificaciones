@@ -1,15 +1,15 @@
 package ids323.estudiantes.data;
 
 import ids323.estudiantes.Main;
-import ids323.estudiantes.gui.ModuleToken;
+import ids323.estudiantes.gui.TokenModulo;
 import ids323.estudiantes.gui.Ventana;
-import ids323.estudiantes.gui.explorer.ProjectExplorerItem;
-import ids323.estudiantes.gui.modulos.DisplayModule;
+import ids323.estudiantes.gui.explorador.ItemExploradorRegistro;
+import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.modulos.edicion.ModuloEdicionAsignatura;
 import ids323.estudiantes.gui.modulos.vista.ModuloVistaAsignatura;
-import ids323.estudiantes.util.Commons;
+import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,10 +19,10 @@ import java.util.Collections;
 /**
  * Representación de una asignatura como objeto.
  * */
-public class Asignatura implements ModuleToken {
+public class Asignatura implements TokenModulo {
 
-    public static final Image ICON = Commons.getIcon("asignatura");
-    public static final Image ICON_NUEVO = Commons.getIcon("asignatura_nueva");
+    public static final Image ICON = Comunes.getIcono("asignatura");
+    public static final Image ICON_NUEVO = Comunes.getIcono("asignatura_nueva");
 
     private int id;
     private AreaAcademica area;
@@ -108,12 +108,12 @@ public class Asignatura implements ModuleToken {
     }
 
     @Override
-    public String getLabel() {
+    public String getTitulo() {
         return codigo + " - " + nombre;
     }
 
     @Override
-    public Image getIcon() {
+    public Image getIcono() {
         return ICON;
     }
 
@@ -123,34 +123,34 @@ public class Asignatura implements ModuleToken {
     }
 
     @Override
-    public Collection<ModuleToken> getSubTokens() {
+    public Collection<TokenModulo> getSubTokens() {
         return Collections.emptyList();
     }
 
     @Override
-    public boolean isExpandable() {
+    public boolean isExpandible() {
         return false;
     }
 
     @Override
-    public DisplayModule createModule(Tab tab) {
+    public ModuloPantalla crearModulo(Tab tab) {
         return (editando) ? new ModuloEdicionAsignatura(tab, this) : new ModuloVistaAsignatura(tab, this);
     }
 
     @Override
-    public void onInteract() {
+    public void enInteraccion() {
         editando = editando && TabManager.getTabForToken(this) != null;
         TabManager.openTab(this);
     }
 
     @Override
-    public JPopupMenu generatePopup(ProjectExplorerItem explorerItem) {
+    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
         JPopupMenu menu = new JPopupMenu();
 
         {
             JMenuItem item = new JMenuItem("Ver");
 
-            item.addActionListener(e -> onInteract());
+            item.addActionListener(e -> enInteraccion());
 
             menu.add(item);
         }
@@ -206,11 +206,11 @@ public class Asignatura implements ModuleToken {
     }
 
     @Override
-    public String getSearchInfo() {
+    public String getInformacionBusqueda() {
         return nombre + "\n" +
                 codigo + "\n" +
                 area.getNombre() + "\n" +
                 creditos + " créditos" + "\n" +
-                profesor.getSearchInfo();
+                profesor.getInformacionBusqueda();
     }
 }
