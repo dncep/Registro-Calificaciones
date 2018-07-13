@@ -16,7 +16,7 @@ import java.util.Collection;
 
 import static ids323.estudiantes.Main.registro;
 
-public class ModuleTokenRoot implements TokenModulo {
+public class TokenOrigen implements TokenModulo {
 
     private Collection<TokenModulo> subTokens = Arrays.asList(new TokenModuloEstudiantes(), new TokenModuloAsignaturas(), new TokenModuloProfesores());
 

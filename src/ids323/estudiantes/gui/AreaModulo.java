@@ -32,13 +32,13 @@ public class AreaModulo extends JPanel {
         tabList.setPreferredSize(new Dimension(1, 30));
         tabList.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(200, 200, 200)));
 
-        JScrollPane tabSP = new JScrollPane(Ventana.tabList);
+        JScrollPane tabSP = new JScrollPane(Ventana.listaPestanas);
         tabSP.setBorder(BorderFactory.createEmptyBorder());
         tabSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tabListHolder.add(tabSP, BorderLayout.CENTER);
 
-        this.setContent(Ventana.welcomePane);
+        this.setContent(Ventana.panelVacio);
 
 
         KeyStroke saveKeystroke = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
@@ -72,7 +72,7 @@ public class AreaModulo extends JPanel {
         if(this.content != null) {
             this.remove(this.content);
         }
-        if(content == null) content = Ventana.welcomePane;
+        if(content == null) content = Ventana.panelVacio;
 
         this.add(content, BorderLayout.CENTER);
         this.content = content;

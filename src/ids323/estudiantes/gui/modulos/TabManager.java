@@ -35,7 +35,7 @@ public class TabManager {
         }
         Tab nt = new Tab(token);
         openTabs.add(nt);
-        Ventana.tabList.addTab(nt);
+        Ventana.listaPestanas.addTab(nt);
         setSelectedTab(nt);
     }
 
@@ -65,9 +65,9 @@ public class TabManager {
         }
         for (int i = 0; i < openTabs.size(); i++) {
             if (openTabs.get(i) == tab) {
-                if (selectedTab == openTabs.get(i)) setSelectedTab(Ventana.tabList.getFallbackTab(tab));
+                if (selectedTab == openTabs.get(i)) setSelectedTab(Ventana.listaPestanas.getFallbackTab(tab));
 
-                Ventana.tabList.removeTab(tab);
+                Ventana.listaPestanas.removeTab(tab);
                 openTabs.remove(i);
 
                 return;
@@ -107,7 +107,7 @@ public class TabManager {
     }*/
 
     public static void setSelectedTab(Tab tab) {
-        Ventana.tabList.selectTab(tab);
+        Ventana.listaPestanas.selectTab(tab);
         if (selectedTab != null) {
             selectedTab = null;
         }
@@ -115,13 +115,13 @@ public class TabManager {
             selectedTab = tab;
 
             //CraftrWindow.setTitle(((linkedProject != null) ? linkedProject.getTitulo() + " - " : "") + tab.getTitulo());
-            Ventana.editArea.setContent(tab.getComponenteModulo());
+            Ventana.areaModulos.setContent(tab.getComponenteModulo());
             tab.onSelect();
         } else {
             //CraftrWindow.statusBar.setCaretInfo(Comunes.DEFAULT_CARET_DISPLAY_TEXT);
             //CraftrWindow.statusBar.setSelectionInfo(" ");
             //Ventana.clearTitle();
-            Ventana.editArea.setContent(null);
+            Ventana.areaModulos.setContent(null);
         }
     }
 

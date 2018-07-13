@@ -174,7 +174,7 @@ public abstract class ModuloEdicion extends JPanel implements ModuloPantalla {
         }
         if(valid) {
             entradas.forEach(EntradaValor::guardarEntrada);
-            Ventana.projectExplorer.refresh();
+            Ventana.exploradorRegistro.refresh();
         }
         return getValor();
     }

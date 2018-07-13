@@ -218,7 +218,7 @@ public class Estudiante implements TokenModulo {
 
         Estudiante est = new Estudiante(Main.registro, "Nombre", "Apellido", fechaNacimiento, Estado.EN_PROCESO, Carrera.AGN, false);
         Main.registro.estudiantes.add(est);
-        Ventana.projectExplorer.refresh();
+        Ventana.exploradorRegistro.refresh();
         est.setEditando(true);
         TabManager.openTab(est);
 
@@ -231,7 +231,7 @@ public class Estudiante implements TokenModulo {
 
         TabManager.closeTab(TabManager.getTabForToken(this));
         Main.registro.estudiantes.remove(this);
-        Ventana.projectExplorer.refresh();
+        Ventana.exploradorRegistro.refresh();
     }
 
     @Override

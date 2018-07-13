@@ -32,7 +32,7 @@ public class ModuloVistaEstudiante extends ModuloVista {
                 estudiante.getFechaNacimiento().get(Calendar.YEAR));
 
         panelInfo.put("NACIONALIDAD", estudiante.isExtranjero() ? "Extranjero/a" : "Dominicano/a");
-        panelInfo.put("ÍNDICE GENERAL", estudiante.getIndiceGeneral() >= 0 ? StringUtil.stripDecimals(estudiante.getIndiceGeneral(),2) : "-");
+        panelInfo.put("ÍNDICE GENERAL", estudiante.getIndiceGeneral() >= 0 ? StringUtil.omitirDecimales(estudiante.getIndiceGeneral(),2) : "-");
         panelInfo.put("HONORES", estudiante.getHonores());
 
         gradeExplorer = new MasterExploradorCalificacion(estudiante);

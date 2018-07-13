@@ -143,7 +143,7 @@ public class Profesor implements TokenModulo {
         Profesor prof = new Profesor(Main.registro, "Nombre", "Apellido");
 
         Main.registro.profesores.add(prof);
-        Ventana.projectExplorer.refresh();
+        Ventana.exploradorRegistro.refresh();
         prof.setEditando(true);
         TabManager.openTab(prof);
 
@@ -163,7 +163,7 @@ public class Profesor implements TokenModulo {
 
         TabManager.closeTab(TabManager.getTabForToken(this));
         Main.registro.profesores.remove(this);
-        Ventana.projectExplorer.refresh();
+        Ventana.exploradorRegistro.refresh();
     }
 
     @Override

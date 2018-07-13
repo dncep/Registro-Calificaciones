@@ -38,8 +38,8 @@ public class ModuloRanking extends JPanel implements ModuloPantalla {
             String parte1 = (i+1) + ". " + est.getNombre() + " " + est.getApellido() + " (" + est.getCarrera().getCodigo() + ")";
 
             double indice = est.getIndiceGeneral();
-            String indiceStr = (indice >= 0) ? StringUtil.stripDecimals(indice, 2) : "-";
-            String line = parte1 + StringUtil.repeat(" ", 20-parte1.length()) + "\t" + "Índice General: " + indiceStr + "\tHonores: " + est.getHonores() + "\n";
+            String indiceStr = (indice >= 0) ? StringUtil.omitirDecimales(indice, 2) : "-";
+            String line = parte1 + StringUtil.repetir(" ", 20-parte1.length()) + "\t" + "Índice General: " + indiceStr + "\tHonores: " + est.getHonores() + "\n";
             try {
                 document.insertString(document.getLength(), line, null);
             } catch(BadLocationException x) {

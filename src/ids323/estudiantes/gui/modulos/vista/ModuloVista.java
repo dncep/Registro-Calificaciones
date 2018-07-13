@@ -1,6 +1,7 @@
 package ids323.estudiantes.gui.modulos.vista;
 
 import ids323.estudiantes.componentes.CBoton;
+import ids323.estudiantes.componentes.Relleno;
 import ids323.estudiantes.gui.Colores;
 import ids323.estudiantes.gui.PanelInfo;
 import ids323.estudiantes.gui.modulos.ModuloPantalla;

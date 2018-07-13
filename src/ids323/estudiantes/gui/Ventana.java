@@ -2,6 +2,7 @@ package ids323.estudiantes.gui;
 
 import ids323.estudiantes.Main;
 import ids323.estudiantes.componentes.CBoton;
+import ids323.estudiantes.componentes.Relleno;
 import ids323.estudiantes.data.Asignatura;
 import ids323.estudiantes.data.Estudiante;
 import ids323.estudiantes.data.Profesor;
@@ -18,10 +19,10 @@ import java.awt.event.WindowEvent;
 public class Ventana {
 
     public static JFrame jframe;
-    public static final TabListMaster tabList = new TabListMaster();
-    public static JPanel welcomePane = new JPanel();
-    public static MasterExploradorRegistro projectExplorer = new MasterExploradorRegistro();
-    public static AreaModulo editArea = new AreaModulo();
+    public static final TabListMaster listaPestanas = new TabListMaster();
+    public static JPanel panelVacio = new JPanel();
+    public static MasterExploradorRegistro exploradorRegistro = new MasterExploradorRegistro();
+    public static AreaModulo areaModulos = new AreaModulo();
 
     public Ventana() {
         jframe = new JFrame("Registro de Calificaciones");
@@ -32,7 +33,12 @@ public class Ventana {
         jframe.setContentPane(contentPane);
 
         JPanel sidebar = new JPanel(new BorderLayout());
-        sidebar.add(projectExplorer);
+
+        JScrollPane sp = new JScrollPane(exploradorRegistro);
+        sp.setBorder(BorderFactory.createEmptyBorder());
+        sp.getVerticalScrollBar().setUnitIncrement(20);
+        sidebar.add(sp);
+
         sidebar.setPreferredSize(new Dimension(300,1));
         contentPane.add(sidebar, BorderLayout.WEST);
 
@@ -45,7 +51,7 @@ public class Ventana {
         sidebarHeader.setBackground(Colores.PRIMARIO_OSCURO);
         sidebar.add(sidebarHeader, BorderLayout.NORTH);
 
-        contentPane.add(editArea, BorderLayout.CENTER);
+        contentPane.add(areaModulos, BorderLayout.CENTER);
 
         JPanel toolbar = new JPanel(new FlowLayout(FlowLayout.LEFT));
         toolbar.setBackground(Colores.PRIMARIO_OSCURO.brighter());
@@ -91,7 +97,7 @@ public class Ventana {
             button.setRolloverColor(Colores.PRIMARIO_MAS_OSCURO);
             button.setPressedColor(Colores.PRIMARIO_CLARO);
             button.setBorder(Colores.PRIMARIO_MAS_OSCURO, 1);
-            button.addActionListener(e -> projectExplorer.triggerSearch());
+            button.addActionListener(e -> exploradorRegistro.triggerSearch());
             button.setToolTipText("Buscar");
             toolbar.add(button);
         }
@@ -109,7 +115,7 @@ public class Ventana {
         }
 
 
-        welcomePane.setBackground(Colores.FONDO);
+        panelVacio.setBackground(Colores.FONDO);
 
         jframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
 

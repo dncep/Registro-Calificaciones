@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Collection;
 
-public class ModuleRankingToken implements TokenModulo {
+public class TokenRanking implements TokenModulo {
 
     public static final Image ICON = Comunes.getIcono("calificaciones");
 

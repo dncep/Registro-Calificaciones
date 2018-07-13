@@ -1,8 +1,8 @@
 package ids323.estudiantes.data;
 
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.gui.modulos.ModuleRankingToken;
-import ids323.estudiantes.gui.modulos.ModuleTokenRoot;
+import ids323.estudiantes.gui.modulos.TokenOrigen;
+import ids323.estudiantes.gui.modulos.TokenRanking;
 import ids323.estudiantes.saveio.EscritorData;
 import ids323.estudiantes.saveio.LectorData;
 
@@ -62,8 +62,8 @@ public class Registro {
     public Registro(File file) {
         this.file = file;
 
-        rootToken = new ModuleTokenRoot();
-        rankingToken = new ModuleRankingToken();
+        rootToken = new TokenOrigen();
+        rankingToken = new TokenRanking();
     }
 
     /**

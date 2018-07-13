@@ -82,7 +82,7 @@ public class Tab {
     }
 
     private void actualizarLista() {
-        Ventana.tabList.repaint();
+        Ventana.listaPestanas.repaint();
     }
 
     public String getTitulo() {

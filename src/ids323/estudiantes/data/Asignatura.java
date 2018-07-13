@@ -183,7 +183,7 @@ public class Asignatura implements TokenModulo {
         }
         Asignatura asig = new Asignatura(Main.registro, AreaAcademica.BASICAS, "Codigo", "Nombre", Main.registro.profesores.get(0), 1);
         Main.registro.asignaturas.add(asig);
-        Ventana.projectExplorer.refresh();
+        Ventana.exploradorRegistro.refresh();
         asig.setEditando(true);
         TabManager.openTab(asig);
         return asig;
@@ -202,7 +202,7 @@ public class Asignatura implements TokenModulo {
 
         TabManager.closeTab(TabManager.getTabForToken(this));
         Main.registro.asignaturas.remove(this);
-        Ventana.projectExplorer.refresh();
+        Ventana.exploradorRegistro.refresh();
     }
 
     @Override

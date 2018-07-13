@@ -1,21 +1,15 @@
 package ids323.estudiantes.util;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Random;
-import java.util.Set;
 
 /**
  * Things for strings.
  */
 public class StringUtil {
 
-    private static final char[] randomCharacters = new char[] {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','_','-'};
+    private static final char[] caracteresAleatorios = new char[] {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','_','-'};
 
-    public static final String TRUE = "true";
-    public static final String FALSE = "false";
-
-    public static String ellipsis(String str, int max) {
+    public static String elipsis(String str, int max) {
         if (str.length() > max) {
             return (str.substring(0, max - 3) + "...").intern();
         } else {
@@ -23,44 +17,7 @@ public class StringUtil {
         }
     }
 
-    public static String substring(String str, int i1, int i2) {
-        if (i1 < 0)
-            i1 = 0;
-        if (i2 < 0)
-            i2 = 0;
-        if (i1 > str.length())
-            i1 = str.length();
-        if (i2 > str.length())
-            i2 = str.length();
-        return str.substring(i1, i2);
-    }
-
-    public static String escapeHTML(String str) {
-        return str.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
-    }
-
-    public static String escape(String str) {
-        return str.replaceAll("\n", "\\\\n").replaceAll("\t", "\\\\t").replaceAll("\f", "\\\\f").replaceAll("\r", "\\\\r");
-    }
-
-    public static String addSlashes(String str) {
-        return str.replace("\\", "\\\\").replace("\"", "\\\"");
-    }
-
-    public static String stringFromBoolMap(HashMap<String, Object> m) {
-        String s = "";
-        Set<String> set = m.keySet();
-        Iterator<String> setI = set.iterator();
-        while(setI.hasNext()) {
-            String key = setI.next();
-            if(m.get(key) == Boolean.valueOf(true)) {
-                s += key;
-            }
-        }
-        return s.trim();
-    }
-
-    public static String repeat(String str, int amount) {
+    public static String repetir(String str, int amount) {
         StringBuilder o = new StringBuilder();
         for(int i = 0; i < amount; i++) {
             o.append(str);
@@ -68,7 +25,7 @@ public class StringUtil {
         return o.toString();
     }
 
-    public static String getInitials(String s) {
+    public static String getIniciales(String s) {
         StringBuilder initials = new StringBuilder();
 
         char lastChar = 0;
@@ -85,25 +42,25 @@ public class StringUtil {
         return initials.toString().toUpperCase();
     }
 
-    public static char getRandomChar() {
+    public static char getCaracterAleatorio() {
         Random rand = new Random();
 
-        return randomCharacters[rand.nextInt(randomCharacters.length)];
+        return caracteresAleatorios[rand.nextInt(caracteresAleatorios.length)];
     }
 
-    public static String getRandomString(int len) {
+    public static String getCadenaAleatorio(int lon) {
         String s = "";
-        for (int i = 0; i < len; i++) {
-            s += getRandomChar();
+        for (int i = 0; i < lon; i++) {
+            s += getCaracterAleatorio();
         }
         return s;
     }
 
-    public static int getSequenceCount(String str, String pattern) {
-        return getSequenceCount(str, pattern, 0);
+    public static int contarSecuencia(String str, String pattern) {
+        return contarSecuencia(str, pattern, 0);
     }
 
-    public static int getSequenceCount(String str, String pattern, int start) {
+    public static int contarSecuencia(String str, String pattern, int start) {
         int count = 0;
 
         for(int i = start; i < str.length();) {
@@ -116,7 +73,7 @@ public class StringUtil {
         return count;
     }
 
-    public static String stripDecimals(double n) {
+    public static String omitirDecimales(double n) {
         if(n % 1 == 0) {
             return Integer.toString((int) n);
         } else {
@@ -124,7 +81,7 @@ public class StringUtil {
         }
     }
 
-    public static String stripDecimals(double n, int p) {
+    public static String omitirDecimales(double n, int p) {
         double pow = Math.pow(10,p);
         return "" + ((Math.round(n*pow))/pow);
     }

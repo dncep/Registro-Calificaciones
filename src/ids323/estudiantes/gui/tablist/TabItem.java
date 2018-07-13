@@ -33,7 +33,7 @@ public class TabItem extends TabListElement {
         g.setFont(master.getFont());
         FontMetrics fm = g.getFontMetrics();
 
-        this.name = StringUtil.ellipsis(associatedTab.getTitulo(),32);
+        this.name = StringUtil.elipsis(associatedTab.getTitulo(),32);
 
         this.x = master.getOffsetX();
         this.lastRecordedOffset = x;

@@ -24,7 +24,7 @@ public class MasterExploradorRegistro extends MasterExplorador {
     private TokenModulo root;
 
     private ArrayList<TokenModulo> searchResults = new ArrayList<>();
-    private SearchResultTokenRoot searchToken = new SearchResultTokenRoot();
+    private TokenResultadosBusqueda searchToken = new TokenResultadosBusqueda();
 
     public MasterExploradorRegistro() {
         root = Main.registro.rootToken;

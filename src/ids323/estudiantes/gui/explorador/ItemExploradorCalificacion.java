@@ -67,13 +67,6 @@ public class ItemExploradorCalificacion extends ElementoExplorador {
 
         x += 23;
 
-        //File Icon
-        /*if(this.icon != null) {
-            int margin = ((master.getRowHeight() - 16) / 2);
-            g.drawImage(this.icon,x + 8 - icon.getWidth(null)/2,y + margin + 8 - icon.getHeight(null)/2, null);
-            x += 25;
-        }*/
-
         //File Name
 
         if(this.selected) {
@@ -106,7 +99,7 @@ public class ItemExploradorCalificacion extends ElementoExplorador {
         g2d.setComposite(oldComposite);
 
         double indice = calif.getIndiceTrimestral();
-        String labelIndice = indice >= 0 ? StringUtil.stripDecimals(indice,2) : "-";
+        String labelIndice = indice >= 0 ? StringUtil.omitirDecimales(indice,2) : "-";
         x -= metrics.stringWidth(labelIndice);
         g.drawString(labelIndice, x, master.getOffsetY() + metrics.getAscent() + ((master.getRowHeight() - metrics.getHeight())/2));
 

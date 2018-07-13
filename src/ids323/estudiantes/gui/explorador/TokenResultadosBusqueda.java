@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Collection;
 
-public class SearchResultTokenRoot implements TokenModulo {
+public class TokenResultadosBusqueda implements TokenModulo {
 
     @Override
     public String getTitulo() {
@@ -28,7 +28,7 @@ public class SearchResultTokenRoot implements TokenModulo {
 
     @Override
     public Collection<TokenModulo> getSubTokens() {
-        return Ventana.projectExplorer.getSearchResults();
+        return Ventana.exploradorRegistro.getSearchResults();
     }
 
     @Override

@@ -187,7 +187,7 @@ public class AdaptadoresEntradaEstandar {
                 String mes = "" + (def.get(Calendar.MONTH)+1);
                 String anio = "" + def.get(Calendar.YEAR);
 
-                String formatted = StringUtil.repeat("0",2-dia.length()) + dia + "-" + StringUtil.repeat("0",2-mes.length()) + mes + "-" + StringUtil.repeat("0",4-anio.length()) + anio;
+                String formatted = StringUtil.repetir("0",2-dia.length()) + dia + "-" + StringUtil.repetir("0",2-mes.length()) + mes + "-" + StringUtil.repetir("0",4-anio.length()) + anio;
 
                 campo = new CampoTexto("", Pattern.compile("\\d{1,2}[-/]\\d{1,2}[-/]\\d+"));
                 campo.setToolTipText("Formato: dd-mm-aaaa");
