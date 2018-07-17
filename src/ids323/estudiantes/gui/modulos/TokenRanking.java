@@ -1,7 +1,6 @@
 package ids323.estudiantes.gui.modulos;
 
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.gui.explorador.ItemExploradorRegistro;
 import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
@@ -48,7 +47,7 @@ public class TokenRanking implements TokenModulo {
     }
 
     @Override
-    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
+    public JPopupMenu generarMenu() {
         return null;
     }
 }

@@ -47,7 +47,7 @@ public class TokenResultadosBusqueda implements TokenModulo {
     }
 
     @Override
-    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
+    public JPopupMenu generarMenu() {
         return null;
     }
 }

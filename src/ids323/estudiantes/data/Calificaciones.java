@@ -1,7 +1,6 @@
 package ids323.estudiantes.data;
 
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.gui.explorador.ItemExploradorRegistro;
 import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
@@ -130,7 +129,7 @@ public class Calificaciones implements TokenModulo {
     }
 
     @Override
-    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
+    public JPopupMenu generarMenu() {
         return null;
     }
 }

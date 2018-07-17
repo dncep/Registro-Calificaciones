@@ -29,14 +29,14 @@ public class TabListMaster extends JComponent implements MouseListener, MouseMot
 
     public TabListMaster() {
 
-        colors.put("background", Colores.PRIMARIO_OSCURO);
-        colors.put("tab.background", Colores.PRIMARIO_OSCURO);
+        colors.put("fondo", Colores.PRIMARIO_OSCURO);
+        colors.put("tab.fondo", Colores.PRIMARIO_OSCURO);
         colors.put("tab.texto", Colores.TEXTO);
         colors.put("tab.close.color", Colores.TEXTO.darker());
         colors.put("tab.close.rollover.color", Colores.TEXTO);
         colors.put("tab.seleccionado.background", Colores.ENFASIS);
         colors.put("tab.seleccionado.texto", Colores.TEXTO);
-        colors.put("tab.rollover.background", Colores.PRIMARIO_CLARO);
+        colors.put("tab.rollover.fondo", Colores.PRIMARIO_CLARO);
         colors.put("tab.rollover.texto", Colores.TEXTO);
 
         this.addMouseListener(this);
@@ -47,7 +47,7 @@ public class TabListMaster extends JComponent implements MouseListener, MouseMot
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setColor(colors.get("background"));
+        g.setColor(colors.get("fondo"));
         g.fillRect(0,0,this.getWidth(), this.getHeight());
 
         this.x = 0;

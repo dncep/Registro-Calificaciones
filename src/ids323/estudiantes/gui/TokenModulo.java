@@ -1,6 +1,5 @@
 package ids323.estudiantes.gui;
 
-import ids323.estudiantes.gui.explorador.ItemExploradorRegistro;
 import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
 
@@ -18,7 +17,7 @@ public interface TokenModulo {
 
     void enInteraccion();
 
-    JPopupMenu generarMenu(ItemExploradorRegistro explorerItem);
+    JPopupMenu generarMenu();
 
     default String getInformacionBusqueda() {
         return null;

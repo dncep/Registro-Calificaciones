@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class CMenu extends JMenu {
     protected Color background = new Color(0,0,0,0);
-    protected Color foreground = UIManager.getColor("Menu.texto");
+    protected Color foreground = UIManager.getColor("Menu.foreground");
     protected Color rolloverBackground = UIManager.getColor("Menu.selectionBackground");
     protected Color rolloverForeground = UIManager.getColor("Menu.selectionForeground");
 

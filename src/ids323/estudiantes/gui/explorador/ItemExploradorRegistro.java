@@ -193,16 +193,20 @@ public class ItemExploradorRegistro extends ElementoExplorador {
             } else {
                 master.setSelected(this, e);
             }
-        } else if(e.getButton() == MouseEvent.BUTTON3) {
-            if(!this.selected) master.setSelected(this, new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), 0, e.getX(), e.getY(), e.getClickCount(), e.isPopupTrigger(), MouseEvent.BUTTON1));
-            JPopupMenu menu = token.generarMenu(this);
-            if(menu != null) menu.show(e.getComponent(), e.getX(), e.getY());
-        }
+        } else confirmarActivacionMenu(e);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        confirmarActivacionMenu(e);
+    }
 
+    private void confirmarActivacionMenu(MouseEvent e) {
+        if(e.isPopupTrigger()) {
+            if(!this.selected) master.setSelected(this, new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), 0, e.getX(), e.getY(), e.getClickCount(), e.isPopupTrigger(), MouseEvent.BUTTON1));
+            JPopupMenu menu = token.generarMenu();
+            if(menu != null) menu.show(e.getComponent(), e.getX(), e.getY());
+        }
     }
 
     @Override

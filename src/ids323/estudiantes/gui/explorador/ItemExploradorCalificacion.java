@@ -151,9 +151,9 @@ public class ItemExploradorCalificacion extends ElementoExplorador {
         if(e.getButton() == MouseEvent.BUTTON1) {
             //x = indentation * master.getIndentPerLevel() + master.getInitialIndent();
             master.setSelected(this, e);
-        } else if(e.getButton() == MouseEvent.BUTTON3) {
+        } else if(e.isPopupTrigger()) {
             if(!this.selected) master.setSelected(this, new MouseEvent(e.getComponent(), e.getID(), e.getWhen(), 0, e.getX(), e.getY(), e.getClickCount(), e.isPopupTrigger(), MouseEvent.BUTTON1));
-            //JPopupMenu menu = token.generarMenu(this);
+            //JPopupMenu menu = calif.generarMenu();
             //if(menu != null) menu.show(e.getComponente(), e.getX(), e.getY());
         }
     }

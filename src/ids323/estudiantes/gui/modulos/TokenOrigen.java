@@ -5,7 +5,6 @@ import ids323.estudiantes.data.Asignatura;
 import ids323.estudiantes.data.Estudiante;
 import ids323.estudiantes.data.Profesor;
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.gui.explorador.ItemExploradorRegistro;
 import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
@@ -56,7 +55,7 @@ public class TokenOrigen implements TokenModulo {
     }
 
     @Override
-    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
+    public JPopupMenu generarMenu() {
         return null;
     }
 }
@@ -98,7 +97,7 @@ class TokenModuloEstudiantes implements TokenModulo {
     }
 
     @Override
-    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
+    public JPopupMenu generarMenu() {
         JPopupMenu menu = new JPopupMenu();
         {
             CItemMenu item = new CItemMenu("Nuevo Estudiante");
@@ -146,7 +145,7 @@ class TokenModuloAsignaturas implements TokenModulo {
     }
 
     @Override
-    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
+    public JPopupMenu generarMenu() {
         JPopupMenu menu = new JPopupMenu();
         {
             CItemMenu item = new CItemMenu("Nueva Asignatura");
@@ -194,7 +193,7 @@ class TokenModuloProfesores implements TokenModulo {
     }
 
     @Override
-    public JPopupMenu generarMenu(ItemExploradorRegistro explorerItem) {
+    public JPopupMenu generarMenu() {
         JPopupMenu menu = new JPopupMenu();
         {
             CItemMenu item = new CItemMenu("Nuevo Profesor");

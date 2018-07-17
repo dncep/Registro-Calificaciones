@@ -1,9 +1,11 @@
 package ids323.estudiantes.gui.tablist;
 
+import ids323.estudiantes.componentes.menu.CItemMenu;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.util.StringUtil;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
@@ -133,18 +135,22 @@ public class TabItem extends TabListElement {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if(!isOverCloseButton(e)) {
-            if(e.getButton() == MouseEvent.BUTTON1) {
-                TabManager.setSelectedTab(this.associatedTab);
-            }
+        if(!isOverCloseButton(e) && e.getButton() == MouseEvent.BUTTON1) {
+            TabManager.setSelectedTab(this.associatedTab);
+        } else {
+            confirmarActivacionMenu(e);
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        confirmarActivacionMenu(e);
+    }
+
+    private void confirmarActivacionMenu(MouseEvent e) {
         if(e.isPopupTrigger()) {
-            //StyledPopupMenu menu = this.generarMenu();
-            //menu.mostrar(e.getComponente(), e.getX(), e.getY());
+            JPopupMenu menu = this.generarMenu();
+            menu.show(e.getComponent(), e.getX(), e.getY());
         }
     }
 
@@ -172,16 +178,16 @@ public class TabItem extends TabListElement {
         return icon;
     }
 
-    /*private StyledPopupMenu generarMenu() {
-        StyledPopupMenu menu = new StyledPopupMenu();
+    private JPopupMenu generarMenu() {
+        JPopupMenu menu = new JPopupMenu();
 
         {
-            StyledMenuItem item = new StyledMenuItem("Close");
+            CItemMenu item = new CItemMenu("Close");
             item.addActionListener(e -> TabManager.closeTab(associatedTab));
             menu.add(item);
         }
         {
-            StyledMenuItem item = new StyledMenuItem("Close Others");
+            CItemMenu item = new CItemMenu("Close Others");
             item.addActionListener(e -> {
                 for(int i = 0; i < TabManager.openTabs.size();) {
                     Tab tab = TabManager.openTabs.get(i);
@@ -195,7 +201,7 @@ public class TabItem extends TabListElement {
             menu.add(item);
         }
         {
-            StyledMenuItem item = new StyledMenuItem("Close Tabs To The Left");
+            CItemMenu item = new CItemMenu("Close Tabs To The Left");
             item.addActionListener(e -> {
                 for(int i = 0; i < master.children.size();) {
                     TabListElement tabListElement = master.children.get(i);
@@ -212,7 +218,7 @@ public class TabItem extends TabListElement {
             menu.add(item);
         }
         {
-            StyledMenuItem item = new StyledMenuItem("Close Tabs To The Right");
+            CItemMenu item = new CItemMenu("Close Tabs To The Right");
             item.addActionListener(e -> {
                 boolean doClose = false;
                 for(int i = 0; i < master.children.size();) {
@@ -233,7 +239,7 @@ public class TabItem extends TabListElement {
         }
         menu.addSeparator();
         {
-            StyledMenuItem item = new StyledMenuItem("Close All");
+            CItemMenu item = new CItemMenu("Close All");
             item.addActionListener(e -> {
                 while(!TabManager.openTabs.isEmpty()) {
                     TabManager.closeTab(TabManager.openTabs.get(0));
@@ -242,7 +248,7 @@ public class TabItem extends TabListElement {
             menu.add(item);
         }
         return menu;
-    }*/
+    }
 
     public Tab getAssociatedTab() {
         return associatedTab;
