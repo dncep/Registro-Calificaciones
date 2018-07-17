@@ -2,7 +2,6 @@ package ids323.estudiantes.data;
 
 import ids323.estudiantes.Main;
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
@@ -217,7 +216,7 @@ public class Estudiante implements TokenModulo {
 
         Estudiante est = new Estudiante(Main.registro, "Nombre", "Apellido", fechaNacimiento, Estado.EN_PROCESO, Carrera.AGN, false);
         Main.registro.estudiantes.add(est);
-        Ventana.exploradorRegistro.refresh();
+        Main.ventana.exploradorRegistro.refresh();
         est.setEditando(true);
         TabManager.openTab(est);
 
@@ -225,12 +224,19 @@ public class Estudiante implements TokenModulo {
     }
 
     public void borrar() {
-        int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere borrar " + this + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
+        int result = JOptionPane.showOptionDialog(Main.ventana.jframe, "¿Está seguro de que quiere borrar " + this + " y sus calificaciones?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
         if(result != JOptionPane.YES_OPTION) return;
 
         TabManager.closeTab(TabManager.getTabForToken(this));
         Main.registro.estudiantes.remove(this);
-        Ventana.exploradorRegistro.refresh();
+        for(int i = 0; i < Main.registro.calificaciones.size(); i++) {
+            Calificaciones calif = Main.registro.calificaciones.get(i);
+            if(calif.getEstudiante() == this) {
+                Main.registro.calificaciones.remove(i);
+                i--;
+            }
+        }
+        Main.ventana.exploradorRegistro.refresh();
     }
 
     @Override

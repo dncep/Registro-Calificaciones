@@ -1,7 +1,7 @@
 package ids323.estudiantes.gui.explorador;
 
+import ids323.estudiantes.Main;
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
 
@@ -28,7 +28,7 @@ public class TokenResultadosBusqueda implements TokenModulo {
 
     @Override
     public Collection<TokenModulo> getSubTokens() {
-        return Ventana.exploradorRegistro.getSearchResults();
+        return Main.ventana.exploradorRegistro.getSearchResults();
     }
 
     @Override

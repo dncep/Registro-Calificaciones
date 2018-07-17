@@ -2,7 +2,6 @@ package ids323.estudiantes.data;
 
 import ids323.estudiantes.Main;
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
@@ -142,7 +141,7 @@ public class Profesor implements TokenModulo {
         Profesor prof = new Profesor(Main.registro, "Nombre", "Apellido");
 
         Main.registro.profesores.add(prof);
-        Ventana.exploradorRegistro.refresh();
+        Main.ventana.exploradorRegistro.refresh();
         prof.setEditando(true);
         TabManager.openTab(prof);
 
@@ -150,19 +149,19 @@ public class Profesor implements TokenModulo {
     }
 
     public void borrar() {
-        int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere borrar " + this + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
+        int result = JOptionPane.showOptionDialog(Main.ventana.jframe, "¿Está seguro de que quiere borrar " + this + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
         if(result != JOptionPane.YES_OPTION) return;
 
         for(Asignatura asig : Main.registro.asignaturas) {
             if(asig.getProfesor() == this) {
-                JOptionPane.showMessageDialog(Ventana.jframe, "<html>No se puede borrar " + this + ":<br>La asignatura " + asig + " está registrada con su nombre</html>", "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(Asignatura.ICON));
+                JOptionPane.showMessageDialog(Main.ventana.jframe, "<html>No se puede borrar " + this + ":<br>La asignatura " + asig + " está registrada con su nombre</html>", "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(Asignatura.ICON));
                 return;
             }
         }
 
         TabManager.closeTab(TabManager.getTabForToken(this));
         Main.registro.profesores.remove(this);
-        Ventana.exploradorRegistro.refresh();
+        Main.ventana.exploradorRegistro.refresh();
     }
 
     @Override

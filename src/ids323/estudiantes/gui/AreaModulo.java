@@ -10,12 +10,14 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 public class AreaModulo extends JPanel {
+    private final Ventana ventana;
 
     private JPanel tabList;
 
     private JComponent content = null;
 
-    {
+    public AreaModulo(Ventana ventana) {
+        this.ventana = ventana;
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(500, 500));
 
@@ -32,13 +34,13 @@ public class AreaModulo extends JPanel {
         tabList.setPreferredSize(new Dimension(1, 30));
         tabList.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(200, 200, 200)));
 
-        JScrollPane tabSP = new JScrollPane(Ventana.listaPestanas);
+        JScrollPane tabSP = new JScrollPane(ventana.listaPestanas);
         tabSP.setBorder(BorderFactory.createEmptyBorder());
         tabSP.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
 
         tabListHolder.add(tabSP, BorderLayout.CENTER);
 
-        this.setContent(Ventana.panelVacio);
+        this.setContent(ventana.panelVacio);
 
 
         KeyStroke saveKeystroke = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
@@ -70,9 +72,13 @@ public class AreaModulo extends JPanel {
 
     public void setContent(JComponent content) {
         if(this.content != null) {
+            if(this.content == ventana.panelVacio) ventana.panelVacio.pause();
             this.remove(this.content);
         }
-        if(content == null) content = Ventana.panelVacio;
+        if(content == null) {
+            content = ventana.panelVacio;
+            ventana.panelVacio.start();
+        }
 
         this.add(content, BorderLayout.CENTER);
         this.content = content;

@@ -1,9 +1,9 @@
 package ids323.estudiantes.gui.modulos.edicion;
 
+import ids323.estudiantes.Main;
 import ids323.estudiantes.componentes.CBoton;
 import ids323.estudiantes.componentes.Relleno;
 import ids323.estudiantes.gui.Colores;
-import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
@@ -174,7 +174,7 @@ public abstract class ModuloEdicion extends JPanel implements ModuloPantalla {
         }
         if(valid) {
             entradas.forEach(EntradaValor::guardarEntrada);
-            Ventana.exploradorRegistro.refresh();
+            Main.ventana.exploradorRegistro.refresh();
         }
         return getValor();
     }

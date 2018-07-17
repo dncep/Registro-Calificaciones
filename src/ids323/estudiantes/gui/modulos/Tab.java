@@ -1,7 +1,7 @@
 package ids323.estudiantes.gui.modulos;
 
+import ids323.estudiantes.Main;
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.tablist.TabItem;
 
 import javax.swing.*;
@@ -82,7 +82,7 @@ public class Tab {
     }
 
     private void actualizarLista() {
-        Ventana.listaPestanas.repaint();
+        Main.ventana.listaPestanas.repaint();
     }
 
     public String getTitulo() {

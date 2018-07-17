@@ -1,7 +1,7 @@
 package ids323.estudiantes.gui.modulos;
 
+import ids323.estudiantes.Main;
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.gui.Ventana;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -35,7 +35,7 @@ public class TabManager {
         }
         Tab nt = new Tab(token);
         openTabs.add(nt);
-        Ventana.listaPestanas.addTab(nt);
+        Main.ventana.listaPestanas.addTab(nt);
         setSelectedTab(nt);
     }
 
@@ -58,16 +58,16 @@ public class TabManager {
         if(tab == null) return;
         if(!force) {
             if(!tab.isGuardado()) {
-                int result = JOptionPane.showOptionDialog(Ventana.jframe, "Hay cambios sin guardar. ¿Desea guardarlos?", "Cambios sin guardar", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Guardar", "No guardar", "Cancelar"}, "Guardar");
+                int result = JOptionPane.showOptionDialog(Main.ventana.jframe, "Hay cambios sin guardar. ¿Desea guardarlos?", "Cambios sin guardar", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, new String[] {"Guardar", "No guardar", "Cancelar"}, "Guardar");
                 if(result == JOptionPane.CANCEL_OPTION) return;
                 if(result == JOptionPane.YES_OPTION) tab.guardar();
             }
         }
         for (int i = 0; i < openTabs.size(); i++) {
             if (openTabs.get(i) == tab) {
-                if (selectedTab == openTabs.get(i)) setSelectedTab(Ventana.listaPestanas.getFallbackTab(tab));
+                if (selectedTab == openTabs.get(i)) setSelectedTab(Main.ventana.listaPestanas.getFallbackTab(tab));
 
-                Ventana.listaPestanas.removeTab(tab);
+                Main.ventana.listaPestanas.removeTab(tab);
                 openTabs.remove(i);
 
                 return;
@@ -107,7 +107,7 @@ public class TabManager {
     }*/
 
     public static void setSelectedTab(Tab tab) {
-        Ventana.listaPestanas.selectTab(tab);
+        Main.ventana.listaPestanas.selectTab(tab);
         if (selectedTab != null) {
             selectedTab = null;
         }
@@ -115,13 +115,13 @@ public class TabManager {
             selectedTab = tab;
 
             //CraftrWindow.setTitle(((linkedProject != null) ? linkedProject.getTitulo() + " - " : "") + tab.getTitulo());
-            Ventana.areaModulos.setContent(tab.getComponenteModulo());
+            Main.ventana.areaModulos.setContent(tab.getComponenteModulo());
             tab.onSelect();
         } else {
             //CraftrWindow.statusBar.setCaretInfo(Comunes.DEFAULT_CARET_DISPLAY_TEXT);
             //CraftrWindow.statusBar.setSelectionInfo(" ");
             //Ventana.clearTitle();
-            Ventana.areaModulos.setContent(null);
+            Main.ventana.areaModulos.setContent(null);
         }
     }
 

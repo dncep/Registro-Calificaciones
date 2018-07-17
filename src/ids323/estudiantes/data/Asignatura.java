@@ -2,7 +2,6 @@ package ids323.estudiantes.data;
 
 import ids323.estudiantes.Main;
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.modulos.ModuloPantalla;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
@@ -177,31 +176,31 @@ public class Asignatura implements TokenModulo {
 
     public static Asignatura crearNueva() {
         if(Main.registro.profesores.isEmpty()) {
-            JOptionPane.showMessageDialog(Ventana.jframe, "No existen profesores registrados para la nueva asignatura", "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(Asignatura.ICON));
+            JOptionPane.showMessageDialog(Main.ventana.jframe, "No existen profesores registrados para la nueva asignatura", "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(Asignatura.ICON));
             return null;
         }
         Asignatura asig = new Asignatura(Main.registro, AreaAcademica.BASICAS, "Codigo", "Nombre", Main.registro.profesores.get(0), 1);
         Main.registro.asignaturas.add(asig);
-        Ventana.exploradorRegistro.refresh();
+        Main.ventana.exploradorRegistro.refresh();
         asig.setEditando(true);
         TabManager.openTab(asig);
         return asig;
     }
 
     public void borrar() {
-        int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere borrar " + this + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
+        int result = JOptionPane.showOptionDialog(Main.ventana.jframe, "¿Está seguro de que quiere borrar " + this + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(ICON), new String[] {"Si", "No"}, "Si");
         if(result != JOptionPane.YES_OPTION) return;
 
         for(Calificaciones calif : Main.registro.calificaciones) {
             if(calif.getCalificaciones().containsKey(this)) {
-                JOptionPane.showMessageDialog(Ventana.jframe, "<html>No se puede borrar " + this + ":<br>El reporte de calificaciones de " + calif.getEstudiante() + " para trimestre " + calif.getTrimestre() + " contiene esta asignatura</html>", "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(Calificaciones.ICON));
+                JOptionPane.showMessageDialog(Main.ventana.jframe, "<html>No se puede borrar " + this + ":<br>El reporte de calificaciones de " + calif.getEstudiante() + " para trimestre " + calif.getTrimestre() + " contiene esta asignatura</html>", "Error", JOptionPane.ERROR_MESSAGE, new ImageIcon(Calificaciones.ICON));
                 return;
             }
         }
 
         TabManager.closeTab(TabManager.getTabForToken(this));
         Main.registro.asignaturas.remove(this);
-        Ventana.exploradorRegistro.refresh();
+        Main.ventana.exploradorRegistro.refresh();
     }
 
     @Override

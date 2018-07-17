@@ -3,7 +3,6 @@ package ids323.estudiantes.gui.explorador;
 import ids323.estudiantes.Main;
 import ids323.estudiantes.data.Calificaciones;
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorador.base.MarcaExplorador;
 import ids323.estudiantes.gui.explorador.base.elementos.ElementoExplorador;
 import ids323.estudiantes.gui.modulos.TabManager;
@@ -134,7 +133,7 @@ public class ItemExploradorCalificacion extends ElementoExplorador {
     @Override
     public void mouseClicked(MouseEvent e) {
         if(closeRollover) {
-            int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere borrar registro de calificaciones para el trimestre " + calif.getTrimestre() + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(Calificaciones.ICON), new String[] {"Si", "No"}, "Si");
+            int result = JOptionPane.showOptionDialog(Main.ventana.jframe, "¿Está seguro de que quiere borrar registro de calificaciones para el trimestre " + calif.getTrimestre() + "?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(Calificaciones.ICON), new String[] {"Si", "No"}, "Si");
             if(result != JOptionPane.YES_OPTION) return;
 
             Main.registro.calificaciones.remove(calif);

@@ -7,6 +7,7 @@ import ids323.estudiantes.gui.TokenModulo;
 import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorador.base.MasterExplorador;
 import ids323.estudiantes.gui.explorador.base.elementos.SeparadorExplorador;
+import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
@@ -21,12 +22,14 @@ import java.util.Collection;
  * Created by User on 5/16/2017.
  */
 public class MasterExploradorRegistro extends MasterExplorador {
+    private final Ventana ventana;
     private TokenModulo root;
 
     private ArrayList<TokenModulo> searchResults = new ArrayList<>();
     private TokenResultadosBusqueda searchToken = new TokenResultadosBusqueda();
 
-    public MasterExploradorRegistro() {
+    public MasterExploradorRegistro(Ventana ventana) {
+        this.ventana = ventana;
         root = Main.registro.rootToken;
 
         colors.put("fondo", Colores.PRIMARIO_MAS_OSCURO);
@@ -60,6 +63,18 @@ public class MasterExploradorRegistro extends MasterExplorador {
                 triggerSearch();
             }
         });
+
+        KeyStroke rankingKeystroke = KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK);
+
+        this.getInputMap(WHEN_IN_FOCUSED_WINDOW).put(rankingKeystroke, "rankingKeystroke");
+
+        this.getActionMap().put("rankingKeystroke", new AbstractAction() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TabManager.openTab(Main.registro.rankingToken);
+            }
+        });
     }
 
     @Override
@@ -87,7 +102,7 @@ public class MasterExploradorRegistro extends MasterExplorador {
     }
 
     public void triggerSearch() {
-        String query = JOptionPane.showInputDialog(Ventana.jframe, "Introduzca lo que desea buscar", "Buscar", JOptionPane.QUESTION_MESSAGE);
+        String query = JOptionPane.showInputDialog(Main.ventana.jframe, "Introduzca lo que desea buscar", "Buscar", JOptionPane.QUESTION_MESSAGE);
         if(query == null) return;
 
         searchResults.clear();
@@ -104,7 +119,7 @@ public class MasterExploradorRegistro extends MasterExplorador {
             message = "Se encontraron " + searchResults.size() + " resultados";
         }
 
-        JOptionPane.showMessageDialog(Ventana.jframe, message);
+        JOptionPane.showMessageDialog(Main.ventana.jframe, message);
 
         refresh();
     }

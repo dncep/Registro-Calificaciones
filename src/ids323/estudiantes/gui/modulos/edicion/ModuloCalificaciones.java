@@ -7,7 +7,6 @@ import ids323.estudiantes.componentes.CampoNumerico;
 import ids323.estudiantes.data.Asignatura;
 import ids323.estudiantes.data.Calificaciones;
 import ids323.estudiantes.gui.Colores;
-import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.modulos.Tab;
 import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.modulos.edicion.logica.AdaptadorEntrada;
@@ -72,7 +71,7 @@ public class ModuloCalificaciones extends ModuloEdicion {
             fieldPanel.add(botonBorrar);
 
             botonBorrar.addActionListener(e -> {
-                int result = JOptionPane.showOptionDialog(Ventana.jframe, "¿Está seguro de que quiere remover la asignatura " + campoClave.getValor() + " de este reporte de calificaciones?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(Calificaciones.ICON), new String[] {"Si", "No"}, "Si");
+                int result = JOptionPane.showOptionDialog(Main.ventana.jframe, "¿Está seguro de que quiere remover la asignatura " + campoClave.getValor() + " de este reporte de calificaciones?", "Confirmación de acción", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE, new ImageIcon(Calificaciones.ICON), new String[] {"Si", "No"}, "Si");
                 if(result != JOptionPane.YES_OPTION) return;
 
                 map.remove(campoClave.getValor());

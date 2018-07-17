@@ -1,0 +1,7 @@
+Utiliza Ctrl+W para cerrar la pestaña activa
+Las entidades principales del registro se muestran en el explorador al lado izquierdo
+Utiliza click derecho para ver todas las acciones a realizar en las entidades del explorador
+Utiliza Ctrl+F para buscar una entidad
+Utiliza Ctrl+R para generar el ranking académico de los estudiantes
+Utiliza Ctrl+S mientras editas para guardar los cambios automáticamente
+El registro se guarda automáticamente al cerrar la ventana

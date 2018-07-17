@@ -18,15 +18,20 @@ import java.awt.event.WindowEvent;
 
 public class Ventana {
 
-    public static JFrame jframe;
-    public static final TabListMaster listaPestanas = new TabListMaster();
-    public static JPanel panelVacio = new JPanel();
-    public static MasterExploradorRegistro exploradorRegistro = new MasterExploradorRegistro();
-    public static AreaModulo areaModulos = new AreaModulo();
+    public JFrame jframe;
+    public final TabListMaster listaPestanas;
+    public PantallaTips panelVacio;
+    public MasterExploradorRegistro exploradorRegistro;
+    public AreaModulo areaModulos;
 
     public Ventana() {
         jframe = new JFrame("Registro de Calificaciones");
         jframe.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+
+        listaPestanas = new TabListMaster();
+        panelVacio = new PantallaTips();
+        exploradorRegistro = new MasterExploradorRegistro(this);
+        areaModulos = new AreaModulo(this);
 
         JPanel contentPane = new JPanel(new BorderLayout());
         contentPane.setPreferredSize(new Dimension(700,500));
@@ -114,8 +119,10 @@ public class Ventana {
             toolbar.add(button);
         }
 
-
         panelVacio.setBackground(Colores.FONDO);
+        panelVacio.setForeground(Colores.TEXTO_OSCURO);
+        panelVacio.setFont(panelVacio.getFont().deriveFont(24f).deriveFont(Font.BOLD));
+        areaModulos.setContent(null);
 
         jframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
 
@@ -130,12 +137,16 @@ public class Ventana {
         });
     }
 
-    public static boolean isVisible() {
+    public boolean isVisible() {
         return jframe.isVisible();
     }
 
     private void terminar() {
         Main.registro.guardar();
         System.exit(0);
+    }
+
+    public void mostrarError(String error) {
+        JOptionPane.showMessageDialog(jframe, error, "Error Interno", JOptionPane.ERROR_MESSAGE);
     }
 }
