@@ -193,7 +193,8 @@ public class ItemExploradorRegistro extends ElementoExplorador {
             } else {
                 master.setSelected(this, e);
             }
-        } else confirmarActivacionMenu(e);
+        }
+        confirmarActivacionMenu(e);
     }
 
     @Override

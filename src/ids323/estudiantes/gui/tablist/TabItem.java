@@ -137,9 +137,8 @@ public class TabItem extends TabListElement {
     public void mousePressed(MouseEvent e) {
         if(!isOverCloseButton(e) && e.getButton() == MouseEvent.BUTTON1) {
             TabManager.setSelectedTab(this.associatedTab);
-        } else {
-            confirmarActivacionMenu(e);
         }
+        confirmarActivacionMenu(e);
     }
 
     @Override
