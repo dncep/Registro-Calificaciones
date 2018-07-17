@@ -2,6 +2,9 @@ package ids323.estudiantes.gui;
 
 import java.awt.*;
 
+/**
+ * Clase de utilidad que guarda los colores utilizados para la interfaz.
+ * */
 public class Colores {
     public static final Color PRIMARIO_CLARO = new Color(161,0,0);
     public static final Color ENFASIS = new Color(226,38,51);
@@ -16,4 +19,9 @@ public class Colores {
 
     public static final Color TEXTO_ENTRADA = new Color(40, 40, 40);
     public static final Color TEXTO_ERROR = PRIMARIO_CLARO;
+
+    /**
+     * Esta clase no debe ser instanciada.
+     * */
+    private Colores() {}
 }

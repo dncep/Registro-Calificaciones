@@ -5,9 +5,17 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * Created by User on 1/8/2017.
+ * Clase estática de utilidad que lee un archivo y lo divide en líneas no vacías.
  */
 public class LectorLineas {
+    /**
+     * Lee un archivo recurso dentro del classpath y lo divide en líneas no vacías.
+     *
+     * @throws IOException
+     *
+     * @param ruta La ruta dentro del classpath que debe leer.
+     * @return Un <code>ArrayList&lt;String&gt;</code> con todas las líneas del archivo, excluyendo las vacías y las que empiezan con el símbolo '#'.
+     * */
     public static ArrayList<String> leer(String ruta) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
         try(BufferedReader br = new BufferedReader(
@@ -25,6 +33,14 @@ public class LectorLineas {
         }
     }
 
+    /**
+     * Lee un archivo dentro del filesystem del dispositivo y lo divide en líneas no vacías.
+     *
+     * @throws IOException
+     *
+     * @param archivo El archivo dentro del filesystem del dispositivo.
+     * @return Un <code>ArrayList&lt;String&gt;</code> con todas las líneas del archivo, excluyendo las vacías y las que empiezan con el símbolo '#'.
+     * */
     public static ArrayList<String> leer(File archivo) throws IOException {
         ArrayList<String> lines = new ArrayList<>();
 
@@ -39,5 +55,8 @@ public class LectorLineas {
         }
     }
 
+    /**
+     * LectorLineas no debe ser instanciado.
+     * */
     private LectorLineas() {}
 }

@@ -9,13 +9,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
+/**
+ * El área a la derecha del explorador y bajo la lista de pestañas que muestra el contenido de cada pestaña.
+ * */
 public class AreaModulo extends JPanel {
+    /**
+     * La ventana a la que pertenece.
+     * */
     private final Ventana ventana;
 
-    private JPanel tabList;
-
+    /**
+     * El componente siendo mostrado actualmente.
+     * */
     private JComponent content = null;
 
+    /**
+     * Crea un área módulo para la ventana dada.
+     *
+     * @param ventana La ventana padre de este componente.
+     * */
     public AreaModulo(Ventana ventana) {
         this.ventana = ventana;
         this.setLayout(new BorderLayout());
@@ -28,7 +40,7 @@ public class AreaModulo extends JPanel {
 
         this.add(tabListHolder, BorderLayout.NORTH);
 
-        tabList = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        JPanel tabList = new JPanel(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
         tabList.setBackground(new Color(200, 202, 205));
         tabList.setPreferredSize(new Dimension(1, 30));
@@ -40,7 +52,7 @@ public class AreaModulo extends JPanel {
 
         tabListHolder.add(tabSP, BorderLayout.CENTER);
 
-        this.setContent(ventana.panelVacio);
+        this.cambiarModulo(ventana.panelVacio);
 
 
         KeyStroke saveKeystroke = KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK);
@@ -70,18 +82,23 @@ public class AreaModulo extends JPanel {
         });
     }
 
-    public void setContent(JComponent content) {
+    /**
+     * Cambia el módulo siendo mostrado al módulo dado.
+     *
+     * @param modulo El módulo a mostrar. Si es <code>null</code>, mostrará la pantalla de inicio.
+     * */
+    public void cambiarModulo(JComponent modulo) {
         if(this.content != null) {
-            if(this.content == ventana.panelVacio) ventana.panelVacio.pause();
+            if(this.content == ventana.panelVacio) ventana.panelVacio.pausar();
             this.remove(this.content);
         }
-        if(content == null) {
-            content = ventana.panelVacio;
-            ventana.panelVacio.start();
+        if(modulo == null) {
+            modulo = ventana.panelVacio;
+            ventana.panelVacio.activar();
         }
 
-        this.add(content, BorderLayout.CENTER);
-        this.content = content;
+        this.add(modulo, BorderLayout.CENTER);
+        this.content = modulo;
 
         this.revalidate();
         this.repaint();

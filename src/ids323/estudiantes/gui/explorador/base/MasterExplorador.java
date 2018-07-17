@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by User on 2/7/2017.
+ * Representa un explorador que contiene ítemes que pueden o no expandirse y mostrar subnodos.
  */
 public class MasterExplorador extends JComponent implements MouseListener, MouseMotionListener {
     protected HashMap<MarcaExplorador, Boolean> explorerFlags = new HashMap<>();

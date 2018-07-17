@@ -20,7 +20,7 @@ public class ModuloVistaAsignatura extends ModuloVista {
     }
 
     @Override
-    protected void startEditing() {
+    protected void empezarEditar() {
         asignatura.setEditando(true);
         TabManager.closeTab(TabManager.getTabForToken(asignatura));
         TabManager.openTab(asignatura);

@@ -1,6 +1,7 @@
 package ids323.estudiantes.gui;
 
 import ids323.estudiantes.Main;
+import ids323.estudiantes.Recursos;
 import ids323.estudiantes.componentes.CBoton;
 import ids323.estudiantes.componentes.Relleno;
 import ids323.estudiantes.data.Asignatura;
@@ -9,7 +10,6 @@ import ids323.estudiantes.data.Profesor;
 import ids323.estudiantes.gui.explorador.MasterExploradorRegistro;
 import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.tablist.TabListMaster;
-import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -96,7 +96,7 @@ public class Ventana {
             toolbar.add(button);
         }
         {
-            CBoton button = new CBoton("", new ImageIcon(Comunes.getIcono("buscar").getScaledInstance(26, 26, Image.SCALE_SMOOTH)));
+            CBoton button = new CBoton("", new ImageIcon(Recursos.getIcono("buscar").getScaledInstance(26, 26, Image.SCALE_SMOOTH)));
             button.setPreferredSize(new Dimension(32, 32));
             button.setBackground(Colores.PRIMARIO_OSCURO);
             button.setRolloverColor(Colores.PRIMARIO_MAS_OSCURO);
@@ -108,7 +108,7 @@ public class Ventana {
         }
 
         {
-            CBoton button = new CBoton("", new ImageIcon(Comunes.getIcono("calificaciones").getScaledInstance(26, 26, Image.SCALE_SMOOTH)));
+            CBoton button = new CBoton("", new ImageIcon(Recursos.getIcono("calificaciones").getScaledInstance(26, 26, Image.SCALE_SMOOTH)));
             button.setPreferredSize(new Dimension(32, 32));
             button.setBackground(Colores.PRIMARIO_OSCURO);
             button.setRolloverColor(Colores.PRIMARIO_MAS_OSCURO);
@@ -122,7 +122,7 @@ public class Ventana {
         panelVacio.setBackground(Colores.FONDO);
         panelVacio.setForeground(Colores.TEXTO_OSCURO);
         panelVacio.setFont(panelVacio.getFont().deriveFont(24f).deriveFont(Font.BOLD));
-        areaModulos.setContent(null);
+        areaModulos.cambiarModulo(null);
 
         jframe.setExtendedState(JFrame.MAXIMIZED_BOTH);
 

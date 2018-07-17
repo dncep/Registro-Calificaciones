@@ -11,8 +11,14 @@ import javax.swing.text.Document;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Módulo que muestra, en texto, el ranking de todos los estudiantes, de mayor índice a menor.
+ * */
 public class ModuloRanking extends JPanel implements ModuloPantalla {
 
+    /**
+     * Crea un módulo de ranking para los estudiantes en {@link Main#registro}.
+     * */
     public ModuloRanking() {
         super(new BorderLayout());
         JTextArea textArea = new JTextArea();

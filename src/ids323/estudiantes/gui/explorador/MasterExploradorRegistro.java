@@ -1,6 +1,7 @@
 package ids323.estudiantes.gui.explorador;
 
 import ids323.estudiantes.Main;
+import ids323.estudiantes.Recursos;
 import ids323.estudiantes.data.Util;
 import ids323.estudiantes.gui.Colores;
 import ids323.estudiantes.gui.TokenModulo;
@@ -8,7 +9,6 @@ import ids323.estudiantes.gui.Ventana;
 import ids323.estudiantes.gui.explorador.base.MasterExplorador;
 import ids323.estudiantes.gui.explorador.base.elementos.SeparadorExplorador;
 import ids323.estudiantes.gui.modulos.TabManager;
-import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by User on 5/16/2017.
+ * Representa un explorador que contiene entidades del registro que pueden o no expandirse y mostrar subnodos.
  */
 public class MasterExploradorRegistro extends MasterExplorador {
     private final Ventana ventana;
@@ -47,8 +47,8 @@ public class MasterExploradorRegistro extends MasterExplorador {
         selectionStyle = "LINE_LEFT";
         selectionLineThickness = 2;
 
-        assets.put("expand", Comunes.getIcono("expand").getScaledInstance(16, 16, Image.SCALE_SMOOTH));
-        assets.put("collapse", Comunes.getIcono("collapse").getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+        assets.put("expand", Recursos.getIcono("expand").getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+        assets.put("collapse", Recursos.getIcono("collapse").getScaledInstance(16, 16, Image.SCALE_SMOOTH));
 
         refresh();
 

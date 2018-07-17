@@ -7,11 +7,9 @@ import javax.swing.*;
 import java.util.ArrayList;
 
 /**
- * Interface that allows communication between parts of the program and the tab
- * list.
+ * Interfaz que permite la comunicación entre partes del programa y la lista de pestañas.
  */
 public class TabManager {
-
     public static ArrayList<Tab> openTabs = new ArrayList<>();
 
     private static Tab selectedTab = null;
@@ -75,37 +73,6 @@ public class TabManager {
         }
     }
 
-    private static void updateMenu() {
-        /*
-        menu = new StyledPopupMenu();
-        if(TabManager.openTabs.size() <= 0) {
-            StyledMenuItem item = new StyledMenuItem("No tabs open!");
-            item.setFont(item.getFont().deriveFont(Font.ITALIC));
-            item.setIcono(new ImageIcon(Comunes.getIcono("info").getScaledInstance(16, 16, Image.SCALE_SMOOTH)));
-            menu.add(item);
-            return;
-        }
-        for(int i = 0; i < TabManager.openTabs.size(); i++) {
-            Tab tab = TabManager.openTabs.get(i);
-            StyledMenuItem item = new StyledMenuItem(((!tab.isGuardado()) ? "*" : "") + tab.getTitulo());
-            item.setIcono(new ImageIcon(tab.getLinkedTabItem().getIcono()));
-            if(!tab.visible) {
-                item.setFont(item.getFont().deriveFont(Font.BOLD));
-            }
-            item.addMouseListener(new MouseAdapter() {
-                public void mousePressed(MouseEvent e) {
-                    setSelectedTab(tab);
-                }
-            });
-            menu.add(item);
-        }*/
-    }/*
-
-    public static StyledPopupMenu getMenu() {
-        updateMenu();
-        return menu;
-    }*/
-
     public static void setSelectedTab(Tab tab) {
         Main.ventana.listaPestanas.selectTab(tab);
         if (selectedTab != null) {
@@ -113,15 +80,10 @@ public class TabManager {
         }
         if (tab != null) {
             selectedTab = tab;
-
-            //CraftrWindow.setTitle(((linkedProject != null) ? linkedProject.getTitulo() + " - " : "") + tab.getTitulo());
-            Main.ventana.areaModulos.setContent(tab.getComponenteModulo());
+            Main.ventana.areaModulos.cambiarModulo(tab.getComponenteModulo());
             tab.onSelect();
         } else {
-            //CraftrWindow.statusBar.setCaretInfo(Comunes.DEFAULT_CARET_DISPLAY_TEXT);
-            //CraftrWindow.statusBar.setSelectionInfo(" ");
-            //Ventana.clearTitle();
-            Main.ventana.areaModulos.setContent(null);
+            Main.ventana.areaModulos.cambiarModulo(null);
         }
     }
 

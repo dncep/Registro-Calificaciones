@@ -10,13 +10,12 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 /**
- * Created by User on 4/8/2017.
+ * Representa un elemento visible dentro de un explorador que maneja sus propios eventos de entrada y su apariencia.
  */
 public abstract class ElementoExplorador implements MouseListener, MouseMotionListener {
     protected final MasterExplorador master;
     protected boolean selected;
     protected boolean rollover;
-    protected boolean expanded;
 
     public ElementoExplorador(MasterExplorador master) {
         this.master = master;

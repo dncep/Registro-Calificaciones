@@ -1,6 +1,7 @@
 package ids323.estudiantes.gui.modulos.edicion;
 
 import ids323.estudiantes.Main;
+import ids323.estudiantes.Recursos;
 import ids323.estudiantes.componentes.CBoton;
 import ids323.estudiantes.componentes.CMenuOpciones;
 import ids323.estudiantes.componentes.CampoNumerico;
@@ -12,7 +13,6 @@ import ids323.estudiantes.gui.modulos.TabManager;
 import ids323.estudiantes.gui.modulos.edicion.logica.AdaptadorEntrada;
 import ids323.estudiantes.gui.modulos.edicion.logica.EntradaValor;
 import ids323.estudiantes.gui.modulos.edicion.logica.ValorEdicion;
-import ids323.estudiantes.util.Comunes;
 import ids323.estudiantes.util.DocumentAdapter;
 
 import javax.swing.*;
@@ -51,7 +51,7 @@ public class ModuloCalificaciones extends ModuloEdicion {
             panel.add(fieldPanel, BorderLayout.CENTER);
 
             campoClave = new CMenuOpciones<>(getOpcionesSeleccionNuevas());
-            campoClave.setIcono(campoClave.getOpciones().get(0), Comunes.getIcono("dropdown"));
+            campoClave.setIcono(campoClave.getOpciones().get(0), Recursos.getIcono("dropdown"));
 
             campoValor = new CampoNumerico();
 
@@ -124,7 +124,7 @@ public class ModuloCalificaciones extends ModuloEdicion {
 
         private void refrescar() {
             campoClave.setOpciones(getOpcionesSeleccionNuevas());
-            campoClave.setIcono(campoClave.getOpciones().get(0), Comunes.getIcono("dropdown"));
+            campoClave.setIcono(campoClave.getOpciones().get(0), Recursos.getIcono("dropdown"));
             campoAgregar.setOpciones(getOpcionesAdicionNuevas());
             actualizar();
         }

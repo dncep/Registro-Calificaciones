@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Collection;
 
+/**
+ * La entidad que representa los resultados de búsqueda.
+ * */
 public class TokenResultadosBusqueda implements TokenModulo {
 
     @Override

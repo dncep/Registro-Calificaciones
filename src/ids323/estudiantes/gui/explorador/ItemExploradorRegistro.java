@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
- * Created by User on 2/7/2017.
+ * Representa un ítem dentro de un explorador que pertenece a un {@link TokenModulo}.
  */
 public class ItemExploradorRegistro extends ElementoExplorador {
     private ItemExploradorRegistro parent = null;

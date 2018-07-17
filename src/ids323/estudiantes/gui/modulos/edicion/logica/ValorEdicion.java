@@ -4,6 +4,9 @@ import ids323.estudiantes.gui.modulos.edicion.ModuloEdicion;
 
 import java.util.Collection;
 
+/**
+ * Representa un valor a editar en un {@link ModuloEdicion}. Describe cómo se debe leer y guardar el valor.
+ * */
 public class ValorEdicion<T> {
     private final String titulo;
     private final T valorDefecto;
@@ -11,19 +14,19 @@ public class ValorEdicion<T> {
     private final SetterValor<T> setter;
     private Collection<T> valoresPosibles;
 
-    private AdaptadorEntrada adapter;
+    private AdaptadorEntrada adaptador;
 
     public ValorEdicion(String titulo, T valorDefecto, ValidacionValor<T> validacion, SetterValor<T> setter) {
         this(titulo, valorDefecto, validacion, setter, AdaptadoresEntradaEstandar.getAdaptadorParaClase(valorDefecto.getClass()));
     }
 
-    public ValorEdicion(String titulo, T valorDefecto, ValidacionValor<T> validacion, SetterValor<T> setter, AdaptadorEntrada adapter) {
+    public ValorEdicion(String titulo, T valorDefecto, ValidacionValor<T> validacion, SetterValor<T> setter, AdaptadorEntrada adaptador) {
         this.titulo = titulo;
         this.valorDefecto = valorDefecto;
         this.validacion = validacion;
         this.setter = setter;
 
-        this.adapter = adapter;
+        this.adaptador = adaptador;
     }
 
     public ValorEdicion(String titulo, T valorDefecto, ValidacionValor<T> validacion, SetterValor<T> setter, Collection<T> valoresPosibles) {
@@ -52,6 +55,6 @@ public class ValorEdicion<T> {
     }
 
     public EntradaValor crearEntrada(ModuloEdicion modulo) {
-        return adapter.crearEntrada(this, modulo);
+        return adaptador.crearEntrada(this, modulo);
     }
 }

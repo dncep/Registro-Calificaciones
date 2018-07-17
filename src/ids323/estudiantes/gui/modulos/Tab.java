@@ -23,7 +23,7 @@ public class Tab {
 
     @Override
     public String toString() {
-        return "Tab [title=" + getTitulo() + ", token=" + token + ", visible=" + visible + "]";
+        return "Tab [titulo=" + getTitulo() + ", token=" + token + ", visible=" + visible + "]";
     }
 
     public Tab(TokenModulo token) {

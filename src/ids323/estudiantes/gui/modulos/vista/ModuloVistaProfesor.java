@@ -16,7 +16,7 @@ public class ModuloVistaProfesor extends ModuloVista {
     }
 
     @Override
-    protected void startEditing() {
+    protected void empezarEditar() {
         profesor.setEditando(true);
         TabManager.closeTab(TabManager.getTabForToken(profesor));
         TabManager.openTab(profesor);

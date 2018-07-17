@@ -12,6 +12,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+/**
+ * Representa un ítem dentro de un explorador de calificaciones que pertenece a un objeto {@link Calificaciones}.
+ */
 public class ItemExploradorCalificacion extends ElementoExplorador {
     private MasterExploradorCalificacion parent = null;
 

@@ -15,25 +15,55 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Representa una pantalla para editar un conjunto de información.
+ * */
 public abstract class ModuloEdicion extends JPanel implements ModuloPantalla {
-    protected final Tab associatedTab;
+    /**
+     * La pestaña a la que pertenece.
+     * */
+    protected final Tab tab;
 
+    /**
+     * El título de la pantalla.
+     * */
     protected final String title;
+    /**
+     * La lista de valores que se editan.
+     * */
     protected ArrayList<ValorEdicion<?>> valores = new ArrayList<>();
 
+    /**
+     * La lista de componentes de entrada para cada valor de edición.
+     * */
     protected ArrayList<EntradaValor> entradas = new ArrayList<>();
 
+    /**
+     * El contenido interno de este panel.
+     * */
     protected JPanel content;
 
+    /**
+     * El panel de botones para las acciones Guardar y Cancelar.
+     * */
     private JPanel buttonPanel;
 
+    /**
+     * Crea un módulo de edición para las propiedades dadas.
+     *
+     * @param tab La pestaña asociada al módulo.
+     * @param title El título que se muestra en el encabezado del módulo.
+     * */
     public ModuloEdicion(Tab tab, String title) {
         super(new BorderLayout());
-        this.associatedTab = tab;
+        this.tab = tab;
         this.title = title;
     }
 
-    void actualizarEntradas() {
+    /**
+     * Oculta los campos actualmente visibles y los vuelve a mostrar a según los datos en {@link ModuloEdicion#valores}.
+     * */
+    private void actualizarEntradas() {
         content.removeAll();
 
         ArrayList<EntradaValor> nuevasEntradas = new ArrayList<>();
@@ -79,7 +109,10 @@ public abstract class ModuloEdicion extends JPanel implements ModuloPantalla {
         content.add(buttonPanel);
     }
 
-    void construir() {
+    /**
+     * Construye los componentes internos de este módulo.
+     * */
+    protected void construir() {
         JPanel wrapper = new JPanel(new BorderLayout());
         JScrollPane sp = new JScrollPane(wrapper);
         sp.getVerticalScrollBar().setUnitIncrement(20);
@@ -119,7 +152,7 @@ public abstract class ModuloEdicion extends JPanel implements ModuloPantalla {
         CBoton guardar = new CBoton("Guardar");
 
         guardar.addActionListener(e -> {
-            associatedTab.guardar();
+            tab.guardar();
             TabManager.closeSelectedTab();
             finalizarEdicion();
         });
@@ -143,10 +176,16 @@ public abstract class ModuloEdicion extends JPanel implements ModuloPantalla {
         actualizarEntradas();
     }
 
+    /**
+     * Se llama cuando se presiona el botón Guardar o el botón Cancelar. No se llama cuando se cierra la pestaña.
+     * */
     protected abstract void finalizarEdicion();
 
+    /**
+     * Se llama cuando uno de los campos en el módulo cambia su valor.
+     * */
     public void enEdicion() {
-        associatedTab.enEdicion();
+        tab.enEdicion();
     }
 
     @Override

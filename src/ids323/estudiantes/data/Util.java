@@ -1,6 +1,13 @@
 package ids323.estudiantes.data;
 
+/**
+ * Clase para métodos de utilidad.
+ * */
 public class Util {
+    /**
+     * Cadena de longitud <code>2n</code> donde cada caracter en posición <code>i &lt; n</code> tiene su representación
+     * sin acentos ni tildes en la posición <code>n + i</code>.
+     * */
     private static final String MAPA_TILDES = "áéíóúñÁÉÍÓÚÑaeiounAEIOUN";
 
     /**
@@ -36,9 +43,19 @@ public class Util {
         return sb.toString();
     }
 
+    /**
+     * Retorna el módulo matemático de dos números. Con parámetros a y b, el operador <code>%</code> retorna un número
+     * entre -b y b exclusivos. Este método retorna un número entre 0 inclusivo y b exclusivo, siguiendo la definición
+     * matemática de <code>mod</code>.
+     * */
     public static int mod(int a, int b) {
         int res = a % b;
         if(res < 0) res += b;
         return res;
     }
+
+    /**
+     * La clase util no debe ser instanciada.
+     * */
+    private Util() {}
 }

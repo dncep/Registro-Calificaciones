@@ -1,16 +1,19 @@
 package ids323.estudiantes.gui.explorador;
 
 import ids323.estudiantes.Main;
+import ids323.estudiantes.Recursos;
 import ids323.estudiantes.data.Calificaciones;
 import ids323.estudiantes.data.Estudiante;
 import ids323.estudiantes.gui.Colores;
 import ids323.estudiantes.gui.TokenModulo;
 import ids323.estudiantes.gui.explorador.base.MasterExplorador;
-import ids323.estudiantes.util.Comunes;
 
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Representa un explorador que contiene calificaciones.
+ * */
 public class MasterExploradorCalificacion extends MasterExplorador {
 
     Estudiante estudiante;
@@ -33,9 +36,9 @@ public class MasterExploradorCalificacion extends MasterExplorador {
         selectionStyle = "LINE_LEFT";
         selectionLineThickness = 4;
 
-        assets.put("expand", Comunes.getIcono("expand").getScaledInstance(16, 16, Image.SCALE_SMOOTH));
-        assets.put("collapse", Comunes.getIcono("collapse").getScaledInstance(16, 16, Image.SCALE_SMOOTH));
-        assets.put("close", Comunes.getIcono("remove").getScaledInstance(24, 24, Image.SCALE_SMOOTH));
+        assets.put("expand", Recursos.getIcono("expand").getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+        assets.put("collapse", Recursos.getIcono("collapse").getScaledInstance(16, 16, Image.SCALE_SMOOTH));
+        assets.put("close", Recursos.getIcono("remove").getScaledInstance(24, 24, Image.SCALE_SMOOTH));
 
         refresh();
     }

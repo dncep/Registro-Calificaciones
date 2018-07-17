@@ -11,6 +11,9 @@ import ids323.estudiantes.gui.modulos.TabManager;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+/**
+ * Representa un ítem dentro de un explorador de calificaciones que pertenece a un {@link Estudiante} y crea un nuevo reporte de calificaciones.
+ */
 public class ItemNuevoExploradorCalificacion extends ElementoExplorador {
 
     private MasterExploradorCalificacion parent;

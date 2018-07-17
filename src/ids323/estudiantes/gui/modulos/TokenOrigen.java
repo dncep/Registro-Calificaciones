@@ -1,11 +1,11 @@
 package ids323.estudiantes.gui.modulos;
 
+import ids323.estudiantes.Recursos;
 import ids323.estudiantes.componentes.menu.CItemMenu;
 import ids323.estudiantes.data.Asignatura;
 import ids323.estudiantes.data.Estudiante;
 import ids323.estudiantes.data.Profesor;
 import ids323.estudiantes.gui.TokenModulo;
-import ids323.estudiantes.util.Comunes;
 
 import javax.swing.*;
 import java.awt.*;
@@ -26,7 +26,7 @@ public class TokenOrigen implements TokenModulo {
 
     @Override
     public Image getIcono() {
-        return Comunes.getIcono("file");
+        return Recursos.getIcono("file");
     }
 
     @Override

@@ -1,29 +1,35 @@
 package ids323.estudiantes.data;
 
+/**
+ * Representa un mes en el cual un trimestre puede empezar.
+ * */
 public enum MesTrimestre {
-    FEBRERO("Febrero-Abril %d", "Febrero %d"), //1
-    MAYO("Mayo-Julio %d", "Mayo %d"), //4
-    AGOSTO("Agosto-Octubre %d", "Agosto %d"), //7
-    NOVIEMBRE("Noviembre %d-Enero %d", "Noviembre %d"); //10
+    FEBRERO("Febrero-Abril %d"),
+    MAYO("Mayo-Julio %d"),
+    AGOSTO("Agosto-Octubre %d"),
+    NOVIEMBRE("Noviembre %d-Enero %d");
 
+    /**
+     * Contiene la cadena que describe cómo el mes se va a ver en pantalla.<br>
+     * %d se va a reemplazar por el año en el que se encuentra el trimestre.<br>
+     * Si hay dos %d, el segundo será reemplazado por el año siguiente.
+     * */
     String formato;
-    String corto;
 
-    MesTrimestre(String formato, String corto) {
+    /**
+     * Crea un mes trimestral con el formato dado.
+     * */
+    MesTrimestre(String formato) {
         this.formato = formato;
-        this.corto = corto;
     }
 
+    /**
+     * Obtiene el formato del trimestre.
+     *
+     * @return El formato del trimestre.
+     * */
     public String getFormato() {
         return formato;
-    }
-
-    public String getCorto() {
-        return corto;
-    }
-
-    public String getNombre() {
-        return corto.substring(0, corto.indexOf(' '));
     }
 
     @Override

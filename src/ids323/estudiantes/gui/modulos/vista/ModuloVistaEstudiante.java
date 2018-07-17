@@ -52,11 +52,11 @@ public class ModuloVistaEstudiante extends ModuloVista {
         wrapper.add(califHeaderPanel, BorderLayout.NORTH);
         wrapper.add(gradeExplorer, BorderLayout.CENTER);
 
-        addSouthComponent(wrapper);
+        agregarComponenteSur(wrapper);
     }
 
     @Override
-    protected void startEditing() {
+    protected void empezarEditar() {
         estudiante.setEditando(true);
         TabManager.closeTab(TabManager.getTabForToken(estudiante));
         TabManager.openTab(estudiante);

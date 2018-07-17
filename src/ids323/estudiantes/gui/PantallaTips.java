@@ -6,68 +6,68 @@ import java.util.*;
 import java.util.Timer;
 
 public class PantallaTips extends JPanel {
-    private Timer timer;
-    private int milliseconds = 0;
-    private int seconds = 0;
+    private Timer cronometro;
+    private int milisegundos = 0;
+    private int segundos = 0;
 
-    private static final int TICK_RATE = 50;
-    private static final int TIP_PERIOD = 15;
+    private static final int FRECUENCIA_AVANCE = 50;
+    private static final int PERIODO_TIP = 15;
 
     private Random random = new Random();
-    private ArrayList<String> tipList = new ArrayList<>();
-    private int currentTipIndex = -1;
-    private String currentTip = "";
+    private ArrayList<String> listaTips = new ArrayList<>();
+    private int indiceActual = -1;
+    private String tipActual = "";
 
     private TimerTask task;
 
     public PantallaTips() {
-        timer = new Timer();
+        cronometro = new Timer();
         this.setPreferredSize(new Dimension(800, 100));
     }
 
-    public void start() {
-        start(0);
+    public void activar() {
+        activar(0);
     }
 
-    public void start(int delay) {
-        if(currentTipIndex < 0) {
-            showNext();
+    public void activar(int delay) {
+        if(indiceActual < 0) {
+            mostrarSiguiente();
         }
         task = new TimerTask() {
             @Override
             public void run() {
-                tick();
+                avanzar();
             }
         };
-        timer.scheduleAtFixedRate(task, delay, 1000/ TICK_RATE);
+        cronometro.scheduleAtFixedRate(task, delay, 1000/ FRECUENCIA_AVANCE);
     }
 
-    public void pause() {
+    public void pausar() {
         if(task != null) {
             task.cancel();
-            timer.purge();
+            cronometro.purge();
         }
     }
 
-    private void tick() {
-        milliseconds += 1000/ TICK_RATE;
-        if(milliseconds >= 1000) {
-            milliseconds = 0;
-            if(++seconds >= TIP_PERIOD) {
-                this.showNext();
-                seconds = 0;
+    private void avanzar() {
+        milisegundos += 1000/ FRECUENCIA_AVANCE;
+        if(milisegundos >= 1000) {
+            milisegundos = 0;
+            if(++segundos >= PERIODO_TIP) {
+                this.mostrarSiguiente();
+                segundos = 0;
             }
         }
         this.repaint();
     }
 
-    private void showNext() {
-        if(tipList.isEmpty()) return;
-        if(++currentTipIndex >= tipList.size()) {
-            shuffleList();
-            currentTipIndex = 0;
+    private void mostrarSiguiente() {
+        if(listaTips.isEmpty()) return;
+        if(++indiceActual >= listaTips.size()) {
+            shuffle();
+            indiceActual = 0;
         }
-        currentTip = tipList.get(currentTipIndex);
+        tipActual = listaTips.get(indiceActual);
     }
 
     @Override
@@ -77,9 +77,9 @@ public class PantallaTips extends JPanel {
         Graphics2D g2d = ((Graphics2D) g);
         g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
 
-        if(seconds < 1 || seconds >= TIP_PERIOD-1) {
-            float transitionTime = milliseconds;
-            if(seconds < 1) transitionTime += 1000;
+        if(segundos < 1 || segundos >= PERIODO_TIP -1) {
+            float transitionTime = milisegundos;
+            if(segundos < 1) transitionTime += 1000;
             transitionTime /= 2000;
             transitionTime *= 2 * Math.PI;
             transitionTime -= Math.PI;
@@ -92,25 +92,25 @@ public class PantallaTips extends JPanel {
         g.setColor(this.getForeground());
         g.setFont(this.getFont());
         FontMetrics metrics = g.getFontMetrics();
-        g.drawString(currentTip, (this.getWidth()-metrics.stringWidth(currentTip))/2, (this.getHeight()-metrics.getHeight())/2);
+        g.drawString(tipActual, (this.getWidth()-metrics.stringWidth(tipActual))/2, (this.getHeight()-metrics.getHeight())/2);
 
         g.dispose();
     }
 
     public void setTips(Collection<String> tips) {
-        tipList.clear();
-        tipList.addAll(tips);
-        currentTip = "";
-        currentTipIndex = -1;
-        shuffleList();
+        listaTips.clear();
+        listaTips.addAll(tips);
+        tipActual = "";
+        indiceActual = -1;
+        shuffle();
     }
 
-    private void shuffleList() {
-        for(int i = 0; i < tipList.size(); i++) {
-            int index = i+random.nextInt(tipList.size()-i-((i == 0) ? 1 : 0));
-            String tip = tipList.get(index);
-            tipList.remove(index);
-            tipList.add(i, tip);
+    private void shuffle() {
+        for(int i = 0; i < listaTips.size(); i++) {
+            int index = i+random.nextInt(listaTips.size()-i-((i == 0) ? 1 : 0));
+            String tip = listaTips.get(index);
+            listaTips.remove(index);
+            listaTips.add(i, tip);
         }
     }
 }

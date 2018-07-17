@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 
 /**
- * Created by User on 4/8/2017.
+ * Representa un separador dentro de un explorador.
  */
 public class SeparadorExplorador extends ElementoExplorador {
 
